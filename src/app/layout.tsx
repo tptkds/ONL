@@ -18,9 +18,9 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="ko">
-            <body className="PretendardRegular bg-neutral-900 text-white">
-                {children}
+        <html lang="ko" suppressHydrationWarning className="h-full">
+            <body className="h-full PretendardRegular bg-neutral-900 text-white ">
+                <main className="h-full">{children}</main>
             </body>
         </html>
     );
