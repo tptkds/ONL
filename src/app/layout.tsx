@@ -1,8 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
     title: 'ONL',
@@ -21,8 +18,10 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="ko">
-            <body className={inter.className}>{children}</body>
+        <html lang="ko" suppressHydrationWarning className="h-full">
+            <body className="h-full PretendardRegular bg-neutral-900 text-white ">
+                <main className="h-full">{children}</main>
+            </body>
         </html>
     );
 }
