@@ -1,18 +1,29 @@
-import ForgotPassword from './components/ForgotPassword';
 import Form from './components/Form';
+import SignUpLink from './components/SignUpLink';
+import SignInWithGoogle from './components/SignInWithGoogle';
 
 const SignIn: React.FC = () => {
     return (
-        <div className="flex flex-col items-center w-96 h-80 py-8 bg-white bg-opacity-10 shadow ">
-            <div>
-                <h2 className="PretendardBold text-xl ">로그인</h2>
-            </div>
-            <div className="mt-4">
-                <h3 className="">ONL 계정으로 로그인</h3>
-                <Form />
-            </div>
+        <div className="flex min-h-full flex-1 flex-col justify-center px-6  lg:px-8">
+            <h2 className="text-center text-2xl font-bold leading-9 tracking-tight ">
+                로그인
+            </h2>
 
-            {/* <ForgotPassword /> */}
+            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                <h3 className="text-center mb-6">ONL 계정으로 로그인</h3>
+                <Form />
+                <SignUpLink />
+            </div>
+            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
+                <div className="flex w-full items-center mb-6">
+                    <div className="border-b  w-full h-1"></div>
+                    <h3 className="text-center w-full mx-4">
+                        다른 방법으로 로그인하기
+                    </h3>
+                    <div className="border-b w-full h-1"></div>
+                </div>
+                <SignInWithGoogle />
+            </div>
         </div>
     );
 };
