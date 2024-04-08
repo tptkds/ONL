@@ -1,3 +1,4 @@
+'use server';
 import getPopularMovies from '@/service/movie/getPopularMovies';
 import { MoviesResponse } from '@/types/movie';
 import {
@@ -16,14 +17,12 @@ export default async function PopularMovies() {
         queryFn: async ({ pageParam = 1 }) => {
             return getPopularMovies(pageParam as number);
         },
-        getNextPageParam: (
-            lastPage: MoviesResponse,
-            allPages: InfiniteData<MoviesResponse>['pages']
-        ) => {
+        getNextPageParam: (lastPage: MoviesResponse) => {
             const nextPage = lastPage.page + 1;
             return nextPage <= lastPage.total_pages ? nextPage : undefined;
         },
         initialPageParam: 1,
+        pages: 1,
     });
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>

@@ -16,6 +16,7 @@ export interface Movie {
 }
 
 export interface MoviesResponse {
+    [x: string]: any;
     page: number;
     results: Movie[];
     total_pages: number;

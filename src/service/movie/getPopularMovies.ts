@@ -6,7 +6,7 @@ export default async function getPopularMovies(pageNumber: number) {
         method: 'GET',
         headers: {
             accept: 'application/json',
-            Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`,
         },
     };
     try {
