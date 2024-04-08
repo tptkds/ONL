@@ -4,7 +4,7 @@ import SignInWithGoogle from './components/SignInWithGoogle';
 
 const SignIn: React.FC = () => {
     return (
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6  lg:px-8">
+        <section className="flex min-h-full flex-1 flex-col justify-center px-6  lg:px-8">
             <h2 className="text-center text-2xl font-bold leading-9 tracking-tight ">
                 로그인
             </h2>
@@ -16,15 +16,15 @@ const SignIn: React.FC = () => {
             </div>
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
                 <div className="flex w-full items-center mb-6">
-                    <div className="border-b  w-full h-1"></div>
-                    <h3 className="text-center w-full mx-4">
+                    <hr aria-hidden="true" className="w-full" />
+                    <h3 className="whitespace-nowrap text-center mx-4">
                         다른 방법으로 로그인하기
                     </h3>
-                    <div className="border-b w-full h-1"></div>
+                    <hr aria-hidden="true" className="w-full" />
                 </div>
                 <SignInWithGoogle />
             </div>
-        </div>
+        </section>
     );
 };
 

@@ -10,7 +10,9 @@ const Form: React.FC = () => {
 
     return (
         <>
-            <p aria-live="polite">{state?.message}</p>
+            <p role="alert" aria-live="assertive">
+                {state?.message}
+            </p>
             <form className="space-y-6" action={formAction}>
                 <div>
                     <label

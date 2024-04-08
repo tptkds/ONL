@@ -10,7 +10,9 @@ const Form: React.FC = () => {
 
     return (
         <>
-            <p aria-live="polite">{status === 'error' ? errorMessage : ''}</p>
+            <p role="alert" aria-live="assertive">
+                {status === 'error' ? errorMessage : ''}
+            </p>
             <form
                 className="space-y-6"
                 onSubmit={e => {
@@ -70,6 +72,7 @@ const Form: React.FC = () => {
                         type="submit"
                         className="flex w-full justify-center rounded-md bg-yellow-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         disabled={status === 'loading'}
+                        aria-disabled={status === 'loading'}
                     >
                         {status === 'loading' ? '로그인 중..' : '로그인하기'}
                     </button>
