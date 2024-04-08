@@ -12,9 +12,10 @@ export default function SignInWithGoogle() {
                     signIn('google', { redirect: false });
                 }}
                 className="w-full bg-white py-4 px-2 flex text-black items-center justify-center rounded"
+                aria-label="Google 계정으로 로그인"
             >
                 <FcGoogle className="text-xl" />
-                <span className="ml-2">구글로 로그인하기</span>
+                <span className="ml-2">Google 계정으로 로그인</span>
             </button>
         </>
     );
