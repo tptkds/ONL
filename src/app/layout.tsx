@@ -20,7 +20,7 @@ export default function RootLayout({
     return (
         <html lang="ko" suppressHydrationWarning className="h-full">
             <body className="h-full PretendardRegular bg-neutral-900 text-white ">
-                <main className="h-full">{children}</main>
+                <main className="h-full">{children}</main>\
             </body>
         </html>
     );
