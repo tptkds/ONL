@@ -23,9 +23,7 @@ export default function List() {
         threshold: 0.5,
     });
     useEffect(() => {
-        console.log('chop');
         if (isIntersecting && hasNextPage && !isFetchingNextPage) {
-            console.log('yup');
             fetchNextPage();
         }
     }, [isIntersecting, hasNextPage, isFetchingNextPage, fetchNextPage]);
