@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import Providers from './queryClientProvider';
 
 export const metadata: Metadata = {
     title: 'ONL',
@@ -20,7 +21,9 @@ export default function RootLayout({
     return (
         <html lang="ko" suppressHydrationWarning className="h-full">
             <body className="h-full PretendardRegular bg-neutral-900 text-white ">
-                <main className="h-full">{children}</main>\
+                <Providers>
+                    <main className="h-full">{children}</main>
+                </Providers>
             </body>
         </html>
     );
