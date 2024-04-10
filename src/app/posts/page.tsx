@@ -14,16 +14,7 @@ import {
     Timestamp,
 } from 'firebase/firestore';
 import { PAGE_SIZE } from '@/constants/post';
-
-interface PostData {
-    authorId: string;
-    category: string;
-    content: string;
-    createdAt: Timestamp;
-    tags: string[];
-    title: string;
-    updatedAt: Timestamp;
-}
+import { PostData } from '@/types/post';
 
 async function fetchAllPosts(
     page: number,
@@ -84,7 +75,6 @@ export default function Posts() {
     const handlePrevPage = () => {
         setPage(old => Math.max(old - 1, 0));
     };
-    console.log(data?.hasMore || isPlaceholderData);
     return (
         <div>
             {isPending ? (
