@@ -29,9 +29,9 @@ const Write = () => {
     const [category, setCategory] = useState('');
     const [editorContent, setEditorContent] = useState('');
     const [selectedTags, setSelectedTags] = useState<TagOption[]>([]);
-
-    const handleTagsChange = (newValue: MultiValue<TagOption>) => {
-        setSelectedTags([...newValue]);
+    const handleTagsChange = (newValue: unknown) => {
+        const typedNewValue = newValue as MultiValue<TagOption>;
+        setSelectedTags([...typedNewValue]);
     };
 
     const modules = {
