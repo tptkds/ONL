@@ -39,7 +39,6 @@
 hr {
     border: none;
     height: 1px;
-    background-color: #fff;
     margin: 0;
 }
 
@@ -49,5 +48,38 @@ hr {
 }
 
 body {
-    overflow: hidden;
+    background-color: #f1f3f8;
+}
+
+.nav-item:hover {
+    background-color: rgba(215, 221, 229, 0.7);
+    border-radius: 10%;
+}
+
+.li-hover-line::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    top: 46px;
+    width: 0;
+    height: 2px;
+    background-color: #1454ff;
+    transition: width 0.3s ease-in-out;
+}
+
+.li-hover-line:hover::before {
+    width: 100%;
+}
+
+.button-color {
+    background-color: #1454ff;
+    color: white;
+    font-weight: 600;
+}
+
+.contour {
+    width: 100%;
+    height: 2px;
+    background-color: #f1f3f8;
 }

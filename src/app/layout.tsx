@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Providers from './queryClientProvider';
+import Nav from './components/Nav';
+import { AppProviders } from './AppProviders';
 
 export const metadata: Metadata = {
     title: 'ONL',
@@ -20,10 +21,15 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="ko" suppressHydrationWarning className="h-full">
-            <body className="h-full PretendardRegular bg-neutral-900 text-white ">
-                <Providers>
-                    <main className="h-full">{children}</main>
-                </Providers>
+            <body className="h-full PretendardRegular">
+                <AppProviders>
+                    <header className="relative w-full">
+                        <Nav />
+                    </header>
+                    <main className="my-14 flex justify-center">
+                        {children}
+                    </main>
+                </AppProviders>
             </body>
         </html>
     );
