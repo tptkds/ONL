@@ -6,11 +6,11 @@ export default function SubmitButton() {
     return (
         <button
             type="submit"
-            className="disabled:bg-black flex w-full justify-center rounded-md bg-yellow-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className=" bg-neutral-950	hover:bg-neutral-800	text-white w-full  flex justify-center  px-3 py-3 mt-8 rounded-md "
             disabled={pending}
             aria-disabled={pending}
         >
-            {pending ? '만드는 중...' : '계정 만들기'}
+            {pending ? '회원가입하는 중...' : '회원가입하기'}
         </button>
     );
 }

@@ -53,7 +53,6 @@ body {
 
 .nav-item:hover {
     background-color: rgba(215, 221, 229, 0.7);
-    border-radius: 10%;
 }
 
 .li-hover-line::before {
@@ -64,7 +63,7 @@ body {
     top: 46px;
     width: 0;
     height: 2px;
-    background-color: #1454ff;
+    background-color: rgba(10, 10, 10);
     transition: width 0.3s ease-in-out;
 }
 

@@ -2,14 +2,14 @@ import Form from './components/Form';
 
 const SignUp: React.FC = () => {
     return (
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6  lg:px-8">
-            <h2 className="text-center text-2xl font-bold leading-9 tracking-tight ">
-                계정 만들기
+        <section className="bg-white max-w-md flex flex-1 flex-col justify-center rounded-md py-6 pb-12 px-8 text-sm overflow-hidden">
+            <h2 className="text-center text-xl font-bold leading-9 tracking-tight ">
+                회원가입
             </h2>
-            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <div className="mt-12 ">
                 <Form />
             </div>
-        </div>
+        </section>
     );
 };
 
