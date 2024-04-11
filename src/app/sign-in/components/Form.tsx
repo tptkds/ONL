@@ -54,7 +54,7 @@ const Form: React.FC = () => {
                 <div>
                     <button
                         type="submit"
-                        className="button-color w-full  flex justify-center  px-3 py-3 rounded-md "
+                        className=" bg-neutral-950	hover:bg-neutral-800	text-white w-full  flex justify-center  px-3 py-3 rounded-md "
                         disabled={status === 'loading'}
                         aria-disabled={status === 'loading'}
                     >

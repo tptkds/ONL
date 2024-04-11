@@ -79,7 +79,9 @@ body {
 }
 
 .contour {
-    width: 100%;
-    height: 2px;
+    position: relative;
+    left: -50px;
+    width: 100vw;
+    height: 1px;
     background-color: #f1f3f8;
 }

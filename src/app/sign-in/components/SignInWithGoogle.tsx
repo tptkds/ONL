@@ -15,7 +15,7 @@ export default function SignInWithGoogle() {
                 aria-label="Google 계정으로 로그인"
             >
                 <FcGoogle className="absolute left-4 text-xl" />
-                <span className="ml-2">Google로 계속하기</span>
+                <span className="ml-2 text-sm">Google로 계속하기</span>
             </button>
         </>
     );
