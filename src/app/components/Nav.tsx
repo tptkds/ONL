@@ -64,31 +64,31 @@ export default function Nav() {
                 <>
                     <div className="border-t border-gray-200 w-full"></div>
                     <ul className="flex justify-center px-16 bg-white">
-                        <li className="px-4 py-4 li-hover-line relative cursor">
+                        <li className="px-4 py-2 li-hover-line relative cursor">
                             <Link
                                 href="/movie-of-the-year"
                                 className="flex items-center justify-center"
                             >
                                 <BsAwardFill className="text-base mr-1" />
-                                <span>올해의 영화</span>
+                                <span>올해의영화</span>
                             </Link>
                         </li>
-                        <li className="px-4 py-4 li-hover-line relative cursor">
+                        <li className="px-4 py-2 li-hover-line relative cursor">
                             <Link
                                 href="/movie-of-the-year"
                                 className="flex items-center justify-center"
                             >
                                 <MdLocalMovies className="text-base mr-1" />
-                                <span>모든 영화</span>
+                                <span>모든영화</span>
                             </Link>
                         </li>
-                        <li className="px-4 py-4 li-hover-line relative cursor">
+                        <li className="px-4 py-2 li-hover-line relative cursor">
                             <Link
                                 href="/movie-of-the-year"
                                 className="flex items-center justify-center"
                             >
                                 <IoChatboxEllipses className="text-base mr-1" />
-                                <span>이야기 공간</span>
+                                <span>이야기공간</span>
                             </Link>
                         </li>
                     </ul>

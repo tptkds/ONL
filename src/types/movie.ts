@@ -22,3 +22,24 @@ export interface MoviesResponse {
     total_pages: number;
     total_results: number;
 }
+
+interface AwardItem {
+    title: string;
+    director: string;
+    overview: string;
+    award: string;
+    genres: string[];
+    posterPath: string;
+    release_date: string;
+    tmdbId: string;
+}
+
+interface AwardData {
+    [year: number]: AwardItem[];
+}
+
+interface Award {
+    id: string;
+    data: AwardData;
+}
+export type { Award };
