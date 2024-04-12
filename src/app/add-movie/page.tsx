@@ -37,7 +37,9 @@ const UploadMovies = () => {
                         } = movie;
 
                         const genresArray = movie.genres
-                            ? movie.genres.split(',').map(genre => genre.trim())
+                            ? movie.genres
+                                  .split(',')
+                                  .map((genre: any) => genre.trim())
                             : [];
 
                         // Firestore 업데이트 로직
