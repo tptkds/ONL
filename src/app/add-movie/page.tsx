@@ -9,17 +9,17 @@ const UploadMovies = () => {
     // 상태를 추가하여 업로드 진행 상황을 추적할 수 있습니다.
     const [isUploading, setIsUploading] = useState(false);
 
-    const handleUpload = event => {
+    const handleUpload = (event: any) => {
         setIsUploading(true);
         const file = event.target.files[0];
 
         Papa.parse(file, {
             header: true,
             skipEmptyLines: true,
-            complete: async result => {
+            complete: async (result: any) => {
                 const movies = result.data;
                 const moviesToUpload = movies.filter(
-                    movie => movie.genres && movie.genres.trim() !== ''
+                    (movie: any) => movie.genres && movie.genres.trim() !== ''
                 );
 
                 try {
@@ -47,13 +47,13 @@ const UploadMovies = () => {
                         const result = await setDoc(
                             awardsDocRef,
                             {
-                                '2023': moviesToUpload.map(movie => ({
+                                '2023': moviesToUpload.map((movie: any) => ({
                                     title: movie.title,
                                     award: movie.award,
                                     tmdbId: movie.tmdbId,
                                     genres: movie.genres
                                         .split(',')
-                                        .map(genre => genre.trim()),
+                                        .map((genre: any) => genre.trim()),
                                     posterPath: movie.posterPath,
                                     director: movie.director,
                                     release_date: movie.release_date,
