@@ -83,11 +83,11 @@ export default function Nav() {
                         </li>
                         <li className="px-4 py-6 mx-6  li-hover-line relative cursor">
                             <Link
-                                href="/movie-of-the-year"
+                                href="/film-finder"
                                 className="flex items-center justify-center"
                             >
                                 <MdLocalMovies className="text-base mr-1" />
-                                <span>모든영화</span>
+                                <span>영화탐색</span>
                             </Link>
                         </li>
                         <li className="px-4 py-6 mx-6  li-hover-line relative cursor">

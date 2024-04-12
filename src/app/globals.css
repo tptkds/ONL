@@ -80,3 +80,13 @@ hr {
     height: 1px;
     background-color: #f1f3f8;
 }
+
+.hide-scrollbar {
+    -ms-overflow-style: none; /* IE, Edge 브라우저 */
+    scrollbar-width: none; /* 파이어폭스 */
+    overflow-y: scroll; /* 세로 스크롤 활성화 */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; /* 스크롤바 공간 없애기 */
+}
