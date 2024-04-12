@@ -21,17 +21,18 @@ export default function Filter() {
     };
 
     return (
-        <div className=" border p-4 ">
-            <div className="mb-4 ">
+        <div className="flex xl:block border p-4 ">
+            <div className="mb-4 w-1/5 mr-12 xl:mr-0 xl:w-full min-w-32">
                 <label
                     htmlFor="filterSelect"
                     className="block text-sm font-medium text-gray-700"
                 >
                     정렬
                 </label>
+
                 <select
                     id="filterSelect"
-                    className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                    className="select  text-xs select-bordered w-full max-w-xs border mt-1 block w-full px-3 pr-10 py-2  border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-neutral-500 rounded-md"
                     value={selectedSorting}
                     onChange={handleSortingChange}
                 >
@@ -44,18 +45,19 @@ export default function Filter() {
                 <span className="block text-sm font-medium text-gray-700">
                     장르
                 </span>
-                <div className="flex flex-wrap">
+                <div className=" mt-1 flex flex-wrap">
                     {genres.map(genre => (
                         <label
                             key={genre}
-                            className="w-1/2 flex items-center space-x-2"
+                            className=" w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/2 flex items-center space-x-2 mb-2"
                         >
                             <input
                                 type="checkbox"
                                 checked={selectedGenres.includes(genre)}
                                 onChange={() => handleGenreChange(genre)}
+                                className="checkbox w-6 h-6"
                             />
-                            <span className="text-sm text-gray-600">
+                            <span className="text-xs text-gray-600">
                                 {genre}
                             </span>
                         </label>

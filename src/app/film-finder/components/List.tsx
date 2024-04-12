@@ -32,7 +32,10 @@ export default function List() {
             {data?.pages.map((page, pageIndex) => (
                 <Fragment key={pageIndex}>
                     {page.results.map(movie => (
-                        <div key={movie.id} className="w-1/4 flex ">
+                        <div
+                            key={movie.id}
+                            className="md:w-1/3 xl:w-1/4 2xl:w-1/5 flex "
+                        >
                             <Movie movie={movie} />
                         </div>
                     ))}

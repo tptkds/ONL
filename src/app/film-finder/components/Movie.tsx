@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 interface MovieProps {
@@ -30,19 +31,30 @@ export default function Movie({ movie }: MovieProps) {
     };
 
     return (
-        <div className="mb-5">
-            <div className="relative mb-2">
-                <Image
-                    src={posterURL}
-                    layout={'responsive'}
-                    width={500}
-                    height={300}
-                    alt={movie.title}
-                />
+        <div className="py-2 sm:py-6 p-2 h-full">
+            <div className="  w-full h-full">
+                <Link href={'/'}>
+                    <div className="relative mb-2 flex h-4/5">
+                        <Image
+                            src={posterURL}
+                            alt={movie.title}
+                            sizes="100vw"
+                            width={10000}
+                            height={3000}
+                            priority
+                        />
+                    </div>
+                </Link>
+                <div className="h-1/4">
+                    <h2 className="text-lg font-bold text-gray-800 ">
+                        {movie.title}
+                    </h2>
+                    <p className="text-sm text-gray-600">
+                        {movie.release_date}
+                    </p>
+                    {renderRating(movie.vote_average)}
+                </div>
             </div>
-            <h2 className="text-lg font-bold text-gray-800">{movie.title}</h2>
-            <p className="text-sm text-gray-600">{movie.release_date}</p>
-            {renderRating(movie.vote_average)}
         </div>
     );
 }
