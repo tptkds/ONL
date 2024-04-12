@@ -47,10 +47,6 @@ hr {
     overflow-y: auto;
 }
 
-body {
-    background-color: #f1f3f8;
-}
-
 .nav-item:hover {
     background-color: rgba(215, 221, 229, 0.7);
 }
@@ -60,10 +56,10 @@ body {
     position: absolute;
     bottom: 0;
     left: 0;
-    top: 46px;
+    top: 70px;
     width: 0;
-    height: 2px;
-    background-color: rgba(10, 10, 10);
+    height: 4px;
+    background-color: rgba(33, 37, 41);
     transition: width 0.3s ease-in-out;
 }
 

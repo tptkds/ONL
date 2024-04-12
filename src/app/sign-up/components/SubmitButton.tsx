@@ -6,7 +6,7 @@ export default function SubmitButton() {
     return (
         <button
             type="submit"
-            className=" bg-neutral-950	hover:bg-neutral-800	text-white w-full  flex justify-center  px-3 py-3 mt-8 rounded-md "
+            className=" border border-neutral-300	 hover:border-slate-400	text-black w-full  flex justify-center  px-3 py-3 rounded-md "
             disabled={pending}
             aria-disabled={pending}
         >
