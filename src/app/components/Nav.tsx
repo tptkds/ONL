@@ -74,7 +74,7 @@ export default function Nav() {
                     <ul className="flex justify-center px-16 bg-white text-base font-medium text-neutral-800">
                         <li className="px-4 py-6 mx-6 li-hover-line relative cursor">
                             <Link
-                                href="/movie-of-the-year"
+                                href="/film-of-the-year"
                                 className="flex items-center justify-center"
                             >
                                 <BsAwardFill className="text-base mr-1" />

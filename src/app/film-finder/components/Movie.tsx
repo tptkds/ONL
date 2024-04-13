@@ -33,14 +33,14 @@ export default function Movie({ movie }: MovieProps) {
     return (
         <div className="py-2 sm:py-6 p-2 h-full">
             <div className="  w-full h-full">
-                <Link href={'/'}>
+                <Link href={`/film-info/${movie.id}`}>
                     <div className="relative mb-2 flex h-4/5">
                         <Image
                             src={posterURL}
                             alt={movie.title}
                             sizes="100vw"
-                            width={10000}
-                            height={3000}
+                            width={1000}
+                            height={700}
                             priority
                         />
                     </div>

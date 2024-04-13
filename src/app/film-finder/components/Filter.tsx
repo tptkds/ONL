@@ -21,7 +21,7 @@ export default function Filter() {
     };
 
     return (
-        <div className="flex xl:block border p-4 ">
+        <div className="flex xl:block border p-4 xl:my-6">
             <div className="mb-4 w-1/5 mr-12 xl:mr-0 xl:w-full min-w-32">
                 <label
                     htmlFor="filterSelect"
