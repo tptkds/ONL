@@ -32,6 +32,25 @@ const config: Config = {
                 'screen-420': '420px',
                 'screen-920': '920px',
             },
+            height: {
+                284: '284px',
+                398: '398px',
+                550: '550px',
+            },
+            width: {
+                198: '198px',
+                278: '278px',
+            },
+            zIndex: {
+                '-1': '-1',
+            },
+            transitionProperty: {
+                height: 'height',
+                width: 'width',
+            },
+            fontSize: {
+                '2.5rem': '2.5rem',
+            },
         },
     },
     plugins: [require('tailwindcss-animate'), require('daisyui')],

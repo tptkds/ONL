@@ -101,4 +101,49 @@ interface MovieDetails {
     vote_count: number;
 }
 
-export type { Award, MovieDetails, MoviesResponse, Movie };
+interface CastMember {
+    adult: boolean;
+    gender: number;
+    id: number;
+    known_for_department: string;
+    name: string;
+    original_name: string;
+    popularity: number;
+    profile_path: string;
+    cast_id: number;
+    character: string;
+    credit_id: string;
+    order: number;
+}
+
+interface CrewMember {
+    adult: boolean;
+    gender: number;
+    id: number;
+    known_for_department: string;
+    name: string;
+    original_name: string;
+    popularity: number;
+    profile_path: string;
+    credit_id: string;
+    department: string;
+    job: string;
+}
+
+interface MovieCredits {
+    id: number;
+    cast: CastMember[];
+    crew: CrewMember[];
+}
+
+export type {
+    Award,
+    MovieDetails,
+    MoviesResponse,
+    Movie,
+    Genre,
+    SpokenLanguage,
+    CastMember,
+    CrewMember,
+    MovieCredits,
+};

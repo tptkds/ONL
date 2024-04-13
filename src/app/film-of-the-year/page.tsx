@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 export default function MovieOfTheYear() {
     const [awards, setAwards] = useState<Award[]>([]);
-    const [visibleOverview, setVisibleOverview] = useState<number | null>(null);
+    const [visibleOverview, setVisibleOverview] = useState<(string|number)[]>([]);
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -41,9 +41,9 @@ export default function MovieOfTheYear() {
                                     key={index}
                                     className="relative p-4 my-4 border border-gray-200 w-full sm:w-1/2 screen-920:w-1/3 xl:w-1/4 2xl:w-1/5 "
                                     onMouseOver={() =>
-                                        setVisibleOverview(index)
+                                        setVisibleOverview([award.id,index])
                                     }
-                                    onMouseOut={() => setVisibleOverview(null)}
+                                    onMouseOut={() => setVisibleOverview([])}
                                 >
                                     <p className="mb-3 text-sm text-center font-medium">
                                         {item.award}
@@ -63,7 +63,7 @@ export default function MovieOfTheYear() {
                                     </p>
 
                                     <div
-                                        className={`${index === visibleOverview ? 'absolute top-0 left-0 w-full h-full bg-neutral-900/80 text-ellipsis overflow-scroll hide-scrollbar px-6 py-4' : 'hidden'}`}
+                                        className={`${award.id === visibleOverview[0] &&index === visibleOverview[1]  ? 'absolute top-0 left-0 w-full h-full bg-neutral-900/80 text-ellipsis overflow-scroll hide-scrollbar px-6 py-4' : 'hidden'}`}
                                     >
                                         <p className="text-white text-sm">
                                             {item.overview}

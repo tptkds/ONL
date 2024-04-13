@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const getMovieDetails = async (movieId: string) => {
+export const getMovieCredits = async (movieId: string) => {
     const OPTIONS = {
         method: 'GET',
         headers: {
@@ -9,7 +9,7 @@ export const getMovieDetails = async (movieId: string) => {
         },
     };
 
-    const URL = `https://api.themoviedb.org/3/movie/${movieId}?language=ko-KR`;
+    const URL = `https://api.themoviedb.org/3/movie/${movieId}/credits?language=ko-KR`;
     try {
         const response = await axios(URL, OPTIONS);
 
