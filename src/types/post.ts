@@ -1,13 +1,13 @@
-import firebase from 'firebase/compat/app';
+import { FieldValue } from 'firebase/firestore';
 
 interface PostData {
     authorId: string;
     category: string;
     content: string;
-    createdAt: firebase.firestore.Timestamp;
+    createdAt: FieldValue;
     tags: string[];
     title: string;
-    updatedAt: firebase.firestore.Timestamp;
+    updatedAt: FieldValue;
     attachments: string[];
     authorName: string;
     likeCount: number;

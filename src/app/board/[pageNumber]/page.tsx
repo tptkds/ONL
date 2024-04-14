@@ -8,6 +8,7 @@ import Pagination from './components/Pagination';
 import List from './components/List';
 import { PostData } from '@/types/post';
 import getPosts from '@/service/post/getPosts';
+import useStore from '@/app/store';
 
 interface PostQueryResult {
     data: PostData[];
@@ -16,10 +17,8 @@ interface PostQueryResult {
 
 export default function Board({ params }: { params: { pageNumber: number } }) {
     const [page, setPage] = useState(params.pageNumber);
-    const [lastDoc, setLastDoc] = useState<
-        QueryDocumentSnapshot<DocumentData> | undefined
-    >(undefined);
 
+    const { lastDoc, setLastDoc } = useStore();
     const { data, isFetching } = useQuery<PostQueryResult>({
         queryKey: ['posts', 'all', page],
         queryFn: async () => await getPosts(page - 1, lastDoc),
@@ -28,7 +27,7 @@ export default function Board({ params }: { params: { pageNumber: number } }) {
     });
 
     useEffect(() => {
-        setLastDoc(data?.lastDoc);
+        if (data?.lastDoc) setLastDoc(data?.lastDoc);
         console.log(lastDoc);
     }, [data]);
 

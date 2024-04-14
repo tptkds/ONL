@@ -86,6 +86,10 @@ const Write = () => {
             tags,
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp(),
+            attachments: [],
+            authorName: 'finn',
+            likeCount: 0,
+            viewCount: 0,
         };
 
         try {
