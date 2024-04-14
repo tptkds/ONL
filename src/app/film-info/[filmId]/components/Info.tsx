@@ -73,7 +73,9 @@ export default function Info({ filmId }: { filmId: string }) {
                         </p>
                     </div>
                     <p className="mb-4 text-sm">{`${data.runtime / 60 >= 1 ? Math.floor(data.runtime / 60) + '시간 ' + (data.runtime % 60) + '분' : data.runtime + '분'}`}</p>
-                    <p className="mx-6 mb-4 text-sm">{data.overview}</p>
+                    <p className="mx-6 sm:ml-0  mb-4 text-sm">
+                        {data.overview}
+                    </p>
                 </div>
             </div>
             <div className="mt-16 mx-16">

@@ -92,7 +92,7 @@ export default function Nav() {
                         </li>
                         <li className="px-4 py-6 mx-6  li-hover-line relative cursor">
                             <Link
-                                href="/movie-of-the-year"
+                                href="/board/1"
                                 className="flex items-center justify-center"
                             >
                                 <IoChatboxEllipses className="text-base mr-1" />

@@ -1,3 +1,3 @@
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 2;
 
 export { PAGE_SIZE };
