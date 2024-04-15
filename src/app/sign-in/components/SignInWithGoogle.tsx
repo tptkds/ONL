@@ -11,11 +11,11 @@ export default function SignInWithGoogle() {
                     e.preventDefault();
                     signIn('google', { redirect: false });
                 }}
-                className="w-full bg-white py-4 px-2 flex text-black items-center justify-center rounded"
+                className="border-neutral-300	 relative w-full bg-white py-4 px-2 flex items-center justify-center rounded-full border hover:border-slate-400"
                 aria-label="Google 계정으로 로그인"
             >
-                <FcGoogle className="text-xl" />
-                <span className="ml-2">Google 계정으로 로그인</span>
+                <FcGoogle className="absolute left-4 text-xl" />
+                <span className="ml-2 text-sm">Google로 계속하기</span>
             </button>
         </>
     );

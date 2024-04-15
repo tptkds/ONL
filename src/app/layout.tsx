@@ -1,7 +1,13 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Providers from './queryClientProvider';
-
+import Nav from './components/Nav';
+import { AppProviders } from './AppProviders';
+import { Noto_Sans_KR } from 'next/font/google';
+const notoSans = Noto_Sans_KR({
+    weight: ['300', '400', '500', '600', '700'],
+    subsets: ['latin'],
+    preload: true,
+});
 export const metadata: Metadata = {
     title: 'ONL',
     description:
@@ -20,10 +26,15 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="ko" suppressHydrationWarning className="h-full">
-            <body className="h-full PretendardRegular bg-neutral-900 text-white ">
-                <Providers>
-                    <main className="h-full">{children}</main>
-                </Providers>
+            <body className={`h-full  ${notoSans.className}`}>
+                <AppProviders>
+                    <header className="relative w-full">
+                        <Nav />
+                    </header>
+                    <main className="my-14 pb-12 flex justify-center">
+                        {children}
+                    </main>
+                </AppProviders>
             </body>
         </html>
     );

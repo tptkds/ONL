@@ -3,7 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import { FirebaseError } from 'firebase/app';
 import { FirebaseAuthError } from '@/error/firebaseAuthError';
-import signInFirebase from '@/_utils/signInFirebase';
+import signInFirebase from '@/service/account/signInFirebase';
 
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
     throw new Error(

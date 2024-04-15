@@ -23,23 +23,25 @@ export default function List() {
         threshold: 0.5,
     });
     useEffect(() => {
-        console.log('chop');
         if (isIntersecting && hasNextPage && !isFetchingNextPage) {
-            console.log('yup');
             fetchNextPage();
         }
     }, [isIntersecting, hasNextPage, isFetchingNextPage, fetchNextPage]);
-
     return (
-        <div className="scrollable-div ">
+        <div className="flex flex-wrap ">
             {data?.pages.map((page, pageIndex) => (
                 <Fragment key={pageIndex}>
                     {page.results.map(movie => (
-                        <Movie key={movie.id} movie={movie} />
+                        <div
+                            key={movie.id}
+                            className="w-full sm:w-1/2 md:w-1/3 xl:w-1/4 2xl:w-1/5 flex "
+                        >
+                            <Movie movie={movie} />
+                        </div>
                     ))}
                 </Fragment>
             ))}
-            <div ref={ref} style={{ height: '100px' }} />
+            <div ref={ref} style={{ height: '300px' }} />
         </div>
     );
 }

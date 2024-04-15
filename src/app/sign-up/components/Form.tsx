@@ -15,75 +15,53 @@ const Form: React.FC = () => {
             </p>
             <form className="space-y-6" action={formAction}>
                 <div>
-                    <label
-                        htmlFor="nickname"
-                        className="block text-sm font-medium leading-6 "
-                    >
-                        닉네임
-                    </label>
                     <div className="mt-2">
                         <input
                             id="nickname"
                             name="nickname"
                             type="nickname"
                             required
-                            className="block w-full rounded-md border-0 py-4 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            placeholder="닉네임"
+                            className="block w-full  border-b py-3 px-3 text-gray-900 placeholder:text-gray-400 focus:outline-none"
                         />
                     </div>
                 </div>
                 <div>
-                    <label
-                        htmlFor="email"
-                        className="block text-sm font-medium leading-6 "
-                    >
-                        이메일 주소
-                    </label>
                     <div className="mt-2">
                         <input
                             id="email"
                             name="email"
                             type="email"
                             required
-                            className="block w-full rounded-md border-0 py-4 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            placeholder="이메일 주소"
+                            className="block w-full  border-b py-3 px-3 text-gray-900 placeholder:text-gray-400 focus:outline-none"
                         />
                     </div>
                 </div>
 
                 <div>
-                    <div className="flex items-center justify-between">
-                        <label
-                            htmlFor="password"
-                            className="block text-sm font-medium leading-6 "
-                        >
-                            비밀번호
-                        </label>
-                    </div>
+                    <div className="flex items-center justify-between"></div>
                     <div className="mt-2">
                         <input
                             id="password"
                             name="password"
                             type="password"
                             required
-                            className="block w-full rounded-md border-0 py-4 px-2  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            placeholder="비밀번호"
+                            className="block w-full  border-b py-3 px-3 text-gray-900 placeholder:text-gray-400 focus:outline-none"
                         />
                     </div>
                 </div>
                 <div>
-                    <div className="flex items-center justify-between">
-                        <label
-                            htmlFor="checkPassword"
-                            className="block text-sm font-medium leading-6 "
-                        >
-                            비밀번호 확인
-                        </label>
-                    </div>
+                    <div className="flex items-center justify-between"></div>
                     <div className="mt-2">
                         <input
                             id="checkPassword"
                             name="checkPassword"
                             type="password"
                             required
-                            className="block w-full rounded-md border-0 py-4 px-2  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            placeholder="비밀번호 확인"
+                            className="block w-full  border-b py-3 px-3 text-gray-900 placeholder:text-gray-400 focus:outline-none"
                         />
                     </div>
                 </div>
