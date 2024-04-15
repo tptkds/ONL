@@ -21,7 +21,7 @@ export default function CrewList({
                     .slice(0, visibleCount)
                     .map((crew: CrewMember) => (
                         <div
-                            key={crew.id}
+                            key={crew.id + crew.job}
                             className="relative w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-8 flex items-center"
                         >
                             <div className="relative w-24 h-24 rounded overflow-hidden border flex-shrink-0">
