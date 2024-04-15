@@ -4,12 +4,13 @@ import { CommentData } from '@/types/post';
 import formatDate from '@/utils/date';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { serverTimestamp } from 'firebase/firestore';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
 export default function CommentsSection({ postId }: { postId: string }) {
     const queryClient = useQueryClient();
     const [commentText, setCommentText] = useState('');
-
+    const { data, status } = useSession();
     const { data: comments, isFetching } = useQuery({
         queryKey: ['comments', postId],
         queryFn: () => getComments(postId),
@@ -30,9 +31,14 @@ export default function CommentsSection({ postId }: { postId: string }) {
             <div className="mb-4">
                 <textarea
                     className="w-full p-2 border rounded"
-                    placeholder="Leave a comment..."
+                    placeholder={
+                        status !== 'authenticated'
+                            ? '로그인하면 댓글을 남길 수 있어요.'
+                            : '댓글을 남겨주세요...'
+                    }
                     value={commentText}
                     onChange={e => setCommentText(e.target.value)}
+                    disabled={status !== 'authenticated'}
                 ></textarea>
                 <button
                     type="button"
@@ -52,6 +58,7 @@ export default function CommentsSection({ postId }: { postId: string }) {
                             setCommentText('');
                         }
                     }}
+                    disabled={status !== 'authenticated'}
                 >
                     Post Comment
                 </button>
