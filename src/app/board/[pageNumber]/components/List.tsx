@@ -57,7 +57,7 @@ export default function List({ posts }: { posts: PostData[] }) {
     return (
         <div className="w-3/4 bg-white shadow overflow-hidden rounded-md ">
             <Link
-                href={'/board/Write'}
+                href={'/board/write'}
                 aria-disabled={status !== 'authenticated'}
                 className={
                     status !== 'authenticated'
