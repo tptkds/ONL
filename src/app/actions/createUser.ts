@@ -2,7 +2,7 @@
 import { ZodIssue, z } from 'zod';
 import { auth } from '../firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { FirebaseAuthError } from '@/error/firebaseAuthError';
+import { FirebaseAuthError } from '@/service/account/firebaseAuthError';
 import { FirebaseError } from 'firebase/app';
 
 const MIN_PASSWORD_LENGTH = 8;
