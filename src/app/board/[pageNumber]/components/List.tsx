@@ -68,13 +68,7 @@ export default function List({ posts }: { posts: PostData[] }) {
                                 </h3>
                             </Link>
                             <div className=" flex flex-shrink-0 flex space-x-1 text-sm text-gray-500">
-                                <time
-                                    dateTime={post.createdAt
-                                        ?.toDate()
-                                        .toISOString()}
-                                >
-                                    {formatDate(post.createdAt?.toDate())}
-                                </time>
+                                <time>{formatDate(post.createdAt)}</time>
                                 <span aria-hidden="true">&middot;</span>
                                 <span>조회 {post.viewCount}</span>
                                 <span aria-hidden="true">&middot;</span>
