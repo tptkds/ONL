@@ -1,6 +1,6 @@
 import { FieldValue } from 'firebase/firestore';
 
-interface PostData {
+export interface PostData {
     authorId: string;
     category: string;
     content: string;
@@ -12,6 +12,15 @@ interface PostData {
     authorName: string;
     likeCount: number;
     viewCount: number;
+    postId: string;
 }
 
-export type { PostData };
+export interface CommentData {
+    postId: string;
+    authorId: string;
+    authorName: string;
+    content: string;
+    createdAt: FieldValue;
+    updatedAt: FieldValue;
+    commentId: string;
+}

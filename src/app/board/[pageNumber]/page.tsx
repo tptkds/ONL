@@ -17,18 +17,16 @@ interface PostQueryResult {
 
 export default function Board({ params }: { params: { pageNumber: number } }) {
     const [page, setPage] = useState(params.pageNumber);
-
     const { lastDoc, setLastDoc } = useStore();
     const { data, isFetching } = useQuery<PostQueryResult>({
         queryKey: ['posts', 'all', page],
         queryFn: async () => await getPosts(page - 1, lastDoc),
         placeholderData: keepPreviousData,
-        staleTime: 500,
+        staleTime: 60000,
     });
 
     useEffect(() => {
         if (data?.lastDoc) setLastDoc(data?.lastDoc);
-        console.log(lastDoc);
     }, [data]);
 
     const { data: totalPosts, isFetching: isFetchingTotalPosts } = useQuery({
@@ -41,8 +39,8 @@ export default function Board({ params }: { params: { pageNumber: number } }) {
     if (isFetching || isFetchingTotalPosts) return <div>loading..</div>;
 
     return (
-        <div className="min-h-screen w-full py-8">
-            <div className="container mx-auto px-4">
+        <div className="min-h-screen w-full mx-16">
+            <div className="flex flex-col items-center container mx-auto px-4">
                 <List posts={data?.data || []} />
                 <Pagination
                     pageIndex={params.pageNumber}

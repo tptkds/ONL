@@ -4,9 +4,17 @@ import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 import DOMPurify from 'dompurify';
 import { db } from '@/app/firebase';
-import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import {
+    addDoc,
+    collection,
+    doc,
+    serverTimestamp,
+    setDoc,
+    updateDoc,
+} from 'firebase/firestore';
 import { PostData } from '@/types/post';
 import { MultiValue } from 'react-select';
+import { createMarkup } from '@/utils/post';
 
 const ReactQuill = dynamic(() => import('react-quill'), {
     ssr: false,
@@ -66,22 +74,12 @@ const Write = () => {
         'image',
     ];
 
-    const createMarkup = (htmlContent: string) => {
-        const safeHTML =
-            typeof window === 'undefined'
-                ? htmlContent
-                : DOMPurify.sanitize(htmlContent);
-        return {
-            __html: safeHTML,
-        };
-    };
-
     const handlePostSubmit = async () => {
         const tags = selectedTags.map(tag => tag.value);
         const newPost: PostData = {
             title,
             content: editorContent,
-            authorId,
+            authorId: 'tptkds12@gmail.com',
             category,
             tags,
             createdAt: serverTimestamp(),
@@ -90,11 +88,14 @@ const Write = () => {
             authorName: 'finn',
             likeCount: 0,
             viewCount: 0,
+            postId: '',
         };
 
         try {
-            const newPostRef = doc(collection(db, 'posts'));
-            await setDoc(newPostRef, newPost);
+            const docRef = await addDoc(collection(db, 'posts'), newPost);
+            await updateDoc(docRef, {
+                postId: docRef.id,
+            });
             console.log('Post added successfully');
         } catch (error) {
             console.error('Error adding document: ', error);
@@ -102,18 +103,12 @@ const Write = () => {
     };
 
     return (
-        <>
+        <div>
             <input
                 type="text"
                 value={title}
                 onChange={e => setTitle(e.target.value)}
                 placeholder="Title"
-            />
-            <input
-                type="text"
-                value={authorId}
-                onChange={e => setAuthorId(e.target.value)}
-                placeholder="Author ID"
             />
             <input
                 type="text"
@@ -141,7 +136,7 @@ const Write = () => {
                 className="preview"
                 dangerouslySetInnerHTML={createMarkup(editorContent)}
             ></div>
-        </>
+        </div>
     );
 };
 

@@ -1,4 +1,12 @@
-import Link from 'next/link';
+import {
+    Pagination as PaginationWrapper,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from '@/components/ui/pagination';
 
 export default function Pagination({
     pageIndex,
@@ -9,38 +17,50 @@ export default function Pagination({
 }) {
     const renderPageNumbers = () => {
         let pages = [];
-        for (let i = 1; i <= totalPages; i++) {
+        for (let i = pageIndex; i <= totalPages; i++) {
             pages.push(
-                <Link
-                    key={i}
-                    href={`/board/${i}`}
-                    className={`px-3 py-1 ${pageIndex == i ? 'text-white bg-blue-500' : 'text-blue-500 bg-white'} rounded hover:bg-blue-200`}
-                >
-                    {i}
-                </Link>
+                <PaginationItem key={i}>
+                    <PaginationLink
+                        href={`/board/${i}`}
+                        isActive={i == pageIndex}
+                    >
+                        {i}
+                    </PaginationLink>
+                </PaginationItem>
             );
         }
         return pages;
     };
     return (
-        <div className="flex justify-between items-center mt-6">
-            {pageIndex > 1 && (
-                <Link
-                    href={`/board/${pageIndex - 1}`}
-                    className="px-4 py-2 border border-gray-300 text-base rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                >
-                    이전
-                </Link>
-            )}
-            <div className="flex space-x-2">{renderPageNumbers()}</div>
-            {pageIndex < totalPages && (
-                <Link
-                    href={`/board/${+pageIndex + 1}`}
-                    className="px-4 py-2 border border-gray-300 text-base rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                >
-                    다음
-                </Link>
-            )}
-        </div>
+        <PaginationWrapper className=" mt-8">
+            <PaginationContent>
+                <PaginationItem>
+                    <PaginationPrevious
+                        href={`/board/${+pageIndex - 1}`}
+                        aria-disabled={pageIndex <= 1}
+                        className={
+                            pageIndex <= 1
+                                ? 'pointer-events-none opacity-50'
+                                : undefined
+                        }
+                    />
+                </PaginationItem>
+                {renderPageNumbers()}
+                <PaginationItem>
+                    <PaginationEllipsis />
+                </PaginationItem>
+                <PaginationItem>
+                    <PaginationNext
+                        href={`/board/${+pageIndex + 1}`}
+                        aria-disabled={pageIndex == totalPages}
+                        className={
+                            pageIndex == totalPages
+                                ? 'pointer-events-none opacity-50'
+                                : undefined
+                        }
+                    />
+                </PaginationItem>
+            </PaginationContent>
+        </PaginationWrapper>
     );
 }
