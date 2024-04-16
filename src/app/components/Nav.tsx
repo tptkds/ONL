@@ -6,9 +6,10 @@ import { usePathname } from 'next/navigation';
 import { BsAwardFill } from 'react-icons/bs';
 import { IoChatboxEllipses } from 'react-icons/io5';
 import { MdLocalMovies } from 'react-icons/md';
+import SearchBar from './SearchBar';
 
 export default function Nav() {
-    const { data, status } = useSession();
+    const { status } = useSession();
     const pathname = usePathname();
     return (
         <nav className="  w-full flex flex-col text-sm">
@@ -24,11 +25,7 @@ export default function Nav() {
                     </Link>
                 </h1>
                 <div className="w-1/3 flex items-center justify-center">
-                    <input
-                        type="text"
-                        className="h-12 w-full border focus:outline-none p-3"
-                        placeholder="영화, 게시글 검색"
-                    />
+                    <SearchBar />
                 </div>
 
                 <div className=" w-1/3 flex justify-end text-neutral-500">
