@@ -1,6 +1,6 @@
-import addLikedPost from '@/service/account/addLikedPost';
-import deleteLikedPost from '@/service/account/deleteLikedPost';
-import getLikedPosts from '@/service/account/getLikedPosts';
+import addLikedPost from '@/service/post/addLikedPost';
+import deleteLikedPost from '@/service/post/deleteLikedPost';
+import getLikedPosts from '@/service/post/getLikedPosts';
 import updateLikeCount from '@/service/post/updateLikeCount';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
@@ -31,7 +31,7 @@ export default function LikeButton({ postId }: { postId: string }) {
             } else if (likeAction == 'delete') {
                 deleteLikedPost(sessionData?.user?.email as string, postId);
             }
-            setLikeAction(null); // 작업 후 상태 초기화
+            setLikeAction(null);
         }
     }, [isSuccessMutateLikeCount]);
 

@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore';
+
 interface Movie {
     adult: boolean;
     backdrop_path: string;
@@ -147,3 +149,15 @@ export type {
     CrewMember,
     MovieCredits,
 };
+
+export interface WatchedMovie {
+    movieId: string;
+    watchDate: Timestamp;
+    userRating: number;
+}
+
+export interface BookmarkMovie {
+    id?: string;
+    movieId: string;
+    bookmarkDate: Date;
+}
