@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export default async function getMoviesByKeyword(keyword: string) {
-    console.log('getMoviesByKeyword');
     const options = {
         method: 'GET',
         headers: {
@@ -14,7 +13,6 @@ export default async function getMoviesByKeyword(keyword: string) {
 
     try {
         const response = await axios(url, options);
-        console.log(response);
         return response.data.results;
     } catch (error) {
         console.error('Error fetching movies: ' + error);

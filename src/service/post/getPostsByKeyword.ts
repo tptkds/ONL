@@ -3,7 +3,6 @@ import { PostData } from '@/types/post';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 
 export default async function getPostsByKeyword(keyword: string) {
-    console.log('getPostsByKeyword');
     const postsRef = collection(db, 'posts');
     const keywordLower = keyword.toLowerCase();
     const nextChar = String.fromCharCode(

@@ -32,11 +32,9 @@ export const loginUser = async (prevState: any, formData: FormData) => {
         password: rawFormData.password,
     })
         .then(() => {
-            console.log('!!!');
             return { message: '로그인을 성공했습니다.' };
         })
         .catch(error => {
-            console.log('!!!!!');
             console.error(error);
             return { message: error };
         });

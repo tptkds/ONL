@@ -11,12 +11,10 @@ export default function SearchBar() {
 
     useEffect(() => {
         const handler = setTimeout(() => {
-            console.log('야!');
             setDebouncedText(searchedText);
         }, 300);
 
         return () => {
-            console.log('종료!');
             clearTimeout(handler);
         };
     }, [searchedText]);

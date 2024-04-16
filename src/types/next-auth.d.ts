@@ -6,7 +6,16 @@ declare module 'next-auth' {
         user: {
             email: string | null;
             name: string | null;
-            id: string | null;
+            uid: string | null | undefined;
         };
+    }
+    interface User {
+        uid?: string;
+    }
+    interface Profile {
+        sub?: string;
+    }
+    interface JWT {
+        uid?: string | null;
     }
 }

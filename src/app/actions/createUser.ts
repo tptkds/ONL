@@ -4,6 +4,7 @@ import { auth } from '../firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { FirebaseAuthError } from '@/service/account/firebaseAuthError';
 import { FirebaseError } from 'firebase/app';
+import initializeUserDoc from '@/service/account/initializeUserDoc';
 
 const MIN_PASSWORD_LENGTH = 8;
 
@@ -57,6 +58,7 @@ export const createUser = async (prevState: any, formData: FormData) => {
         await updateProfile(userCredential.user, {
             displayName: validatedFields.data.nickname,
         });
+        await initializeUserDoc(userCredential.user.uid);
 
         return { message: '사용자 생성 성공!' };
     } catch (error) {
