@@ -4,7 +4,7 @@ import { auth } from '../firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { FirebaseAuthError } from '@/service/account/firebaseAuthError';
 import { FirebaseError } from 'firebase/app';
-import initializeUserDoc from '@/service/account/InitializeUserDoc';
+import initializeUserDoc from '@/service/account/initializeUserDoc';
 
 const MIN_PASSWORD_LENGTH = 8;
 

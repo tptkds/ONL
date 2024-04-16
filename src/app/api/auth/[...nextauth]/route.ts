@@ -73,7 +73,7 @@ const authOptions: NextAuthOptions = {
             return token;
         },
         async session({ session, token }) {
-            session.user.uid = token.id as string | null | undefined; // token에서 id를 session.user.uid에 할당
+            session.user.uid = token.id as string | null | undefined;
             return session;
         },
 
