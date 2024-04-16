@@ -11,7 +11,8 @@ export default function formatDate(dateInput: any) {
     }
 
     if (isNaN(date.getTime())) {
-        throw new Error('Invalid date value');
+        console.error('Invalid date value');
+        return;
     }
 
     if (isToday(date)) {
