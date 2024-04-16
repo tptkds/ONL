@@ -65,6 +65,24 @@ const authOptions: NextAuthOptions = {
         async redirect({ url, baseUrl }) {
             return baseUrl;
         },
+
+        async jwt({ token, user }) {
+            if (user) {
+                token.id = user.id;
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            session.user.uid = token.id as string | null | undefined; // token에서 id를 session.user.uid에 할당
+            return session;
+        },
+
+        async signIn({ user, account, profile }) {
+            if (account?.provider === 'google' && profile?.sub) {
+                user.id = profile.sub;
+            }
+            return true;
+        },
     },
 };
 

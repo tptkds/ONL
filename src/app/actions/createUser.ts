@@ -4,6 +4,7 @@ import { auth } from '../firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { FirebaseAuthError } from '@/service/account/firebaseAuthError';
 import { FirebaseError } from 'firebase/app';
+import initializeUserDoc from '@/service/account/InitializeUserDoc';
 
 const MIN_PASSWORD_LENGTH = 8;
 
@@ -48,7 +49,6 @@ export const createUser = async (prevState: any, formData: FormData) => {
         return { message: combinedMessage };
     }
     try {
-        // 비동기 작업을 await로 처리
         const userCredential = await createUserWithEmailAndPassword(
             auth,
             validatedFields.data.email,
@@ -58,19 +58,17 @@ export const createUser = async (prevState: any, formData: FormData) => {
         await updateProfile(userCredential.user, {
             displayName: validatedFields.data.nickname,
         });
+        await initializeUserDoc(userCredential.user.uid);
 
-        // 모든 작업이 성공적으로 완료된 후 메시지 반환
         return { message: '사용자 생성 성공!' };
     } catch (error) {
         if (error instanceof FirebaseError) {
-            // error 객체가 FirebaseError 타입인 경우
             const firebaseAuthError = new FirebaseAuthError(
                 error.code,
                 error.message
             );
             return { message: firebaseAuthError.message };
         } else {
-            // error 객체가 FirebaseError 타입이 아닌 경우의 처리
             console.error('Unexpected error:', error);
             return { message: '알 수 없는 오류가 발생했습니다.' };
         }
