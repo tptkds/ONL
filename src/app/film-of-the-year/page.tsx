@@ -8,12 +8,15 @@ import BookmarkToggleButton from './components/BookmarkToggleButton';
 import { useSession } from 'next-auth/react';
 import getBookmarkedMovies from '@/service/movie/getBookmarkedMovies';
 import WatchedToggleButton from './components/WatchedToggleButton';
+import getWatchedMovies from '@/service/movie/getWatchedMovies';
 
 export default function MovieOfTheYear() {
+    const [rating, setRating] = useState<number>(0);
     const [awards, setAwards] = useState<Award[]>([]);
     const [visibleOverview, setVisibleOverview] = useState<(string | number)[]>(
         []
     );
+    const [watchedMovies, setWatchedMovies] = useState({});
     const [bookmarkedMovies, setBookmarkedMovies] = useState<{
         [key: string]: BookmarkMovie;
     }>({});
@@ -33,7 +36,7 @@ export default function MovieOfTheYear() {
         if (awards.length == 0) fetchMovies();
     }, []);
 
-    // 북마크 데이터 로드
+    // 북마크 ,시청영화 데이터 로드
     useEffect(() => {
         if (
             sessionData?.user?.uid &&
@@ -41,6 +44,10 @@ export default function MovieOfTheYear() {
         ) {
             getBookmarkedMovies(sessionData.user.uid)
                 .then(setBookmarkedMovies)
+                .catch(console.error);
+
+            getWatchedMovies(sessionData.user.uid)
+                .then(setWatchedMovies)
                 .catch(console.error);
         }
     }, [sessionData?.user?.uid]);
@@ -110,7 +117,15 @@ export default function MovieOfTheYear() {
                                                 setBookmarkedMovies
                                             }
                                         />
-                                        <WatchedToggleButton />
+                                        <WatchedToggleButton
+                                            movieId={item.tmdbId}
+                                            uId={
+                                                sessionData?.user.uid as string
+                                            }
+                                            watchedMovies={watchedMovies}
+                                            setWatchedMovies={setWatchedMovies}
+                                            rating={rating}
+                                        />
                                     </div>
                                 </div>
                             ))}

@@ -3,10 +3,10 @@ import { doc, deleteDoc } from 'firebase/firestore';
 
 export default async function deleteBookmarkedMovie(
     uId: string,
-    movieId: string
+    docId: string
 ): Promise<void> {
     try {
-        const movieDocRef = doc(db, 'users', uId, 'bookmarkedMovies', movieId);
+        const movieDocRef = doc(db, 'users', uId, 'bookmarkedMovies', docId);
         await deleteDoc(movieDocRef);
         console.log('Bookmarked movie deleted successfully.');
     } catch (error) {

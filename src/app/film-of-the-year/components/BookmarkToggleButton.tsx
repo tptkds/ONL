@@ -21,7 +21,10 @@ export default function BookmarkToggleButton({
 
         if (isBookmarked) {
             try {
-                await deleteBookmarkedMovie(uId, movieId);
+                await deleteBookmarkedMovie(
+                    uId,
+                    bookmarkedMovies[movieId].id as string
+                );
                 const updatedBookmarkedMovies = { ...bookmarkedMovies };
                 delete updatedBookmarkedMovies[movieId];
                 setBookmarkedMovies(updatedBookmarkedMovies);

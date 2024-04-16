@@ -151,6 +151,7 @@ export type {
 };
 
 export interface WatchedMovie {
+    id?: string;
     movieId: string;
     watchDate: Timestamp;
     userRating: number;
