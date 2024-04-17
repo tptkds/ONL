@@ -9,6 +9,7 @@ import { useSession } from 'next-auth/react';
 import getBookmarkedMovies from '@/service/movie/getBookmarkedMovies';
 import WatchedToggleButton from './components/WatchedToggleButton';
 import getWatchedMovies from '@/service/movie/getWatchedMovies';
+import Link from 'next/link';
 
 export default function MovieOfTheYear() {
     const [rating, setRating] = useState<number>(0);
@@ -68,7 +69,7 @@ export default function MovieOfTheYear() {
                             award.data[2023].map((item, index) => (
                                 <div
                                     key={index}
-                                    className=" p-4 my-4 border border-gray-200 w-full sm:w-1/2 screen-920:w-1/3 xl:w-1/4 2xl:w-1/5 "
+                                    className=" flex flex-col justify-center p-4 my-4 border border-gray-200 w-full sm:w-1/2 screen-920:w-1/3 xl:w-1/4 2xl:w-1/5 "
                                 >
                                     <p className="mb-3 text-sm text-center font-medium">
                                         {item.award}
@@ -100,9 +101,13 @@ export default function MovieOfTheYear() {
                                             </p>
                                         </div>
                                     </div>
-                                    <p className="text-center mt-4">
+                                    <Link
+                                        href={`/film-info/${item.tmdbId}`}
+                                        className="text-center mt-4"
+                                    >
                                         {item.title}
-                                    </p>
+                                    </Link>
+
                                     <p className="text-center text-xs">
                                         {item.director}
                                     </p>

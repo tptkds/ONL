@@ -31,7 +31,7 @@ export default function RootLayout({
                     <header className="relative w-full">
                         <Nav />
                     </header>
-                    <main className="my-14 pb-12 flex justify-center">
+                    <main className="pb-12 flex justify-center">
                         {children}
                     </main>
                 </AppProviders>
