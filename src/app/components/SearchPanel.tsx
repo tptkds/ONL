@@ -18,7 +18,7 @@ export default function SearchPanel() {
                 />
             </button>
             <div
-                className={`${isSearchBarHidden ? 'hidden' : 'absolute z-10 top-0  left-0 min-h-screen bg-white '} sm:block w-full`}
+                className={`${isSearchBarHidden ? 'hidden' : 'absolute z-10 top-0  left-0 min-h-screen bg-white sm:static sm:z-10 sm:min-h-12 sm:bg-whte'} sm:block w-full`}
             >
                 <SearchBar
                     isSearchBarHidden={isSearchBarHidden}

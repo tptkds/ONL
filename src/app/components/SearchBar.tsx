@@ -69,6 +69,7 @@ export default function SearchBar({
                     setTimeout(() => {
                         setShowResults(false);
                         setSearchedText('');
+                        setIsSearchBarHidden(true);
                     }, 100);
                 }}
             />
