@@ -1,65 +1,42 @@
 'use client';
-import { useSession, signOut } from 'next-auth/react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
-import { BsAwardFill } from 'react-icons/bs';
-import { IoChatboxEllipses } from 'react-icons/io5';
-import { MdLocalMovies } from 'react-icons/md';
-import SearchBar from './SearchBar';
+import SignUpLink from './SignUpLink';
+import SignInLink from './SignInLink';
+import MyPageLink from './MyPageLink';
+import SignOutButton from './SignOutButton';
+import Logo from './Logo';
+import MainNavigationLinks from './MainNavigationLinks';
+import SearchPanel from './SearchPanel';
 
 export default function Nav() {
     const { status } = useSession();
     const pathname = usePathname();
     return (
-        <nav className="  w-full flex flex-col text-sm">
-            <div className=" flex justify-between px-16 ">
-                <h1 className="w-1/3 ml-4">
-                    <Link href="/">
-                        <Image
-                            src="/onl-text.svg"
-                            alt="ONL"
-                            width={100}
-                            height={100}
-                        />
-                    </Link>
+        <nav className=" relative  w-full min-w-max flex flex-col text-xs sm:text-sm">
+            <div className=" flex justify-between px-4 md:px-16 ">
+                <h1 className="sm:w-1/3   ">
+                    <div className="w-[50px] h-[50px] sm:w-[100px] sm:h-[100px]">
+                        <Logo />
+                    </div>
                 </h1>
-                <div className="w-1/3 flex items-center justify-center">
-                    <SearchBar />
-                </div>
-
-                <div className=" w-1/3 flex justify-end text-neutral-500">
-                    {status === 'unauthenticated' ? (
-                        <>
-                            <Link
-                                href="/sign-up"
-                                className="nav-item flex items-center px-4 py-2"
-                            >
-                                회원가입
-                            </Link>
-                            <Link
-                                href="/sign-in"
-                                className="nav-item flex items-center px-4 py-2"
-                            >
-                                로그인
-                            </Link>
-                        </>
-                    ) : (
-                        <>
-                            <Link
-                                href="/mypage"
-                                className="nav-item flex items-center px-4"
-                            >
-                                마이페이지
-                            </Link>
-                            <button
-                                onClick={() => signOut()}
-                                className="nav-item px-4"
-                            >
-                                로그아웃
-                            </button>
-                        </>
-                    )}
+                <div className="w-full sm:w-2/3 flex justify-end sm:justify-between ">
+                    <div className=" sm:w-1/2 flex items-center justify-center">
+                        <SearchPanel />
+                    </div>
+                    <div className=" sm:w-1/2 flex justify-end text-neutral-500">
+                        {status === 'unauthenticated' ? (
+                            <>
+                                <SignUpLink />
+                                <SignInLink />
+                            </>
+                        ) : (
+                            <>
+                                <MyPageLink />
+                                <SignOutButton />
+                            </>
+                        )}
+                    </div>
                 </div>
             </div>
 
@@ -67,35 +44,9 @@ export default function Nav() {
                 <></>
             ) : (
                 <>
-                    <div className="border-t border-gray-200 w-full"></div>
-                    <ul className="flex justify-center px-16 bg-white text-base font-medium text-neutral-800">
-                        <li className="mx-6 li-hover-line relative cursor">
-                            <Link
-                                href="/film-of-the-year"
-                                className="h-full px-4 py-6 flex items-center justify-center"
-                            >
-                                <BsAwardFill className="text-base mr-1" />
-                                <span>올해의영화</span>
-                            </Link>
-                        </li>
-                        <li className="mx-6  li-hover-line relative cursor">
-                            <Link
-                                href="/film-finder"
-                                className="h-full px-4 py-6 flex items-center justify-center"
-                            >
-                                <MdLocalMovies className="text-base mr-1" />
-                                <span>영화탐색</span>
-                            </Link>
-                        </li>
-                        <li className=" mx-6  li-hover-line relative cursor">
-                            <Link
-                                href="/board/1"
-                                className="h-full px-4 py-6 flex items-center justify-center "
-                            >
-                                <IoChatboxEllipses className="text-base mr-1" />
-                                <span className="">이야기공간</span>
-                            </Link>
-                        </li>
+                    <div className="md: border-t border-gray-200 w-full"></div>
+                    <ul className="flex justify-center px-4 md:px-16 bg-white text-xs sm:text-base font-medium text-neutral-800">
+                        <MainNavigationLinks />
                     </ul>
                 </>
             )}

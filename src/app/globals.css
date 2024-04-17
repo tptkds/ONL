@@ -53,6 +53,12 @@ hr {
     background-color: rgba(33, 37, 41);
     transition: width 0.3s ease-in-out;
 }
+@media (max-width: 640px) {
+    .li-hover-line::before {
+        top: 31px;
+        height: 2px;
+    }
+}
 .li-hover-line:hover::before {
     width: 100%;
 }

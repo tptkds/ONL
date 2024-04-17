@@ -6,8 +6,15 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { IoIosSearch } from 'react-icons/io';
+import { IoCloseSharp } from 'react-icons/io5';
 
-export default function SearchBar() {
+export default function SearchBar({
+    isSearchBarHidden,
+    setIsSearchBarHidden,
+}: {
+    isSearchBarHidden: boolean;
+    setIsSearchBarHidden: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
     const [searchedText, setSearchedText] = useState<string>('');
     const [debouncedText, setDebouncedText] = useState<string>('');
     const [showResults, setShowResults] = useState(false);
@@ -43,8 +50,14 @@ export default function SearchBar() {
     };
 
     return (
-        <div className="relative w-full">
-            <IoIosSearch className="absolute top-1/2 right-2 translate-y-[-50%] text-gray-500 text-xl" />
+        <div className="relative w-full ">
+            <IoIosSearch className="hidden sm:block absolute top-1/2 right-2 translate-y-[-50%] text-gray-500 text-xl" />
+            <button
+                onClick={() => setIsSearchBarHidden(!isSearchBarHidden)}
+                className="sm:hidden"
+            >
+                <IoCloseSharp className="absolute top-1/2 right-2 translate-y-[-50%] text-gray-500 text-xl" />
+            </button>
             <input
                 type="text"
                 className="h-12 w-full border focus:outline-none p-3"
@@ -61,7 +74,7 @@ export default function SearchBar() {
             />
             {(showResults && searchedMovies && searchedMovies.length > 0) ||
             (showResults && searchedPosts && searchedPosts.length > 0) ? (
-                <div className="absolute top-12 z-10  w-full max-w-full max-h-[500px] py-4 bg-white shadow-md overflow-hidden">
+                <div className="absolute top-12 z-10  w-full max-w-full max-h-[500px] py-4 bg-white sm:shadow-md overflow-hidden">
                     {searchedPosts && searchedPosts.length > 0 && (
                         <div className="mb-3">
                             <h2 className="py-0.5 px-4  text-sm font-bold">
