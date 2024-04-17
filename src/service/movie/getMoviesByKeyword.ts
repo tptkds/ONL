@@ -13,7 +13,7 @@ export default async function getMoviesByKeyword(keyword: string) {
 
     try {
         const response = await axios(url, options);
-        return response.data.results;
+        return response.data.results.slice(0, 5);
     } catch (error) {
         console.error('Error fetching movies: ' + error);
         return [];

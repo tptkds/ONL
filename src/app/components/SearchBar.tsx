@@ -10,6 +10,7 @@ import { IoIosSearch } from 'react-icons/io';
 export default function SearchBar() {
     const [searchedText, setSearchedText] = useState<string>('');
     const [debouncedText, setDebouncedText] = useState<string>('');
+    const [showResults, setShowResults] = useState(false);
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -50,20 +51,27 @@ export default function SearchBar() {
                 placeholder="영화, 게시글 검색"
                 value={searchedText}
                 onChange={handleInputChange}
+                onFocus={() => setShowResults(true)}
+                onBlur={() => {
+                    setTimeout(() => {
+                        setShowResults(false);
+                        setSearchedText('');
+                    }, 100);
+                }}
             />
-            {(searchedMovies && searchedMovies.length > 0) ||
-            (searchedPosts && searchedPosts.length > 0) ? (
-                <div className="absolute top-12 z-10  w-full  max-w-full p-4 bg-white shadow-md">
+            {(showResults && searchedMovies && searchedMovies.length > 0) ||
+            (showResults && searchedPosts && searchedPosts.length > 0) ? (
+                <div className="absolute top-12 z-10  w-full max-w-full max-h-[500px] py-4 bg-white shadow-md overflow-hidden">
                     {searchedPosts && searchedPosts.length > 0 && (
-                        <div>
-                            <h2 className="py-0.5 text-sm font-bold">
+                        <div className="mb-3">
+                            <h2 className="py-0.5 px-4  text-sm font-bold">
                                 검색된 게시글
                             </h2>
-                            <ul className="overflow-hidden">
+                            <ul className="">
                                 {searchedPosts.map((post: PostData) => (
                                     <li
                                         key={post.postId}
-                                        className="py-0.5  text-sm "
+                                        className=" py-1 px-4 hover:bg-gray-100 text-sm "
                                     >
                                         <Link
                                             href={`/post/${post.postId}`}
@@ -81,15 +89,15 @@ export default function SearchBar() {
                         </div>
                     )}
                     {searchedMovies && searchedMovies.length > 0 && (
-                        <div className="pt-3">
-                            <h2 className="py-0.5 text-sm font-bold">
+                        <div>
+                            <h2 className="py-0.5 px-4  text-sm font-bold">
                                 검색된 영화
                             </h2>
                             <ul className="overflow-hidden">
                                 {searchedMovies.map((movie: Movie) => (
                                     <li
                                         key={movie.id}
-                                        className="py-0.5  text-sm "
+                                        className="px-4  py-1 hover:bg-gray-100   text-sm "
                                     >
                                         <Link
                                             href={`/film-info/${movie.id}`}

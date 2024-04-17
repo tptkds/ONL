@@ -46,7 +46,7 @@ export default async function getPostsByKeyword(keyword: string) {
             }
         });
 
-        return combinedDocs;
+        return combinedDocs.slice(0, 5);
     } catch (error) {
         console.error('Error fetching documents: ', error);
         return [];
