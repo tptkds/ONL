@@ -1,6 +1,6 @@
 'use client';
-import { useSession } from 'next-auth/react';
+import PosterCarousel from './components/PosterCarousel';
 
 export default function Home() {
-    const { data } = useSession();
+    return <PosterCarousel />;
 }
