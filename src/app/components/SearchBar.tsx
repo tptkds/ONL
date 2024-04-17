@@ -26,7 +26,7 @@ export default function SearchBar() {
         queryKey: ['searchingMovies', debouncedText],
         queryFn: () => getMoviesByKeyword(debouncedText),
         staleTime: Infinity,
-        enabled: !!debouncedText,
+
         placeholderData: previousData => previousData,
     });
 
@@ -34,7 +34,7 @@ export default function SearchBar() {
         queryKey: ['searchingPosts', debouncedText],
         queryFn: () => getPostsByKeyword(debouncedText),
         staleTime: 60000,
-        enabled: !!debouncedText,
+
         placeholderData: previousData => previousData,
     });
 
