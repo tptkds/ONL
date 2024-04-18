@@ -6,7 +6,6 @@ import { MdLocalMovies } from 'react-icons/md';
 export default function MainNavigationLinks() {
     return (
         <>
-            {' '}
             <li className="sm:mx-6 li-hover-line relative cursor">
                 <Link
                     href="/film-of-the-year"

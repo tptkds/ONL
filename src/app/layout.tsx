@@ -3,6 +3,7 @@ import './globals.css';
 import Nav from './components/Nav';
 import { AppProviders } from './AppProviders';
 import { Noto_Sans_KR } from 'next/font/google';
+import Footer from './components/Footer';
 const notoSans = Noto_Sans_KR({
     weight: ['300', '400', '500', '600', '700'],
     subsets: ['latin'],
@@ -35,6 +36,7 @@ export default function RootLayout({
                         {children}
                     </main>
                 </AppProviders>
+                <Footer />
             </body>
         </html>
     );
