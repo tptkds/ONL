@@ -18,7 +18,7 @@ export default function MoviesOfYearCarousel() {
     const [activeIndex, setActiveIndex] = useState(0);
 
     const settings = {
-        dots: true,
+        dots: false,
         infinite: true,
         speed: 1000,
         slidesToShow: 1,
