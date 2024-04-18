@@ -27,8 +27,8 @@ export default async function FilmFinder() {
     });
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
-            <div className="w-full mt-4 mx-4 sm:mx-16 flex flex-col xl:flex-row">
-                <div className="w-full xl:w-72 flex flex-col xl:pr-2">
+            <div className="relative w-full mt-4 mx-4 sm:mx-16 flex flex-col xl:flex-row">
+                <div className=" w-full xl:w-72 flex flex-col xl:pr-2">
                     <Filter />
                 </div>
                 <div className="w-full lg:w-3/4flex flex-col">
