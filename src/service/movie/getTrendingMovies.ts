@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default async function getTrendingMovies() {
-    const URL = `https://api.themoviedb.org/3/movie/popular?language=ko-KR&page=${pageNumber}`;
+    const URL = `https://api.themoviedb.org/3/trending/movie/day?language=ko-KR}`;
     const OPTIONS = {
         method: 'GET',
         headers: {

@@ -7,6 +7,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import getMoviesOfTheYear from '@/service/movie/getMoviesOfTheYear';
 import { useQuery } from '@tanstack/react-query';
 import { TMDB_BASE_URL } from '@/constants/movie';
+import Link from 'next/link';
 
 export default function MoviesOfYearCarousel() {
     const { data: moviesDetailsWithAwards, isSuccess } = useQuery({
@@ -33,13 +34,13 @@ export default function MoviesOfYearCarousel() {
     };
 
     return (
-        <div className="relative w-full h-screen overflow-hidden">
+        <div className="relative w-full overflow-hidden">
             {isSuccess && moviesDetailsWithAwards.length > 0 && (
                 <Slider {...settings} className="z-0">
                     {moviesDetailsWithAwards.map(movie => (
                         <div
                             key={movie.id}
-                            className="relative w-full h-[550px] overflow-hidden"
+                            className="relative w-full h-[550px] overflow-hidden focus:outline-none"
                         >
                             <Image
                                 src={`${TMDB_BASE_URL}/original${movie.backdrop_path}`}
@@ -49,13 +50,15 @@ export default function MoviesOfYearCarousel() {
                                     objectFit: 'cover',
                                     objectPosition: '50% 50%',
                                 }}
-                                quality={100}
+                                sizes="100vw"
                                 priority
                                 className="absolute inset-0 z-0"
                             />
-                            <div className="absolute bottom-10 left-10 z-10 text-white bg-black/50 p-4 rounded-md">
-                                {movie.title} - {movie.award}
-                            </div>
+                            <Link href={`/film-info/${movie.id}`}>
+                                <div className="absolute bottom-10 right-10 z-10 text-white bg-black/40 p-4 rounded-md ">
+                                    {movie.title} - {movie.award}
+                                </div>
+                            </Link>
                         </div>
                     ))}
                 </Slider>

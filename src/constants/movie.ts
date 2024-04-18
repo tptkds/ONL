@@ -135,3 +135,9 @@ export const yearOfFilms2023: FestivalData = {
         { tmdbId: '991708', award: '각본상' },
     ],
 };
+
+export const AWARDS = {
+    Berlin: '베를린 국제 영화제',
+    Cannes: '칸 영화제',
+    Venice: '베니스 국제 영화제',
+};
