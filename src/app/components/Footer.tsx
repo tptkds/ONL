@@ -6,7 +6,7 @@ import { SiVelog } from 'react-icons/si';
 export default function Footer() {
     return (
         <footer className="w-full flex flex-col  items-center py-8 100 px-16 bg-gray-100 text-xs">
-            <div className="flex flex-wrap justify-center">
+            {/* <div className="flex flex-wrap justify-center">
                 <Link href="/">
                     <span className="mb-2 ml-3  cursor-pointer">홈</span>
                 </Link>
@@ -32,11 +32,17 @@ export default function Footer() {
                         마이페이지
                     </span>
                 </Link>
+            </div> */}
+            <div className="flex flex-col items-center   ">
+                <p>© 2024 Kimyougyoung</p>
             </div>
-            <div className="flex items-center mt-4">
-                <p>© 2024 ONL</p>
-            </div>
-            <div className="flex mt-2 text-base">
+            <Link
+                href={'mailto:refund@zero-base.co.kr'}
+                className="mt-2 font-semibold"
+            >
+                문의: tptkds12@gmail.com
+            </Link>
+            <div className="flex mt-4 text-xl">
                 <Link href="https://github.com/tptkds/ONL">
                     <FaGithub />
                 </Link>
