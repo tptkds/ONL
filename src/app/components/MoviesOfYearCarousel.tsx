@@ -1,10 +1,12 @@
 'use client';
 import React, { useState } from 'react';
 import Slider from 'react-slick';
+import Image from 'next/image';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import getMoviesOfTheYear from '@/service/movie/getMoviesOfTheYear';
 import { useQuery } from '@tanstack/react-query';
+import { TMDB_BASE_URL } from '@/constants/movie';
 
 export default function MoviesOfYearCarousel() {
     const { data: moviesDetailsWithAwards, isSuccess } = useQuery({
@@ -18,54 +20,46 @@ export default function MoviesOfYearCarousel() {
     const settings = {
         dots: true,
         infinite: true,
-        speed: 500,
-        slidesToShow: 3,
+        speed: 1000,
+        slidesToShow: 1,
         slidesToScroll: 1,
         centerMode: true,
         centerPadding: '0px',
-        beforeChange: (current, next) => setActiveIndex(next),
+        beforeChange: (current: number, next: number) => setActiveIndex(next),
         autoplay: true,
         autoplaySpeed: 3000,
-        cssEase: 'linear',
+        cssEase: 'ease-in-out',
+        initialSlide: 9,
     };
 
     return (
-        <div className="relative w-full">
-            {/* Background image of the centered movie */}
+        <div className="relative w-full h-screen overflow-hidden">
             {isSuccess && moviesDetailsWithAwards.length > 0 && (
-                <div
-                    className="absolute inset-0 bg-cover bg-center z-0"
-                    style={{
-                        backgroundImage: `url(https://image.tmdb.org/t/p/original${moviesDetailsWithAwards[activeIndex]?.backdrop_path})`,
-                    }}
-                />
-            )}
-
-            <Slider {...settings} className="relative z-10">
-                {moviesDetailsWithAwards?.map((movie, index) => (
-                    <div
-                        key={movie.id}
-                        className="outline-none focus:outline-none"
-                    >
+                <Slider {...settings} className="z-0">
+                    {moviesDetailsWithAwards.map(movie => (
                         <div
-                            className={`transition-transform ease-in-out duration-500 ${index === activeIndex ? 'scale-110' : 'scale-90'}`}
+                            key={movie.id}
+                            className="relative w-full h-[550px] overflow-hidden"
                         >
-                            <img
-                                src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-                                alt={movie.title}
-                                className="mx-auto"
+                            <Image
+                                src={`${TMDB_BASE_URL}/original${movie.backdrop_path}`}
+                                alt={`${movie.title} backdrop`}
+                                fill
                                 style={{
-                                    height: '300px', // Adjust size as needed
-                                    width: 'auto',
+                                    objectFit: 'cover',
+                                    objectPosition: '50% 50%',
                                 }}
+                                quality={100}
+                                priority
+                                className="absolute inset-0 z-0"
                             />
-                            <div className="text-center text-white bg-black/50 p-2.5 rounded">
+                            <div className="absolute bottom-10 left-10 z-10 text-white bg-black/50 p-4 rounded-md">
                                 {movie.title} - {movie.award}
                             </div>
                         </div>
-                    </div>
-                ))}
-            </Slider>
+                    ))}
+                </Slider>
+            )}
         </div>
     );
 }
