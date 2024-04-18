@@ -23,11 +23,11 @@ export default async function FilmFinder() {
         },
         initialPageParam: 1,
         pages: 1,
-        staleTime:Infinity
+        staleTime: Infinity,
     });
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
-            <div className="w-full mx-16 flex flex-col xl:flex-row">
+            <div className="w-full mt-4 mx-4 sm:mx-16 flex flex-col xl:flex-row">
                 <div className="w-full xl:w-72 flex flex-col xl:pr-2">
                     <Filter />
                 </div>

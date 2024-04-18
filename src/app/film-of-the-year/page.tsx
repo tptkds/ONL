@@ -54,7 +54,7 @@ export default function MovieOfTheYear() {
     }, [sessionData?.user?.uid]);
 
     return (
-        <section className="w-full px-16 text-neutral-800">
+        <section className="w-full mt-16 px-16 text-neutral-800">
             {awards.map(award => (
                 <div key={award.id} className="mb-8">
                     <h2 className="text-xl font-semibold text-center">

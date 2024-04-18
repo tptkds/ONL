@@ -21,8 +21,8 @@ export default function Filter() {
     };
 
     return (
-        <div className="flex xl:block border p-4 xl:my-6">
-            <div className="mb-4 w-1/5 mr-12 xl:mr-0 xl:w-full min-w-32">
+        <div className="flex-col sm:flex-row flex xl:block border p-4 xl:my-6 min-w-96">
+            <div className="mb-4 w-1/12 sm:w-1/5 mr-4 sm:mr-12 xl:mr-0 xl:w-full min-w-32">
                 <label
                     htmlFor="filterSelect"
                     className="block text-sm font-medium text-gray-700"
@@ -45,17 +45,17 @@ export default function Filter() {
                 <span className="block text-sm font-medium text-gray-700">
                     장르
                 </span>
-                <div className=" mt-1 flex flex-wrap">
+                <div className=" mt-1 flex flex-wrap ">
                     {genres.map(genre => (
                         <label
                             key={genre}
-                            className=" w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/2 flex items-center space-x-2 mb-2"
+                            className=" w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/2 flex items-center space-x-2 mb-2 "
                         >
                             <input
                                 type="checkbox"
                                 checked={selectedGenres.includes(genre)}
                                 onChange={() => handleGenreChange(genre)}
-                                className="checkbox w-6 h-6"
+                                className="checkbox  w-3 h-3 rounded-none "
                             />
                             <span className="text-xs text-gray-600">
                                 {genre}
