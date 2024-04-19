@@ -1,17 +1,24 @@
 'use client';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { MoviesResponse } from '@/types/movie';
-import getPopularMovies from '@/service/movie/getPopularMovies';
 import Movie from './Movie';
 import React, { Fragment, useEffect } from 'react';
 import { useIntersectionObserver } from 'usehooks-ts';
+import useStore from '@/app/store';
+import getMoviesByFilltering from '@/service/movie/getMoviesByFilltering';
 
 export default function List() {
+    const { selectedSorting, selectedGenres, keyword } = useStore();
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
         useInfiniteQuery<MoviesResponse>({
-            queryKey: ['popularMovies'],
+            queryKey: ['movies', selectedSorting, selectedGenres, keyword],
             queryFn: async ({ pageParam = 1 }) => {
-                return getPopularMovies(pageParam as number);
+                return getMoviesByFilltering(
+                    keyword,
+                    selectedGenres.join(','),
+                    selectedSorting,
+                    pageParam as number
+                );
             },
             initialPageParam: 1,
             getNextPageParam: lastPage => {

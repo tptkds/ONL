@@ -1,5 +1,29 @@
 import { FestivalData } from '@/types/movie';
+interface Genres {
+    [key: string]: number;
+}
 
+export const GENRES: Genres = {
+    액션: 28,
+    모험: 12,
+    애니메이션: 16,
+    코미디: 35,
+    범죄: 80,
+    다큐멘터리: 99,
+    드라마: 18,
+    가족: 10751,
+    판타지: 14,
+    역사: 36,
+    공포: 27,
+    음악: 10402,
+    미스터리: 9648,
+    로맨스: 10749,
+    SF: 878,
+    'TV 영화': 10770,
+    스릴러: 53,
+    전쟁: 10752,
+    서부: 37,
+};
 const genres = [
     'SF',
     'TV 영화',
@@ -140,4 +164,14 @@ export const AWARDS = {
     Berlin: '베를린 국제 영화제',
     Cannes: '칸 영화제',
     Venice: '베니스 국제 영화제',
+};
+
+interface SortBy {
+    [key: string]: string;
+}
+
+export const SORT_BY: SortBy = {
+    인기순: 'popularity.desc',
+    최신순: 'primary_release_date',
+    평점높은순: 'vote_average.desc',
 };

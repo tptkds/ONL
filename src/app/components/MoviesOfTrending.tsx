@@ -54,7 +54,7 @@ export default function MoviesOfTrending() {
     };
 
     if (!isSuccess || !trendingMovies || trendingMovies.length === 0) {
-        return <div>Loading or no data available...</div>;
+        return <div></div>;
     }
 
     return (

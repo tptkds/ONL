@@ -1,5 +1,4 @@
 'use server';
-import getPopularMovies from '@/service/movie/getPopularMovies';
 import { MoviesResponse } from '@/types/movie';
 import {
     HydrationBoundary,
@@ -8,14 +7,20 @@ import {
 } from '@tanstack/react-query';
 import Filter from './components/Filter';
 import List from './components/List';
+import getMoviesByFilltering from '@/service/movie/getMoviesByFilltering';
 
 export default async function FilmFinder() {
     const queryClient = new QueryClient();
 
     await queryClient.prefetchInfiniteQuery<MoviesResponse>({
-        queryKey: ['popularMovies'],
+        queryKey: ['movies', 'popularity.desc', [], ''],
         queryFn: async ({ pageParam = 1 }) => {
-            return getPopularMovies(pageParam as number);
+            return getMoviesByFilltering(
+                '',
+                '',
+                'popularity.desc',
+                pageParam as number
+            );
         },
         getNextPageParam: (lastPage: MoviesResponse) => {
             const nextPage = lastPage.page + 1;
