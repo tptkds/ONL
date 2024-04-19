@@ -36,10 +36,7 @@ export default function Footer() {
             <div className="flex flex-col items-center   ">
                 <p>© 2024 Kimyougyoung</p>
             </div>
-            <Link
-                href={'mailto:refund@zero-base.co.kr'}
-                className="mt-2 font-semibold"
-            >
+            <Link href={'mailto:refund@zero-base.co.kr'} className="mt-2 ">
                 문의: tptkds12@gmail.com
             </Link>
             <div className="flex mt-4 text-xl">

@@ -11,7 +11,7 @@ export default async function getMoviesByFilltering(
     const genreQeury = genres.length === 0 ? '' : `&with_genres=${genres}`;
     const keywordQuery =
         keyword.length === 0 ? '' : `&with_keywords=${keyword}]`;
-    const URL = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=ko-KR&page=${pageNumber}&release_date.lte=${todayDate}&sort_by=${sortBy === 'vote_average.desc' ? 'vote_average.desc&vote_count.gte=300' : sortBy}&watch_region=KR${genreQeury}${keywordQuery}`;
+    const URL = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=ko-KR&page=${pageNumber}&release_date.lte=${todayDate}&sort_by=${sortBy === 'vote_average.desc' ? 'vote_average.desc&vote_count.gte=300' : sortBy}&watch_region=KR${genreQeury}`;
     const OPTIONS = {
         method: 'GET',
         headers: {
