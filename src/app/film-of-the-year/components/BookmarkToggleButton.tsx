@@ -4,11 +4,15 @@ import { BookmarkMovie } from '@/types/movie';
 import { IoBookmarkOutline, IoBookmark } from 'react-icons/io5';
 
 export default function BookmarkToggleButton({
+    moviePoster,
+    movieTitle,
     movieId,
     uId,
     bookmarkedMovies,
     setBookmarkedMovies,
 }: {
+    moviePoster: string;
+    movieTitle: string;
     movieId: string;
     uId: string;
     bookmarkedMovies: { [key: string]: BookmarkMovie };
@@ -36,6 +40,8 @@ export default function BookmarkToggleButton({
             const newBookmark: BookmarkMovie = {
                 movieId: movieId,
                 bookmarkDate: new Date(),
+                moviePoster: moviePoster,
+                movieTitle: movieTitle,
             };
 
             try {

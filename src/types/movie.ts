@@ -161,6 +161,8 @@ export interface BookmarkMovie {
     id?: string;
     movieId: string;
     bookmarkDate: Date;
+    movieTitle: string;
+    moviePoster: string;
 }
 export interface FestivalData {
     [key: string]: { tmdbId: string; award: string }[];

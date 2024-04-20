@@ -113,6 +113,8 @@ export default function MovieOfTheYear() {
                                     </p>
                                     <div className="flex justify-center">
                                         <BookmarkToggleButton
+                                            moviePoster={item.posterPath}
+                                            movieTitle={item.title}
                                             movieId={item.tmdbId}
                                             uId={
                                                 sessionData?.user.uid as string
