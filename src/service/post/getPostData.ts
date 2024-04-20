@@ -1,5 +1,5 @@
 import { db } from '@/app/firebase';
-import { collection, doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 
 export default async function getPostData(postId: string) {
     const docRef = doc(db, 'posts', postId);

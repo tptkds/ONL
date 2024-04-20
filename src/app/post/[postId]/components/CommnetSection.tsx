@@ -2,6 +2,7 @@ import getComments from '@/service/post/getComments';
 import postComment from '@/service/post/postComment';
 import { CommentData } from '@/types/post';
 import formatDate from '@/utils/date';
+import { getPostData } from '@/utils/post';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { serverTimestamp } from 'firebase/firestore';
 import { useSession } from 'next-auth/react';
@@ -10,7 +11,7 @@ import { useEffect, useState } from 'react';
 export default function CommentsSection({ postId }: { postId: string }) {
     const queryClient = useQueryClient();
     const [commentText, setCommentText] = useState('');
-    const { data, status } = useSession();
+    const { data: sessionData, status } = useSession();
     const { data: comments, isFetching } = useQuery({
         queryKey: ['comments', postId],
         queryFn: () => getComments(postId),
@@ -43,16 +44,24 @@ export default function CommentsSection({ postId }: { postId: string }) {
                 <button
                     type="button"
                     className="mt-2 bg-black text-white px-4 py-2 rounded"
-                    onClick={() => {
+                    onClick={async () => {
                         if (commentText.trim() !== '') {
+                            const postData = await getPostData(postId);
+                            if (
+                                postData == null ||
+                                !sessionData?.user.email ||
+                                !sessionData?.user.name
+                            )
+                                return;
                             const commentData: CommentData = {
-                                authorId: 'tptkds12@gmail.com',
-                                authorName: 'finn',
+                                authorId: sessionData?.user.email,
+                                authorName: sessionData?.user.name,
                                 createdAt: serverTimestamp(),
                                 updatedAt: serverTimestamp(),
                                 content: commentText,
                                 postId: postId,
                                 commentId: '',
+                                postTitle: postData?.title,
                             };
                             mutate(commentData);
                             setCommentText('');

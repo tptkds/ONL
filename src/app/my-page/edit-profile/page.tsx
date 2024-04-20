@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/label';
 export default function EditProfile() {
     return (
         <div className="mt-4 sm:mt-0 sm:ml-4 w-full">
-            <Tabs defaultValue="account" className="w-full">
+            <Tabs defaultValue="nickname" className="w-full">
                 <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="nickname">닉네임 변경</TabsTrigger>
                     <TabsTrigger value="password">비밀번호 변경</TabsTrigger>

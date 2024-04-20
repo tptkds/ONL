@@ -23,4 +23,5 @@ export interface CommentData {
     createdAt: FieldValue;
     updatedAt: FieldValue;
     commentId: string;
+    postTitle: string;
 }
