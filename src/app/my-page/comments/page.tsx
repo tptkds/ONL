@@ -14,7 +14,7 @@ export default function Comments() {
         enabled: !!sessionData?.user.uid,
         refetchOnMount: 'always',
     });
-    console.log();
+
     return (
         <div className="sm:ml-4 flex flex-wrap w-full">
             {commentsData?.map(comment => (

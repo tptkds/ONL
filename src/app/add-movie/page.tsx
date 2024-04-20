@@ -45,7 +45,7 @@ const UploadMovies = () => {
                         // Firestore 업데이트 로직
 
                         const awardsDocRef = doc(db, 'Awards', 'Venice');
-                        console.log(awardsDocRef);
+
                         const result = await setDoc(
                             awardsDocRef,
                             {

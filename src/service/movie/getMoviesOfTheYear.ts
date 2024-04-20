@@ -6,6 +6,7 @@ export default async function getMoviesOfTheYear() {
     for (const festival in yearOfFilms2023) {
         for (const film of yearOfFilms2023[festival]) {
             const movieDetails = await getMovieDetails(film.tmdbId);
+
             if (movieDetails) {
                 moviesDetailsWithAwards.push({
                     ...movieDetails,
@@ -15,5 +16,6 @@ export default async function getMoviesOfTheYear() {
             }
         }
     }
+    console.log(moviesDetailsWithAwards);
     return moviesDetailsWithAwards;
 }

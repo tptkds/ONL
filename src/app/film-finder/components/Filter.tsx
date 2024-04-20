@@ -16,7 +16,6 @@ export default function Filter() {
         keyword,
         setKeyword,
     } = useStore();
-    console.log(curGenres);
 
     const searching = () => {
         setSelectedSorting(curSorting);
