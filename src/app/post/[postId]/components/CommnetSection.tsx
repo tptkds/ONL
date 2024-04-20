@@ -49,12 +49,12 @@ export default function CommentsSection({ postId }: { postId: string }) {
                             const postData = await getPostData(postId);
                             if (
                                 postData == null ||
-                                !sessionData?.user.email ||
+                                !sessionData?.user.uid ||
                                 !sessionData?.user.name
                             )
                                 return;
                             const commentData: CommentData = {
-                                authorId: sessionData?.user.email,
+                                authorId: sessionData?.user.uid,
                                 authorName: sessionData?.user.name,
                                 createdAt: serverTimestamp(),
                                 updatedAt: serverTimestamp(),

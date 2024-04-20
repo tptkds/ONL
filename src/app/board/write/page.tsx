@@ -15,6 +15,7 @@ import {
 import { PostData } from '@/types/post';
 import { MultiValue } from 'react-select';
 import { createMarkup } from '@/utils/post';
+import { useSession } from 'next-auth/react';
 
 const ReactQuill = dynamic(() => import('react-quill'), {
     ssr: false,
@@ -32,8 +33,8 @@ interface TagOption {
 }
 
 const Write = () => {
+    const { data: sessionData } = useSession();
     const [title, setTitle] = useState('');
-    const [authorId, setAuthorId] = useState('');
     const [category, setCategory] = useState('');
     const [editorContent, setEditorContent] = useState('');
     const [selectedTags, setSelectedTags] = useState<TagOption[]>([]);
@@ -76,16 +77,17 @@ const Write = () => {
 
     const handlePostSubmit = async () => {
         const tags = selectedTags.map(tag => tag.value);
+        if (!sessionData?.user.uid || !sessionData?.user.name) return;
         const newPost: PostData = {
             title,
             content: editorContent,
-            authorId: 'tptkds12@gmail.com',
+            authorId: sessionData?.user.uid,
             category,
             tags,
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp(),
             attachments: [],
-            authorName: 'finn',
+            authorName: sessionData?.user.name,
             likeCount: 0,
             viewCount: 0,
             postId: '',
