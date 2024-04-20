@@ -25,3 +25,11 @@ export interface CommentData {
     commentId: string;
     postTitle: string;
 }
+
+export interface LikePostData {
+    postContent: string;
+    added: FieldValue;
+
+    postId: string;
+    postTitle: string;
+}

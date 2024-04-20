@@ -155,6 +155,8 @@ export interface WatchedMovie {
     movieId: string;
     watchDate: Timestamp;
     userRating: number;
+    movieTitle: string;
+    moviePoster: string;
 }
 
 export interface BookmarkMovie {

@@ -5,6 +5,8 @@ import { Timestamp } from 'firebase/firestore';
 import { PiTelevisionSimple, PiTelevisionSimpleFill } from 'react-icons/pi';
 
 interface WatchedToggleButtonProps {
+    moviePoster: string;
+    movieTitle: string;
     movieId: string;
     uId: string;
     watchedMovies: { [key: string]: WatchedMovie };
@@ -15,6 +17,8 @@ interface WatchedToggleButtonProps {
 }
 
 export default function WatchedToggleButton({
+    moviePoster,
+    movieTitle,
     movieId,
     uId,
     watchedMovies,
@@ -42,6 +46,8 @@ export default function WatchedToggleButton({
                 movieId: movieId,
                 watchDate: Timestamp.fromDate(new Date()),
                 userRating: rating,
+                movieTitle: movieTitle,
+                moviePoster: moviePoster,
             };
 
             try {

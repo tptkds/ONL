@@ -8,7 +8,7 @@ import Comment from './components/Comment';
 export default function Comments() {
     const { data: sessionData } = useSession();
     const { data: commentsData } = useQuery({
-        queryKey: ['commnet', 'all'],
+        queryKey: ['commnets', sessionData?.user.uid],
         queryFn: () => getAllAccountComments(sessionData?.user.uid as string),
         initialData: [],
         enabled: !!sessionData?.user.uid,

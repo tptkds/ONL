@@ -121,6 +121,10 @@ export default function List() {
                                             }
                                         />
                                         <WatchedToggleButton
+                                            moviePoster={
+                                                movie.poster_path as string
+                                            }
+                                            movieTitle={movie.title}
                                             movieId={movie.id}
                                             uId={
                                                 sessionData?.user.uid as string
