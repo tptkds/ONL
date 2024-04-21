@@ -2,14 +2,11 @@
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
-import DOMPurify from 'dompurify';
 import { db } from '@/app/firebase';
 import {
     addDoc,
     collection,
-    doc,
     serverTimestamp,
-    setDoc,
     updateDoc,
 } from 'firebase/firestore';
 import { PostData } from '@/types/post';

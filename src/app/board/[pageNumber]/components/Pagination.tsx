@@ -9,20 +9,20 @@ import {
 } from '@/components/ui/pagination';
 
 export default function Pagination({
-    pageIndex,
+    curPage,
     totalPages,
 }: {
-    pageIndex: number;
+    curPage: number;
     totalPages: number;
 }) {
     const renderPageNumbers = () => {
         let pages = [];
-        for (let i = pageIndex; i <= totalPages; i++) {
+        for (let i = curPage; i <= totalPages; i++) {
             pages.push(
                 <PaginationItem key={i}>
                     <PaginationLink
                         href={`/board/${i}`}
-                        isActive={i == pageIndex}
+                        isActive={i == curPage}
                     >
                         {i}
                     </PaginationLink>
@@ -36,10 +36,10 @@ export default function Pagination({
             <PaginationContent>
                 <PaginationItem>
                     <PaginationPrevious
-                        href={`/board/${+pageIndex - 1}`}
-                        aria-disabled={pageIndex <= 1}
+                        href={`/board/${+curPage - 1}`}
+                        aria-disabled={curPage <= 1}
                         className={
-                            pageIndex <= 1
+                            curPage <= 1
                                 ? 'pointer-events-none opacity-50'
                                 : undefined
                         }
@@ -51,10 +51,10 @@ export default function Pagination({
                 </PaginationItem>
                 <PaginationItem>
                     <PaginationNext
-                        href={`/board/${+pageIndex + 1}`}
-                        aria-disabled={pageIndex == totalPages}
+                        href={`/board/${+curPage + 1}`}
+                        aria-disabled={curPage == totalPages}
                         className={
-                            pageIndex == totalPages
+                            curPage == totalPages
                                 ? 'pointer-events-none opacity-50'
                                 : undefined
                         }

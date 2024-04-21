@@ -3,56 +3,7 @@ import formatDate from '@/utils/date';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 
-// import {
-//     ColumnDef,
-//     flexRender,
-//     getCoreRowModel,
-//     useReactTable,
-// } from '@tanstack/react-table';
-
-// import {
-//     Table,
-//     TableBody,
-//     TableCell,
-//     TableHead,
-//     TableHeader,
-//     TableRow,
-// } from '@/components/ui/table';
-
-// export const columns: ColumnDef<PostData>[] = [
-//     {
-//         accessorKey: 'title',
-//         header: '제목',
-//     },
-//     {
-//         accessorKey: 'authorName',
-//         header: '글쓴이',
-//     },
-//     {
-//         accessorKey: 'createdAt',
-//         header: '날짜',
-//     },
-//     {
-//         accessorKey: 'viewCount',
-//         header: '조회',
-//     },
-//     {
-//         accessorKey: 'likeCount',
-//         header: '추천',
-//     },
-// ];
-
-// interface DataTableProps<TData, TValue> {
-//     columns: ColumnDef<TData, TValue>[];
-//     data: TData[];
-// }
-
 export default function List({ posts }: { posts: PostData[] }) {
-    // return (
-    //     <div>
-    //         <DataTable />
-    //     </div>
-    // );
     const { data, status } = useSession();
     return (
         <div className="w-3/4 bg-white shadow overflow-hidden rounded-md ">

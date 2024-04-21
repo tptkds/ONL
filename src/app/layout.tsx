@@ -29,11 +29,11 @@ export default function RootLayout({
         <html lang="ko" suppressHydrationWarning className="h-full">
             <body className={`h-full  ${notoSans.className}`}>
                 <AppProviders>
-                    <div className="min-h-screen">
+                    <div className="min-h-screen flex flex-col">
                         <header className="relative w-full">
                             <Nav />
                         </header>
-                        <main className="pb-12 flex justify-center">
+                        <main className="h-full mb-12 flex flex-grow justify-center">
                             {children}
                         </main>
                     </div>
