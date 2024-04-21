@@ -9,7 +9,6 @@ import PostComposer from './components/PostComposer';
 import { PAGE_SIZE } from '@/constants/post';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { pages } from 'next/dist/build/templates/app-page';
 
 export default function Board({ params }: { params: { pageNumber: number } }) {
     const router = useRouter();
@@ -49,10 +48,8 @@ export default function Board({ params }: { params: { pageNumber: number } }) {
     useEffect(() => {
         if (params.pageNumber < 1) router.push('/board/1');
         if (totalPostsCount)
-            if (params.pageNumber > Math.floor(totalPostsCount / PAGE_SIZE))
-                router.push(
-                    `/board/${Math.floor(totalPostsCount / PAGE_SIZE)}`
-                );
+            if (params.pageNumber > Math.ceil(totalPostsCount / PAGE_SIZE))
+                router.push(`/board/${Math.ceil(totalPostsCount / PAGE_SIZE)}`);
     }, [totalPostsCount]);
 
     return (
@@ -73,7 +70,7 @@ export default function Board({ params }: { params: { pageNumber: number } }) {
                     <List posts={posts} />
                     <Pagination
                         curPage={params.pageNumber}
-                        totalPages={Math.floor(totalPostsCount / PAGE_SIZE)}
+                        totalPages={Math.ceil(totalPostsCount / PAGE_SIZE)}
                     />
                 </div>
             ) : (
