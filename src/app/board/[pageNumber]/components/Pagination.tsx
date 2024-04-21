@@ -5,6 +5,8 @@ import {
     PaginationLink,
     PaginationNext,
     PaginationPrevious,
+    PaginationFirst,
+    PaginationLast,
 } from '@/components/ui/pagination';
 
 export default function Pagination({
@@ -33,6 +35,11 @@ export default function Pagination({
     return (
         <PaginationWrapper className=" mt-8">
             <PaginationContent>
+                {curPage > 1 && (
+                    <PaginationItem>
+                        <PaginationFirst href={`/board/1`} />
+                    </PaginationItem>
+                )}
                 <PaginationItem>
                     <PaginationPrevious
                         href={`/board/${+curPage - 1}`}
@@ -57,6 +64,11 @@ export default function Pagination({
                         }
                     />
                 </PaginationItem>
+                {curPage < totalPages && (
+                    <PaginationItem>
+                        <PaginationLast href={`/board/${totalPages}`} />
+                    </PaginationItem>
+                )}
             </PaginationContent>
         </PaginationWrapper>
     );

@@ -7,8 +7,12 @@ import Pagination from './components/Pagination';
 import getTotalPostsCount from '@/service/post/getTotalPostsCount';
 import PostComposer from './components/PostComposer';
 import { PAGE_SIZE } from '@/constants/post';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { pages } from 'next/dist/build/templates/app-page';
 
 export default function Board({ params }: { params: { pageNumber: number } }) {
+    const router = useRouter();
     const {
         data: posts,
         isFetching: isFetchingPosts,
@@ -41,7 +45,15 @@ export default function Board({ params }: { params: { pageNumber: number } }) {
         retryDelay: 1000,
         staleTime: 1000,
     });
-    console.log(posts);
+
+    useEffect(() => {
+        if (params.pageNumber < 1) router.push('/board/1');
+        if (totalPostsCount)
+            if (params.pageNumber > Math.floor(totalPostsCount / PAGE_SIZE))
+                router.push(
+                    `/board/${Math.floor(totalPostsCount / PAGE_SIZE)}`
+                );
+    }, [totalPostsCount]);
 
     return (
         <div className="w-full mx-16 mt-4 flex">
