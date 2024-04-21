@@ -33,3 +33,8 @@ export interface LikePostData {
     postId: string;
     postTitle: string;
 }
+
+export interface TagOption {
+    label: string;
+    value: string;
+}

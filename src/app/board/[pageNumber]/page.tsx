@@ -5,6 +5,8 @@ import BoardSkeleton from './components/BoardSkeleton';
 import List from './components/List';
 import Pagination from './components/Pagination';
 import getTotalPostsCount from '@/service/post/getTotalPostsCount';
+import PostComposer from './components/PostComposer';
+import { PAGE_SIZE } from '@/constants/post';
 
 export default function Board({ params }: { params: { pageNumber: number } }) {
     const {
@@ -21,6 +23,7 @@ export default function Board({ params }: { params: { pageNumber: number } }) {
         retry: true,
         retryDelay: 1000,
         staleTime: 1000,
+        placeholderData: prevData => prevData,
     });
 
     const {
@@ -41,11 +44,8 @@ export default function Board({ params }: { params: { pageNumber: number } }) {
     console.log(posts);
 
     return (
-        <div className="w-full mx-16 mt-8 flex">
-            {isLoadingPosts ||
-            isFetchingPosts ||
-            isLoadingTotalPosts ||
-            isFetchingTotalPosts ? (
+        <div className="w-full mx-16 mt-4 flex">
+            {isLoadingPosts ? (
                 <BoardSkeleton />
             ) : isErrorPosts || isErrorTotalPosts ? (
                 <div className="h-full w-full flex items-center justify-center">
@@ -54,11 +54,14 @@ export default function Board({ params }: { params: { pageNumber: number } }) {
                     </div>
                 </div>
             ) : isSuccessPosts && isSuccessTotalPosts ? (
-                <div className="flex flex-col items-center container mx-auto px-4">
+                <div className="flex flex-col items-center container mx-auto px-4 w-3/4">
+                    <div className="w-full flex justify-end mb-2">
+                        <PostComposer />
+                    </div>
                     <List posts={posts} />
                     <Pagination
                         curPage={params.pageNumber}
-                        totalPages={totalPostsCount}
+                        totalPages={Math.floor(totalPostsCount / PAGE_SIZE)}
                     />
                 </div>
             ) : (

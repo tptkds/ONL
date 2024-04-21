@@ -1,30 +1,17 @@
 import { PostData } from '@/types/post';
 import formatDate from '@/utils/date';
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 
 export default function List({ posts }: { posts: PostData[] }) {
-    const { data, status } = useSession();
     return (
-        <div className="w-3/4 bg-white shadow overflow-hidden rounded-md ">
-            <Link
-                href={'/board/write'}
-                aria-disabled={status !== 'authenticated'}
-                className={
-                    status !== 'authenticated'
-                        ? 'pointer-events-none opacity-50'
-                        : undefined
-                }
-            >
-                글쓰기
-            </Link>
+        <div className="w-full bg-white shadow overflow-hidden rounded-md ">
             <ul className="divide-y divide-gray-200">
                 {posts.map((post, index) => (
                     <li key={index} className="px-4 py-4 hover:bg-gray-50">
                         <article className="flex justify-between items-center space-x-3">
                             <Link
                                 href={`/post/${post.postId}`}
-                                className="w-full"
+                                className="w-full "
                             >
                                 <h3 className="  text-sm font-medium text-gray-900 truncate">
                                     {post.title}

@@ -1,7 +1,6 @@
 import {
     Pagination as PaginationWrapper,
     PaginationContent,
-    PaginationEllipsis,
     PaginationItem,
     PaginationLink,
     PaginationNext,
@@ -46,9 +45,7 @@ export default function Pagination({
                     />
                 </PaginationItem>
                 {renderPageNumbers()}
-                <PaginationItem>
-                    <PaginationEllipsis />
-                </PaginationItem>
+
                 <PaginationItem>
                     <PaginationNext
                         href={`/board/${+curPage + 1}`}

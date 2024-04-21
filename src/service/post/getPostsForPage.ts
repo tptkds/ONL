@@ -1,14 +1,14 @@
 import { db } from '@/app/firebase';
 import { PAGE_SIZE } from '@/constants/post';
 import { PostData } from '@/types/post';
-import { collection, getDocs, limit, query } from 'firebase/firestore';
+import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 
 export default async function getPostsForPage(
     pageNumber: number
 ): Promise<PostData[]> {
     const postsRef = collection(db, 'posts');
     const offset = pageNumber * PAGE_SIZE;
-    const q = query(postsRef, limit(offset));
+    const q = query(postsRef, orderBy('createdAt', 'desc'), limit(offset));
     try {
         const postsSnap = await getDocs(q);
         let postsData: PostData[] = [];

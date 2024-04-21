@@ -22,3 +22,9 @@ export const getPostData = async (postId: string): Promise<PostData | null> => {
         return null;
     }
 };
+
+export const stripHtml = (html: string) => {
+    const tmp = document.createElement('DIV');
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || '';
+};
