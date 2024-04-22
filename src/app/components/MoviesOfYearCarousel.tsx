@@ -10,7 +10,11 @@ import { TMDB_BASE_URL } from '@/constants/movie';
 import Link from 'next/link';
 
 export default function MoviesOfYearCarousel() {
-    const { data: moviesDetailsWithAwards, isSuccess } = useQuery({
+    const {
+        data: moviesDetailsWithAwards,
+        isSuccess,
+        isLoading,
+    } = useQuery({
         queryKey: ['award', 2023],
         queryFn: () => getMoviesOfTheYear(),
         staleTime: Infinity,
@@ -37,9 +41,9 @@ export default function MoviesOfYearCarousel() {
 
     return (
         <div className="relative w-full overflow-hidden">
-            {isSuccess && moviesDetailsWithAwards.length > 0 ? (
+            {!isLoading ? (
                 <Slider {...settings} className="z-0">
-                    {moviesDetailsWithAwards.map(movie => (
+                    {moviesDetailsWithAwards?.map(movie => (
                         <div
                             key={movie.id}
                             className="relative w-full h-[284px] sm:h-[398px] xl:h-[550px] overflow-hidden focus:outline-none"

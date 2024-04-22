@@ -23,11 +23,8 @@ export default function Home() {
     });
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col w-full sm:mb-16">
                 <MoviesOfYearCarousel />
-                <h2 className="mt-16 mb-4 text-2xl text-center font-bold">
-                    오늘의 트렌드
-                </h2>
                 <MoviesOfTrending />
             </div>
         </HydrationBoundary>
