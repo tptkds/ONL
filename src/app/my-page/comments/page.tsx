@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import getAllAccountComments from '@/service/post/getAllAccountComments';
 import { useSession } from 'next-auth/react';
-import Comment from './components/Comment';
+import Comment from './components/Comment1';
 
 export default function Comments() {
     const { data: sessionData } = useSession();
