@@ -9,7 +9,11 @@ const Form: React.FC = () => {
 
     return (
         <>
-            <p role="alert" aria-live="assertive">
+            <p
+                role="alert"
+                aria-live="assertive"
+                className="text-sm text-red-600 mb-4"
+            >
                 {status === 'error' ? errorMessage : ''}
             </p>
             <form

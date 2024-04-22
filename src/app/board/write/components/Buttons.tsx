@@ -9,6 +9,7 @@ import {
 } from 'firebase/firestore';
 import { PostData } from '@/types/post';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 interface ButtonsProps {
     title: string;
@@ -26,7 +27,7 @@ export default function Buttons({
     setErrorMessage,
 }: ButtonsProps) {
     const { data: sessionData } = useSession();
-
+    const router = useRouter();
     const handlePostSubmit = async () => {
         const plainTextContent = stripHtml(editorContent);
         if (!title || plainTextContent.length < 10) {
@@ -60,9 +61,10 @@ export default function Buttons({
             });
             console.log('Post added successfully');
             setErrorMessage('');
+            router.push(`/post/${docRef.id}`);
         } catch (error) {
             console.error('Error adding document: ', error);
-            setErrorMessage('게시글 등록 중 오류가 발생했습니다.');
+            alert('게시글 등록 중 오류가 발생했습니다.');
         }
     };
     return (

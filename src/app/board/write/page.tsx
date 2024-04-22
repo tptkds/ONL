@@ -10,7 +10,7 @@ import { TagOption } from '@/types/post';
 import { useRouter } from 'next/navigation';
 
 const Write = () => {
-    const { data: sessionData, status } = useSession();
+    const { status } = useSession();
     const router = useRouter();
     useEffect(() => {
         if (status !== 'loading' && status === 'unauthenticated') {

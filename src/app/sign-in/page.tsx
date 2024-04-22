@@ -10,7 +10,6 @@ const SignIn: React.FC = () => {
             </h2>
 
             <div className="mt-12 ">
-                {/* <h3 className="text-center mb-6">ONL 계정으로 로그인</h3> */}
                 <Form />
                 <ForgotPassword />
             </div>

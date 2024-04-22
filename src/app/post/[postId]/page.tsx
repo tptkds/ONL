@@ -2,14 +2,22 @@
 import incrementViewCount from '@/service/post/incrementViewCount';
 import { useEffect } from 'react';
 import { VIEWED_POSTS_KEY } from '@/constants/post';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import LikeButton from './components/LikeButton';
 import CommentsSection from './components/CommnetSection';
 import PostContent from './components/PostContent';
 
 export default function Post({ params }: { params: { postId: string } }) {
+    const queryClient = useQueryClient();
     const { mutate: mutateViewCount } = useMutation({
         mutationFn: () => incrementViewCount(params.postId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['post', params.postId],
+                exact: true,
+                refetchType: 'active',
+            });
+        },
     });
 
     useEffect(() => {
