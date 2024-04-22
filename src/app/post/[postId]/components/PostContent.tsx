@@ -20,8 +20,8 @@ export default function PostContent({ postId }: { postId: string }) {
             {isLoadingPostData || !postData ? (
                 <>
                     <Skeleton className="w-64 h-8" />
-                    <Skeleton className="w-44 h-4" />
-                    <Skeleton className="w-44 h-4" />
+                    <Skeleton className="w-44 h-4 mt-4 " />
+                    <Skeleton className="w-full h-96 mt-4 " />
                 </>
             ) : (
                 <>

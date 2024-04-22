@@ -3,6 +3,9 @@ import { Skeleton } from '@/components/ui/skeleton';
 export default function BoardSkeleton() {
     return (
         <div className="flex  flex-col items-center space-x-4 w-full">
+            <div className="w-3/4 flex flex-end">
+                <Skeleton className="h-12 w-12 justify-end mb-2" />
+            </div>
             <div className="flex flex-col space-y-2  w-3/4">
                 {Array.from({ length: 10 }, (_, i) => (
                     <Skeleton className="h-12 w-full " key={i} />

@@ -1,7 +1,6 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 import getPostsForPage from '@/service/post/getPostsForPage';
-import BoardSkeleton from './components/BoardSkeleton';
 import List from './components/List';
 import Pagination from './components/Pagination';
 import getTotalPostsCount from '@/service/post/getTotalPostsCount';
@@ -9,9 +8,12 @@ import PostComposer from './components/PostComposer';
 import { PAGE_SIZE } from '@/constants/post';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { useSession } from 'next-auth/react';
 
 export default function Board({ params }: { params: { pageNumber: number } }) {
     const router = useRouter();
+    const { status: sessionStatus } = useSession();
     const {
         data: posts,
         isFetching: isFetchingPosts,
@@ -54,8 +56,10 @@ export default function Board({ params }: { params: { pageNumber: number } }) {
 
     return (
         <div className="w-full mx-16 mt-4 flex">
-            {isLoadingPosts ? (
-                <BoardSkeleton />
+            {isLoadingTotalPosts || sessionStatus == 'loading' ? (
+                <div className="flex items-center justify-center w-full h-full">
+                    <AiOutlineLoading3Quarters className="animate-spin" />
+                </div>
             ) : isErrorPosts || isErrorTotalPosts ? (
                 <div className="h-full w-full flex items-center justify-center">
                     <div>

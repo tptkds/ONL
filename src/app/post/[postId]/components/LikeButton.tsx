@@ -5,12 +5,7 @@ import deleteLikedPost from '@/service/post/deleteLikedPost';
 import getLikedPostIds from '@/service/post/getLikedPostIds';
 import getPostData from '@/service/post/getPostData';
 import updateLikeCount from '@/service/post/updateLikeCount';
-import {
-    QueryClient,
-    useMutation,
-    useQuery,
-    useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { BiLike, BiSolidLike } from 'react-icons/bi';
 
