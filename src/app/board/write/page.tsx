@@ -26,7 +26,7 @@ const Write = () => {
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState('영화이야기');
     return (
-        <div className="w-3/4">
+        <div className="w-3/4 mt-4">
             <div className="flex flex-col justify-start mt-4">
                 <CatergorySelect setCategory={setCategory} />
                 <TitleInput title={title} setTitle={setTitle} />

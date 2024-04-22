@@ -13,6 +13,7 @@ export interface PostData {
     likeCount: number;
     viewCount: number;
     postId: string;
+    commentCount: number;
 }
 
 export interface CommentData {

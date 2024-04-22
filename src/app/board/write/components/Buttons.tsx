@@ -53,6 +53,7 @@ export default function Buttons({
             likeCount: 0,
             viewCount: 0,
             postId: '',
+            commentCount: 0,
         };
 
         try {
