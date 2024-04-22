@@ -55,7 +55,7 @@ export default function Board({ params }: { params: { pageNumber: number } }) {
     }, [totalPostsCount]);
 
     return (
-        <div className="w-full mx-16 mt-4 flex">
+        <div className="w-full mx-2 sm:mx-16 mt-4 flex">
             {isLoadingTotalPosts || sessionStatus == 'loading' ? (
                 <div className="flex items-center justify-center w-full h-full">
                     <AiOutlineLoading3Quarters className="animate-spin" />
@@ -67,7 +67,7 @@ export default function Board({ params }: { params: { pageNumber: number } }) {
                     </div>
                 </div>
             ) : isSuccessPosts && isSuccessTotalPosts ? (
-                <div className="flex flex-col items-center container mx-auto px-4 w-3/4">
+                <div className="flex flex-col items-center container mx-auto px-4 w-full lg:w-5/6 xl:w-3/4">
                     <div className="w-full flex justify-end mb-2">
                         <PostComposer />
                     </div>
