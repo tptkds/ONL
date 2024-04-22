@@ -14,6 +14,8 @@ export default function MoviesOfYearCarousel() {
         queryKey: ['award', 2023],
         queryFn: () => getMoviesOfTheYear(),
         staleTime: Infinity,
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
     });
 
     const [activeIndex, setActiveIndex] = useState(0);
@@ -40,22 +42,26 @@ export default function MoviesOfYearCarousel() {
                     {moviesDetailsWithAwards.map(movie => (
                         <div
                             key={movie.id}
-                            className="relative w-full h-[550px] overflow-hidden focus:outline-none"
+                            className="relative w-full h-[284px] sm:h-[398px] xl:h-[550px] overflow-hidden focus:outline-none"
                         >
-                            <Image
-                                src={`${TMDB_BASE_URL}/original${movie.backdrop_path}`}
-                                alt={`${movie.title} backdrop`}
-                                fill
-                                style={{
-                                    objectFit: 'cover',
-                                    objectPosition: '50% 50%',
-                                }}
-                                sizes="100vw"
-                                priority
-                                className="absolute inset-0 z-0"
-                            />
+                            <div className="absolute top-0 left-0 right-0 bottom-0">
+                                <Image
+                                    src={`${TMDB_BASE_URL}/original/${movie.backdrop_path}`}
+                                    alt={`${movie.title} backdrop`}
+                                    fill
+                                    style={{
+                                        objectFit: 'cover',
+                                        objectPosition: '50% 50%',
+                                    }}
+                                    sizes="100vw"
+                                    priority
+                                    placeholder="blur"
+                                    blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwJyBoZWlnaHQ9JzYwJyB2ZXJzaW9uPTEuMSB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9J2dyYXknLz48L3N2Zz4="
+                                    loading="eager"
+                                />
+                            </div>
                             <Link href={`/film-info/${movie.id}`}>
-                                <div className="absolute bottom-10 right-10 z-10 text-white bg-black/40 p-4 rounded-md ">
+                                <div className="absolute bottom-10 right-10 z-10 text-white bg-black/40 text-xs sm:text-sm p-2 sm:p-4 rounded-md ">
                                     {movie.title} - {movie.award}
                                 </div>
                             </Link>
