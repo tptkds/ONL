@@ -15,11 +15,14 @@ export default function List({ posts }: { posts: PostData[] }) {
                                 </p>
                                 <Link
                                     href={`/post/${post.postId}`}
-                                    className="w-full "
+                                    className="w-full flex items-center"
                                 >
                                     <h3 className="  text-sm text-gray-900 truncate">
                                         {post.title}
                                     </h3>
+                                    <p className="text-xs font-medium ml-0.5">
+                                        ({post.commentCount})
+                                    </p>
                                 </Link>
                             </div>
                             <div className=" flex flex-shrink-0 flex md:space-x-1 text-xs text-gray-500 mt-2 md:mt-0">

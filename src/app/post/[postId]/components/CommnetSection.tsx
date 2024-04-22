@@ -1,5 +1,6 @@
 import getComments from '@/service/post/getComments';
 import postComment from '@/service/post/postComment';
+import updateCommentCount from '@/service/post/updateCommentCount';
 import { CommentData } from '@/types/post';
 import formatDate from '@/utils/date';
 import { getPostData } from '@/utils/post';
@@ -22,17 +23,45 @@ export default function CommentsSection({ postId }: { postId: string }) {
         retryDelay: 1000,
     });
 
+    const { data: post } = useQuery({
+        queryKey: ['post', postId],
+        queryFn: () => getPostData(postId),
+
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
+        retry: true,
+        retryDelay: 1000,
+    });
+
     const { isSuccess, mutate } = useMutation({
         mutationFn: (commentData: CommentData) => postComment(commentData),
     });
+
+    const {
+        isSuccess: isSuccessMutateCommentCount,
+        mutate: mutateAddCommentCount,
+    } = useMutation({
+        mutationFn: () => updateCommentCount(postId, true),
+    });
+
     useEffect(() => {
-        if (isSuccess)
+        if (isSuccess) {
             queryClient.invalidateQueries({ queryKey: ['comments', postId] });
+        }
     }, [isSuccess]);
+
+    useEffect(() => {
+        if (isSuccessMutateCommentCount) {
+            queryClient.invalidateQueries({ queryKey: ['post', postId] });
+        }
+    }, [isSuccessMutateCommentCount]);
 
     return (
         <div className="mt-2  pt-4">
-            <h3 className="text-xl font-bold mb-2">댓글</h3>
+            <div className="flex items-center  mb-2">
+                <h3 className="flex text-xl font-bold">댓글</h3>
+                <p className="ml-2">{post?.commentCount}개</p>
+            </div>
             {isFetching ? (
                 <div>Loading comments...</div>
             ) : (
@@ -88,6 +117,7 @@ export default function CommentsSection({ postId }: { postId: string }) {
                                 postTitle: postData?.title,
                             };
                             mutate(commentData);
+                            mutateAddCommentCount();
                             setCommentText('');
                         }
                     }}
