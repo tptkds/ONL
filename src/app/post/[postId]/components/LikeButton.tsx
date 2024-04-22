@@ -1,66 +1,118 @@
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import addLikedPost from '@/service/post/addLikedPost';
 import deleteLikedPost from '@/service/post/deleteLikedPost';
-import getLikedPosts from '@/service/post/getLikedPosts';
+import getLikedPostIds from '@/service/post/getLikedPostIds';
 import getPostData from '@/service/post/getPostData';
 import updateLikeCount from '@/service/post/updateLikeCount';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+    QueryClient,
+    useMutation,
+    useQuery,
+    useQueryClient,
+} from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { BiLike, BiSolidLike } from 'react-icons/bi';
 
 export default function LikeButton({ postId }: { postId: string }) {
-    const [likeAction, setLikeAction] = useState<null | string>(null);
+    const { data: sessionData } = useSession();
 
-    const { data: sessionData, status: sessionStatus } = useSession();
-
-    const { data: postData } = useQuery({
+    const { data: postData, isLoading: isLoadingPostData } = useQuery({
         queryKey: ['post', postId],
         queryFn: () => getPostData(postId),
         enabled: !!postId,
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
+        retry: true,
+        retryDelay: 1000,
     });
 
-    const { data: likedPosts } = useQuery({
-        queryKey: ['likedpost', postId],
-        queryFn: () => getLikedPosts(sessionData?.user?.uid as string),
-        initialData: [],
-        enabled: !!sessionData?.user?.uid,
+    const {
+        data: likedPostIds,
+        isLoading: isLoadingLikedPostIds,
+        isFetching: isFetchingLikedPostIds,
+    } = useQuery({
+        queryKey: ['likedPostIds', sessionData?.user.uid],
+        queryFn: () => getLikedPostIds(sessionData?.user.uid as string),
+        enabled: !!sessionData?.user.uid,
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
+        retry: true,
+        retryDelay: 1000,
     });
 
-    const { mutate: mutateLikeCount, isSuccess: isSuccessMutateLikeCount } =
-        useMutation({
-            mutationFn: (isIncrement: boolean) =>
-                updateLikeCount(postId, isIncrement),
+    const queryClient = useQueryClient();
+
+    const handleSuccess = async (isIncrement: boolean) => {
+        await updateLikeCount(postId, isIncrement);
+        queryClient.invalidateQueries({
+            queryKey: ['likedPostIds', sessionData?.user.uid as string],
         });
+        queryClient.invalidateQueries({
+            queryKey: ['post', postId],
+        });
+    };
 
-    useEffect(() => {
-        if (isSuccessMutateLikeCount) {
-            if (likeAction == 'add') {
+    const { mutate: addLikeMutate, isPending: isPendingAddLikeMutate } =
+        useMutation({
+            mutationFn: () =>
                 addLikedPost(
-                    sessionData?.user?.uid as string,
+                    sessionData?.user.uid as string,
                     postId,
                     postData?.title as string,
                     postData?.content as string
-                );
-            } else if (likeAction == 'delete') {
-                deleteLikedPost(sessionData?.user?.uid as string, postId);
-            }
-            setLikeAction(null);
+                ),
+            onSuccess: () => handleSuccess(true),
+            onError: error => {
+                console.error('Error adding like:', error);
+            },
+        });
+
+    const { mutate: removeLikeMutate, isPending: isPendingRemoveLikeMutate } =
+        useMutation({
+            mutationFn: () =>
+                deleteLikedPost(sessionData?.user.uid as string, postId),
+            onSuccess: () => handleSuccess(false),
+            onError: error => {
+                console.error('Error removing like:', error);
+            },
+        });
+
+    const handleLike = () => {
+        if (likedPostIds?.[postId]) {
+            removeLikeMutate();
+        } else {
+            addLikeMutate();
         }
-    }, [isSuccessMutateLikeCount]);
-    if (postData === undefined) return <>loading...</>;
+    };
+
     return (
-        <button
-            className={`px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 ${sessionStatus !== 'authenticated' ? 'bg-gray-500' : 'bg-black'}`}
-            onClick={() => {
-                if (!likedPosts?.includes(postId)) {
-                    mutateLikeCount(true);
-                    setLikeAction('add');
-                } else {
-                    mutateLikeCount(false);
-                    setLikeAction('delete');
-                }
-            }}
-        >
-            {likedPosts?.includes(postId) ? '추천 취소' : '추천'}
-        </button>
+        <>
+            <div className="w-full flex justify-center">
+                {isLoadingLikedPostIds || isLoadingPostData ? (
+                    <Skeleton className="w-12 h-12" />
+                ) : likedPostIds?.[postId] ? (
+                    <button
+                        className="hover:bg-gray-100 rounded-sm px-2 py-2 text-sm flex items-center justify-center"
+                        onClick={handleLike}
+                        disabled={
+                            isPendingRemoveLikeMutate || isPendingAddLikeMutate
+                        }
+                    >
+                        <BiSolidLike className="text-base mr-2" /> 추천
+                    </button>
+                ) : (
+                    <button
+                        className="hover:bg-gray-100 rounded-sm px-2 py-2 text-sm flex items-center justify-center"
+                        onClick={handleLike}
+                        disabled={
+                            isPendingRemoveLikeMutate || isPendingAddLikeMutate
+                        }
+                    >
+                        <BiLike className="text-base mr-2" /> 추천
+                    </button>
+                )}
+            </div>
+        </>
     );
 }

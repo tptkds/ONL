@@ -84,3 +84,11 @@ hr {
 .hide-scrollbar::-webkit-scrollbar {
     display: none; /* 스크롤바 공간 없애기 */
 }
+
+.tb_spr {
+    margin: 0 5px;
+    font-size: 11px;
+    letter-spacing: -1px;
+    color: #dbdbdb;
+    font-weight: 400;
+}
