@@ -37,7 +37,7 @@ export default function Post({ params }: { params: { postId: string } }) {
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-4xl">
-            <div className="bg-white p-6 rounded-lg shadow-lg">
+            <div className="bg-white p-6 rounded-lg ">
                 <PostContent postId={params.postId} />
                 <LikeButton postId={params.postId} />
                 <CommentsSection postId={params.postId} />

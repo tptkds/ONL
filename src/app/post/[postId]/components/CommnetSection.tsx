@@ -16,6 +16,10 @@ export default function CommentsSection({ postId }: { postId: string }) {
         queryKey: ['comments', postId],
         queryFn: () => getComments(postId),
         initialData: [],
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
+        retry: true,
+        retryDelay: 1000,
     });
 
     const { isSuccess, mutate } = useMutation({
@@ -27,15 +31,35 @@ export default function CommentsSection({ postId }: { postId: string }) {
     }, [isSuccess]);
 
     return (
-        <div className="mt-6">
-            <h2 className="text-xl font-bold mb-2">Comments</h2>
+        <div className="mt-2  pt-4">
+            <h3 className="text-xl font-bold mb-2">댓글</h3>
+            {isFetching ? (
+                <div>Loading comments...</div>
+            ) : (
+                <ul>
+                    {comments.map((comment, i) => (
+                        <li
+                            key={comment.commentId}
+                            className="mb-2 p-2 border-b"
+                        >
+                            <p>{comment.content}</p>
+                            <div className="text-xs flex mt-1">
+                                <p>{comment.authorName}</p>
+                                <span className="tb_spr">|</span>
+                                <p> {formatDate(comment.createdAt)}</p>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            )}
+
             <div className="mb-4">
                 <textarea
-                    className="w-full p-2 border rounded"
+                    className="w-full p-2 border rounded focus:outline-none"
                     placeholder={
                         status !== 'authenticated'
                             ? '로그인하면 댓글을 남길 수 있어요.'
-                            : '댓글을 남겨주세요...'
+                            : ''
                     }
                     value={commentText}
                     onChange={e => setCommentText(e.target.value)}
@@ -69,27 +93,9 @@ export default function CommentsSection({ postId }: { postId: string }) {
                     }}
                     disabled={status !== 'authenticated'}
                 >
-                    Post Comment
+                    댓글 남기기
                 </button>
             </div>
-            {isFetching ? (
-                <div>Loading comments...</div>
-            ) : (
-                <ul>
-                    {comments.map((comment, i) => (
-                        <li
-                            key={comment.commentId}
-                            className="mb-2 p-2 border-b"
-                        >
-                            <p>{comment.content}</p>
-                            <div className="text-sm">
-                                By {comment.authorName} on{' '}
-                                {formatDate(comment.createdAt)}
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            )}
         </div>
     );
 }

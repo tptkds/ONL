@@ -13,7 +13,6 @@ export default function PostContent({ postId }: { postId: string }) {
         refetchInterval: false,
         retry: true,
         retryDelay: 1000,
-        staleTime: 1000,
     });
 
     return (
@@ -29,7 +28,7 @@ export default function PostContent({ postId }: { postId: string }) {
                     <h2 className="text-2xl font-semibold mb-2">
                         {postData.title}
                     </h2>
-                    <div className="text-gray-700 text-sm flex pt-2 pb-4 border-b">
+                    <div className="text-gray-700 text-xs flex pt-2 pb-4 border-b">
                         <p>{postData.authorName}</p>
                         <span className="tb_spr">|</span>
                         <p>{formatDate(postData.createdAt)}</p>
@@ -39,16 +38,16 @@ export default function PostContent({ postId }: { postId: string }) {
                         <p>추천 {postData.likeCount}</p>
                     </div>
                     <div
-                        className="preview mb-4 whitespace-pre-line text-gray-800 py-6 border-b"
+                        className="  break-words h-full w-full mb-4 text-gray-800 py-6 "
                         dangerouslySetInnerHTML={createMarkup(postData.content)}
                     ></div>
 
                     {postData.tags && (
-                        <div className="my-4">
+                        <div className="my-4 pb-4 border-b">
                             {postData.tags.map((tag: string) => (
                                 <span
                                     key={tag}
-                                    className="inline-block bg-neutral-200 text-neutral-500 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
+                                    className="inline-block bg-neutral-200 text-neutral-500 rounded-full px-3 py-1 text-xs text-gray-700 mr-2"
                                 >
                                     {tag}
                                 </span>

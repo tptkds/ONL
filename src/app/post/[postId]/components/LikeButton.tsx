@@ -88,12 +88,12 @@ export default function LikeButton({ postId }: { postId: string }) {
 
     return (
         <>
-            <div className="w-full flex justify-center">
+            <div className="w-full flex justify-center mt-4 pb-4 border-b">
                 {isLoadingLikedPostIds || isLoadingPostData ? (
                     <Skeleton className="w-12 h-12" />
                 ) : likedPostIds?.[postId] ? (
                     <button
-                        className="hover:bg-gray-100 rounded-sm px-2 py-2 text-sm flex items-center justify-center"
+                        className="hover:bg-gray-100 rounded-xl px-4 py-2 text-sm flex items-center justify-center"
                         onClick={handleLike}
                         disabled={
                             isPendingRemoveLikeMutate || isPendingAddLikeMutate
@@ -103,7 +103,7 @@ export default function LikeButton({ postId }: { postId: string }) {
                     </button>
                 ) : (
                     <button
-                        className="hover:bg-gray-100 rounded-sm px-2 py-2 text-sm flex items-center justify-center"
+                        className="hover:bg-gray-100 rounded-xl px-4 py-2 text-sm flex items-center justify-center"
                         onClick={handleLike}
                         disabled={
                             isPendingRemoveLikeMutate || isPendingAddLikeMutate
