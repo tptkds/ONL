@@ -31,7 +31,6 @@ export default function LikeButton({ postId }: { postId: string }) {
                 updateLikeCount(postId, isIncrement),
         });
 
-    console.log(likedPosts, postId);
     useEffect(() => {
         if (isSuccessMutateLikeCount) {
             if (likeAction == 'add') {
