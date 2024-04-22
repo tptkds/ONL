@@ -56,37 +56,47 @@ export default async function getMoviesOfTheYearByFestival() {
     const moviesCannes = { id: 'Cannes', movies: [] as MovieDetails[] };
     const moviesVenice = { id: 'Venice', movies: [] as MovieDetails[] };
 
+    const promisesBerlin = [];
+    const promisesCannes = [];
+    const promisesVenice = [];
+
     for (const festival in yearOfFilms2023) {
         for (const film of yearOfFilms2023[festival]) {
-            const movieDetails = await getMovieDetails(film.tmdbId);
-            if (movieDetails) {
-                if (festival === 'Berlin') {
-                    moviesBerlin.movies.push({
+            const promise = getMovieDetails(film.tmdbId).then(movieDetails => {
+                if (movieDetails) {
+                    const movie = {
                         ...movieDetails,
                         award: film.award,
                         festival: festival,
-                    });
-                } else if (festival === 'Cannes') {
-                    moviesCannes.movies.push({
-                        ...movieDetails,
-                        award: film.award,
-                        festival: festival,
-                    });
-                } else {
-                    moviesVenice.movies.push({
-                        ...movieDetails,
-                        award: film.award,
-                        festival: festival,
-                    });
+                    };
+                    if (festival === 'Berlin') {
+                        moviesBerlin.movies.push(movie);
+                    } else if (festival === 'Cannes') {
+                        moviesCannes.movies.push(movie);
+                    } else {
+                        moviesVenice.movies.push(movie);
+                    }
                 }
+            });
+            if (festival === 'Berlin') {
+                promisesBerlin.push(promise);
+            } else if (festival === 'Cannes') {
+                promisesCannes.push(promise);
+            } else {
+                promisesVenice.push(promise);
             }
         }
     }
+
+    await Promise.all(promisesBerlin);
+    await Promise.all(promisesCannes);
+    await Promise.all(promisesVenice);
 
     const allMovies = [
         { ...moviesBerlin },
         { ...moviesCannes },
         { ...moviesVenice },
     ];
+
     return allMovies;
 }

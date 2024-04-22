@@ -16,6 +16,8 @@ export default function MoviesOfTrending() {
         queryKey: ['trending', 'day', 'all', 1],
         queryFn: getTrendingMovies,
         staleTime: Infinity,
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
     });
 
     const settings = {
