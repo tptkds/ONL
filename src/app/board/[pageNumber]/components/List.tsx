@@ -9,12 +9,14 @@ export default function List({ posts }: { posts: PostData[] }) {
                 {posts.map((post, index) => (
                     <li key={index} className="px-4 py-4 hover:bg-gray-50">
                         <article className="flex justify-between items-center space-x-3">
-                            <p className="">{post.category}</p>
+                            <p className="text-xs w-52 font-semibold text-center">
+                                {post.category}
+                            </p>
                             <Link
                                 href={`/post/${post.postId}`}
                                 className="w-full "
                             >
-                                <h3 className="  text-sm font-medium text-gray-900 truncate">
+                                <h3 className="  text-sm text-gray-900 truncate">
                                     {post.title}
                                 </h3>
                             </Link>
