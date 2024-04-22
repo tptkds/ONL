@@ -9,11 +9,13 @@ import MoviesOfTrending from './components/MoviesOfTrending';
 
 export default function Home() {
     const queryClient = new QueryClient();
+
     queryClient.prefetchQuery({
         queryKey: ['award', 2023],
         queryFn: () => getMoviesOfTheYear(),
         staleTime: Infinity,
     });
+
     queryClient.prefetchQuery({
         queryKey: ['trending', 'day', 'all', 1],
         queryFn: () => getMoviesOfTheYear(),

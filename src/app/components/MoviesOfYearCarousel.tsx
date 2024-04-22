@@ -37,7 +37,7 @@ export default function MoviesOfYearCarousel() {
 
     return (
         <div className="relative w-full overflow-hidden">
-            {isSuccess && moviesDetailsWithAwards.length > 0 && (
+            {isSuccess && moviesDetailsWithAwards.length > 0 ? (
                 <Slider {...settings} className="z-0">
                     {moviesDetailsWithAwards.map(movie => (
                         <div
@@ -57,7 +57,6 @@ export default function MoviesOfYearCarousel() {
                                     priority
                                     placeholder="blur"
                                     blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwJyBoZWlnaHQ9JzYwJyB2ZXJzaW9uPTEuMSB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9J2dyYXknLz48L3N2Zz4="
-                                    loading="eager"
                                 />
                             </div>
                             <Link href={`/film-info/${movie.id}`}>
@@ -68,6 +67,29 @@ export default function MoviesOfYearCarousel() {
                         </div>
                     ))}
                 </Slider>
+            ) : (
+                <div className="relative w-full h-[284px] sm:h-[398px] xl:h-[550px] overflow-hidden focus:outline-none">
+                    <div className="absolute top-0 left-0 right-0 bottom-0">
+                        <Image
+                            src={'/temporaryImage.webp'}
+                            alt={`임시 이미지`}
+                            fill
+                            style={{
+                                objectFit: 'cover',
+                                objectPosition: '50% 50%',
+                            }}
+                            sizes="100vw"
+                            priority
+                            placeholder="blur"
+                            blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwJyBoZWlnaHQ9JzYwJyB2ZXJzaW9uPTEuMSB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9J2dyYXknLz48L3N2Zz4="
+                        />
+                    </div>
+                    <Link href={`/film-info/1050035`}>
+                        <div className="absolute bottom-10 right-10 z-10 text-white bg-black/40 text-xs sm:text-sm p-2 sm:p-4 rounded-md ">
+                            괴물 - 각본상
+                        </div>
+                    </Link>
+                </div>
             )}
         </div>
     );
