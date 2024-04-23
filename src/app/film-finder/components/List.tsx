@@ -6,10 +6,11 @@ import React, { Fragment, useEffect } from 'react';
 import { useIntersectionObserver } from 'usehooks-ts';
 import useStore from '@/app/store';
 import getMoviesByFilltering from '@/service/movie/getMoviesByFilltering';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 export default function List() {
     const { selectedSorting, selectedGenres, keyword } = useStore();
-    const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
         useInfiniteQuery<MoviesResponse>({
             queryKey: ['movies', selectedSorting, selectedGenres, keyword],
             queryFn: async ({ pageParam = 1 }) => {
@@ -38,7 +39,12 @@ export default function List() {
         }
     }, [isIntersecting, hasNextPage, isFetchingNextPage, fetchNextPage]);
     return (
-        <div className="flex flex-wrap ">
+        <div className="flex flex-wrap h-full">
+            {isLoading && (
+                <div className="flex items-center justify-center w-full h-full">
+                    <AiOutlineLoading3Quarters className="animate-spin" />
+                </div>
+            )}
             {data?.pages.map((page, pageIndex) => (
                 <Fragment key={pageIndex}>
                     {page.results.map(movie => (
