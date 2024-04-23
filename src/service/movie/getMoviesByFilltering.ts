@@ -21,7 +21,6 @@ export default async function getMoviesByFilltering(
     };
     try {
         const response = await axios(URL, OPTIONS);
-        console.log(response);
         return response.data;
     } catch (error) {
         console.error('error: ' + error);

@@ -29,7 +29,6 @@ export default function Buttons({
     const { data: sessionData } = useSession();
     const router = useRouter();
     const handlePostSubmit = async () => {
-        console.log(category);
         const plainTextContent = stripHtml(editorContent);
         if (!title || plainTextContent.length < 10) {
             setErrorMessage(
