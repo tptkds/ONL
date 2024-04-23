@@ -28,7 +28,7 @@ export default async function FilmFinder() {
         },
         initialPageParam: 1,
         pages: 1,
-        staleTime: Infinity,
+        staleTime: 21600,
     });
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>

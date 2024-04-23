@@ -25,9 +25,12 @@ export default function List() {
                 const nextPage = lastPage.page + 1;
                 return nextPage <= lastPage.total_pages ? nextPage : undefined;
             },
+            refetchOnWindowFocus: false,
+            refetchInterval: false,
         });
     const { ref, isIntersecting } = useIntersectionObserver({
-        threshold: 0.5,
+        threshold: 0.1,
+        rootMargin: '500px',
     });
     useEffect(() => {
         if (isIntersecting && hasNextPage && !isFetchingNextPage) {
