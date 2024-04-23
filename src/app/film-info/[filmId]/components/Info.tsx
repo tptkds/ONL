@@ -59,7 +59,7 @@ export default function Info({ filmId }: { filmId: string }) {
                     />
                 </div>
                 <div className="sm:ml-12 sm:mr-12 flex flex-col justify-center items-center sm:items-start text-white">
-                    <h2 className="mb-4  text-[2.5rem] font-bold">
+                    <h2 className="mb-4  text-xl sm:text-[2.5rem] font-bold">
                         {data.title}
                     </h2>
                     <p className="mb-2  text-xs">
@@ -90,13 +90,13 @@ export default function Info({ filmId }: { filmId: string }) {
                 </div>
             </div>
             <div className="mt-16 mx-16">
-                <h3 className="mb-4 text-2xl font-bold text-center sm:text-left">
+                <h3 className="mb-4 text-xl sm:text-2xl font-bold text-center sm:text-left">
                     배우
                 </h3>
                 <CastList creditsData={creditsData} />
             </div>
             <div className="mt-16 mx-16">
-                <h3 className="mb-4 text-2xl font-bold text-center sm:text-left">
+                <h3 className="mb-4 text-xl sm:ttext-2xl font-bold text-center sm:text-left">
                     제작진
                 </h3>
                 <CrewList creditsData={creditsData} />

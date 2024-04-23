@@ -38,6 +38,7 @@ export default function List() {
             fetchNextPage();
         }
     }, [isIntersecting, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
     return (
         <div className="flex flex-wrap h-full">
             {isLoading && (
@@ -50,7 +51,7 @@ export default function List() {
                     {page.results.map(movie => (
                         <div
                             key={movie.id}
-                            className="w-full sm:w-1/2 md:w-1/3 xl:w-1/4 2xl:w-1/5 flex "
+                            className="relative w-full sm:w-1/2 md:w-1/3 xl:w-1/4 2xl:w-1/5 flex flex-col "
                         >
                             <Movie movie={movie} />
                         </div>

@@ -50,7 +50,10 @@ export default function CastList({
             </div>
             <div className="flex justify-center">
                 {visibleCount < creditsData.cast.length && (
-                    <button onClick={handleShowMore} className="text-sm">
+                    <button
+                        onClick={handleShowMore}
+                        className="text-xs sm:text-sm hover:text-gray-600  underline"
+                    >
                         더보기
                     </button>
                 )}
