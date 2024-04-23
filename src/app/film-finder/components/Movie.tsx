@@ -83,9 +83,10 @@ export default function Movie({ movie }: MovieProps) {
                     <p className="text-sm text-gray-600">
                         {movie.release_date}
                     </p>
-                    {status == 'authenticated' && (
-                        <div className="flex justify-between">
-                            {renderRating(movie.vote_average)}
+
+                    <div className="flex justify-between">
+                        {renderRating(movie.vote_average)}
+                        {status == 'authenticated' && (
                             <div className="flex">
                                 <BookmarkToggleButton
                                     moviePoster={movie.poster_path}
@@ -105,8 +106,8 @@ export default function Movie({ movie }: MovieProps) {
                                     rating={5}
                                 />
                             </div>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

@@ -11,7 +11,7 @@ export default function Menu() {
         if (pathname) setCurCategory(pathname.slice(9));
     }, [setCurCategory, pathname]);
     return (
-        <ul className="min-w-fit text-sm px-2 py-4 bg-base-200 sm:w-56 rounded-box text-center sm:text-left flex flex-wrap flex-row sm:flex-col justify-center sm:justify-normal sm:items-start h-fit focus-bg-white">
+        <ul className="min-w-fit text-sm px-2 py-4 bg-base-200 sm:w-56 rounded-box text-center sm:text-left flex flex-wrap flex-row sm:flex-col justify-center sm:justify-normal sm:items-start h-fit focus-bg-white ">
             <li
                 className={`w-1/2 sm:w-full p-2  px-4 hover:bg-black/5 rounded-md ${curCategory == 'bookmark' ? 'font-semibold text-gray-950 ' : ''} `}
             >
