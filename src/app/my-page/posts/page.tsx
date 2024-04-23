@@ -12,10 +12,12 @@ export default function Posts() {
         initialData: [],
         enabled: !!sessionData?.user.uid,
         refetchOnMount: 'always',
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
     });
 
     return (
-        <div className="sm:ml-4 flex flex-wrap w-full">
+        <div className="sm:ml-4 flex flex-wrap  w-full">
             {postsData?.map(post => <Post {...post} key={post.postId} />)}
         </div>
     );

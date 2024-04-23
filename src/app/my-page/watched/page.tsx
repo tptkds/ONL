@@ -12,6 +12,10 @@ export default function Bookmarks() {
         queryFn: () => getWatchedMovies(sessionData?.user.uid as string),
         enabled: !!sessionData?.user.uid,
         refetchOnMount: 'always',
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
+        retry: true,
+        retryDelay: 1000,
     });
     if (isFetching) return <></>;
     return (

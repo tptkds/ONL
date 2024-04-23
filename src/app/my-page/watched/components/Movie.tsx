@@ -8,7 +8,7 @@ export default function Movie({
     WatchedMovieData: WatchedMovie;
 }) {
     return (
-        <div className="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-2 ">
+        <div className="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5  border py-2 pb-4 mb-4">
             <div className="relative w-full h-auto px-2">
                 <Image
                     src={`${TMDB_BASE_URL}/w500/${WatchedMovieData.moviePoster}`}
