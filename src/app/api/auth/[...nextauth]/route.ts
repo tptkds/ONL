@@ -58,22 +58,27 @@ const authOptions: NextAuthOptions = {
             },
         }),
     ],
-    pages: {
-        signIn: '/sign-in',
-    },
+
     callbacks: {
         async redirect({ url, baseUrl }) {
             return baseUrl;
         },
 
-        async jwt({ token, user }) {
+        async jwt({ token, user, account }) {
+            if (account?.provider === 'google') {
+                token.isGoogleAccount = true;
+            }
+
             if (user) {
                 token.id = user.id;
             }
+
             return token;
         },
         async session({ session, token }) {
             session.user.uid = token.id as string | null | undefined;
+            session.user.isGoogleAccount =
+                (token.isGoogleAccount as boolean) ?? false;
             return session;
         },
 

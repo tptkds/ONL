@@ -2,11 +2,19 @@
 import { createUser } from '@/app/actions/createUser';
 import { useFormState } from 'react-dom';
 import SubmitButton from './SubmitButton';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 const initialState = {
     message: '',
 };
 const Form: React.FC = () => {
     const [state, formAction] = useFormState(createUser, initialState);
+    const router = useRouter();
+    useEffect(() => {
+        if (state.message === '사용자 생성 성공!') {
+            router.push('/sign-in');
+        }
+    }, [state.message]);
 
     return (
         <>

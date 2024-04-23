@@ -1,3 +1,4 @@
+import getUserNickname from '@/service/account/getUserNickname';
 import getComments from '@/service/post/getComments';
 import postComment from '@/service/post/postComment';
 import updateCommentCount from '@/service/post/updateCommentCount';
@@ -13,6 +14,17 @@ export default function CommentsSection({ postId }: { postId: string }) {
     const queryClient = useQueryClient();
     const [commentText, setCommentText] = useState('');
     const { data: sessionData, status } = useSession();
+
+    const { data: userName } = useQuery({
+        queryKey: ['useName', sessionData?.user.uid],
+        queryFn: () => getUserNickname(sessionData?.user.uid as string),
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
+        retry: true,
+        retryDelay: 1000,
+        enabled: !!sessionData?.user.uid,
+    });
+
     const { data: comments, isFetching } = useQuery({
         queryKey: ['comments', postId],
         queryFn: () => getComments(postId),
@@ -103,12 +115,12 @@ export default function CommentsSection({ postId }: { postId: string }) {
                             if (
                                 postData == null ||
                                 !sessionData?.user.uid ||
-                                !sessionData?.user.name
+                                !userName
                             )
                                 return;
                             const commentData: CommentData = {
                                 authorId: sessionData?.user.uid,
-                                authorName: sessionData?.user.name,
+                                authorName: userName,
                                 createdAt: serverTimestamp(),
                                 updatedAt: serverTimestamp(),
                                 content: commentText,

@@ -7,6 +7,7 @@ declare module 'next-auth' {
             email: string | null;
             name: string | null;
             uid: string | null | undefined;
+            isGoogleAccount: boolean;
         };
     }
     interface User {

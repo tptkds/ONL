@@ -30,7 +30,6 @@ const useSignInUser = () => {
         }
 
         const result = await signIn('credentials', {
-            redirect: false,
             email,
             password,
         });

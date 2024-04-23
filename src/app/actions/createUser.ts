@@ -58,7 +58,10 @@ export const createUser = async (prevState: any, formData: FormData) => {
         await updateProfile(userCredential.user, {
             displayName: validatedFields.data.nickname,
         });
-        await initializeUserDoc(userCredential.user.uid);
+        await initializeUserDoc(
+            userCredential.user.uid,
+            validatedFields.data.nickname
+        );
 
         return { message: '사용자 생성 성공!' };
     } catch (error) {
