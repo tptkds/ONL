@@ -8,22 +8,33 @@ import { CastMember, Genre, SpokenLanguage } from '@/types/movie';
 import { getMovieCredits } from '@/service/movie/getMovieCredits';
 import CastList from './CastList';
 import CrewList from './CrewList';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 export default function Info({ filmId }: { filmId: string }) {
     const { data, isError, isPending, isFetching } = useQuery({
         queryKey: ['filmInfo', filmId],
         queryFn: async () => getMovieDetails(filmId),
         staleTime: Infinity,
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
     });
 
     const { data: creditsData, isFetching: isFetchingCreditsData } = useQuery({
         queryKey: ['credits', filmId],
         queryFn: async () => getMovieCredits(filmId),
         staleTime: Infinity,
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
     });
 
     if (isFetching || isFetchingCreditsData) {
-        return <div>Loading...</div>;
+        return (
+            <div className="flex items-center justify-center">
+                <div className="flex items-center justify-center w-full h-full">
+                    <AiOutlineLoading3Quarters className="animate-spin" />
+                </div>
+            </div>
+        );
     }
 
     if (isError) {
