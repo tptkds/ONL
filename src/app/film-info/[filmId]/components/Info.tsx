@@ -47,7 +47,7 @@ export default function Info({ filmId }: { filmId: string }) {
                 backdropPath={data.backdrop_path}
                 title={data.title}
             />
-            <div className="h-[550px] mt-4 sm:mt-0 flex-col sm:flex-row flex items-center">
+            <div className="h-[550px] sm:mt-4 sm:mt-0 flex-col justify-center sm:justify-normal sm:flex-row flex items-center">
                 <div className="relative h-56 w-36 sm:h-[284px] sm:w-[198px] lg:h-[398px] lg:w-[278px] sm:ml-16 flex-shrink-0 transition-[height] transition-[width] ease-in ">
                     <Image
                         src={`${TMDB_BASE_URL}/w780/${data.poster_path}`}
@@ -84,17 +84,21 @@ export default function Info({ filmId }: { filmId: string }) {
                         </p>
                     </div>
                     <p className="mb-4 text-sm">{`${data.runtime / 60 >= 1 ? Math.floor(data.runtime / 60) + '시간 ' + (data.runtime % 60) + '분' : data.runtime + '분'}`}</p>
-                    <p className="mx-6 sm:ml-0  mb-4 text-sm">
+                    <p className="mx-6 sm:ml-0  mb-4 text-sm line-clamp-6">
                         {data.overview}
                     </p>
                 </div>
             </div>
             <div className="mt-16 mx-16">
-                <h3 className="mb-4 text-2xl font-bold">배우</h3>
+                <h3 className="mb-4 text-2xl font-bold text-center sm:text-left">
+                    배우
+                </h3>
                 <CastList creditsData={creditsData} />
             </div>
             <div className="mt-16 mx-16">
-                <h3 className="mb-4 text-2xl font-bold">제작진</h3>
+                <h3 className="mb-4 text-2xl font-bold text-center sm:text-left">
+                    제작진
+                </h3>
                 <CrewList creditsData={creditsData} />
             </div>
         </div>
