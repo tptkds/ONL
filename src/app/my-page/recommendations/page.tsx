@@ -15,7 +15,7 @@ export default function Recommendations() {
     });
 
     return (
-        <div className="sm:ml-4 flex flex-wrap w-full">
+        <div className="sm:ml-4 flex flex-wrap content-start w-full ">
             {recommendationsData?.map(likedPost => (
                 <Post {...likedPost} key={likedPost.postId} />
             ))}

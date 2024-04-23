@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import getAllAccountComments from '@/service/post/getAllAccountComments';
 import { useSession } from 'next-auth/react';
-import Comment from './components/Comment1';
+import Comment from './components/Comment';
 
 export default function Comments() {
     const { data: sessionData } = useSession();
@@ -16,7 +16,7 @@ export default function Comments() {
     });
 
     return (
-        <div className="sm:ml-4 flex flex-wrap w-full">
+        <div className="sm:ml-4 flex flex-wrap content-start w-full">
             {commentsData?.map(comment => (
                 <Comment {...comment} key={comment.commentId} />
             ))}
