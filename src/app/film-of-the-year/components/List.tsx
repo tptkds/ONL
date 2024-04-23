@@ -54,8 +54,8 @@ export default function List() {
         return <></>;
     }
     return (
-        <section className="w-full mt-16 px-16 text-neutral-800">
-            {isLoading ? (
+        <section className="w-full mt-8 sm:mt-16 px-4 min-[420px]:px-16 text-neutral-800">
+            {isLoading || !awards ? (
                 <div className="flex items-center justify-center w-full h-full">
                     <AiOutlineLoading3Quarters className="animate-spin" />
                 </div>
@@ -74,7 +74,7 @@ export default function List() {
                                 award.movies.map((movie, index) => (
                                     <div
                                         key={index}
-                                        className=" flex flex-col justify-center p-4 my-4 border border-gray-200 w-full sm:w-1/2 screen-920:w-1/3 xl:w-1/4 2xl:w-1/5 "
+                                        className=" flex flex-col justify-center p-4 my-4 border border-gray-200 w-full  sm:w-1/2 screen-920:w-1/3 xl:w-1/4 2xl:w-1/5 "
                                     >
                                         <p className="mb-3 text-sm text-center font-medium">
                                             {movie.award}
@@ -93,16 +93,25 @@ export default function List() {
                                         >
                                             <Image
                                                 src={`${TMDB_BASE_URL}/w500/${movie.poster_path}`}
-                                                layout={'responsive'}
+                                                alt={movie.title}
+                                                sizes="100vw"
+                                                style={{
+                                                    width: '100%',
+                                                    height: 'auto',
+                                                    objectFit: 'contain',
+                                                }}
                                                 width={500}
                                                 height={300}
-                                                alt={movie.title}
+                                                placeholder="blur"
+                                                blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwJyBoZWlnaHQ9JzYwJyB2ZXJzaW9uPTEuMSB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9J2dyYXknLz48L3N2Zz4="
                                             />
                                             <div
                                                 className={`${award.id === visibleOverview[0] && index === visibleOverview[1] ? 'absolute top-0 left-0 w-full h-full bg-neutral-900/80 text-ellipsis overflow-scroll hide-scrollbar px-6 py-4' : 'hidden'}`}
                                             >
                                                 <p className="text-white text-sm">
-                                                    {movie.overview}
+                                                    {movie.overview
+                                                        ? movie.overview
+                                                        : '줄거리 정보가 없습니다.'}
                                                 </p>
                                             </div>
                                         </div>
@@ -150,7 +159,7 @@ export default function List() {
                                                             setWatchedMovies
                                                         }
                                                         rating={rating}
-                                                    />{' '}
+                                                    />
                                                 </>
                                             ) : (
                                                 <></>
