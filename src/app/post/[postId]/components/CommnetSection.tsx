@@ -9,6 +9,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { serverTimestamp } from 'firebase/firestore';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 export default function CommentsSection({ postId }: { postId: string }) {
     const queryClient = useQueryClient();
@@ -28,12 +29,13 @@ export default function CommentsSection({ postId }: { postId: string }) {
     const { data: comments, isFetching } = useQuery({
         queryKey: ['comments', postId],
         queryFn: () => getComments(postId),
-        initialData: [],
+
         refetchOnWindowFocus: false,
         refetchInterval: false,
         retry: true,
         retryDelay: 1000,
     });
+    console.log(comments);
 
     const { data: post } = useQuery({
         queryKey: ['post', postId],
@@ -75,10 +77,12 @@ export default function CommentsSection({ postId }: { postId: string }) {
                 <p className="ml-2">{post?.commentCount}개</p>
             </div>
             {isFetching ? (
-                <div>Loading comments...</div>
+                <div className="flex items-center justify-center w-full h-full">
+                    <AiOutlineLoading3Quarters className="animate-spin" />
+                </div>
             ) : (
                 <ul>
-                    {comments.map((comment, i) => (
+                    {comments?.map((comment, i) => (
                         <li
                             key={comment.commentId}
                             className="mb-2 p-2 border-b"
@@ -88,6 +92,10 @@ export default function CommentsSection({ postId }: { postId: string }) {
                                 <p>{comment.authorName}</p>
                                 <span className="tb_spr">|</span>
                                 <p> {formatDate(comment.createdAt)}</p>
+                            </div>
+                            <div>
+                                <button>삭제</button>
+                                <button>수정</button>
                             </div>
                         </li>
                     ))}
