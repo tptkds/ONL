@@ -58,6 +58,9 @@ const authOptions: NextAuthOptions = {
             },
         }),
     ],
+    pages: {
+        signIn: '/sign-in',
+    },
 
     callbacks: {
         async redirect({ url, baseUrl }) {
