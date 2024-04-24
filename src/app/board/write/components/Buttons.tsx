@@ -12,6 +12,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import getUserNickname from '@/service/account/getUserNickname';
+import { useState } from 'react';
 
 interface ButtonsProps {
     title: string;
@@ -28,6 +29,7 @@ export default function Buttons({
     selectedTags,
     setErrorMessage,
 }: ButtonsProps) {
+    const [status, setStatus] = useState<string>('등록하기');
     const { data: sessionData } = useSession();
     const router = useRouter();
 
@@ -38,11 +40,13 @@ export default function Buttons({
     });
 
     const handlePostSubmit = async () => {
+        setStatus('등록중...');
         const plainTextContent = stripHtml(editorContent);
         if (!title || plainTextContent.length < 10) {
             setErrorMessage(
                 '제목과 내용을 적절히 입력해주세요. 내용은 최소 10자 이상이어야 합니다.'
             );
+            setStatus('등록하기');
             return;
         }
 
@@ -77,6 +81,7 @@ export default function Buttons({
         } catch (error) {
             console.error('Error adding document: ', error);
             alert('게시글 등록 중 오류가 발생했습니다.');
+            setStatus('등록하기');
         }
     };
     return (
@@ -84,9 +89,13 @@ export default function Buttons({
             <Button className="mr-2">돌아가기</Button>
             <Button
                 onClick={handlePostSubmit}
-                disabled={!title || stripHtml(editorContent).length < 10}
+                disabled={
+                    !title ||
+                    stripHtml(editorContent).length < 10 ||
+                    status === '등록중...'
+                }
             >
-                등록하기
+                {status}
             </Button>
         </div>
     );
