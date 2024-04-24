@@ -86,7 +86,9 @@ export default function Buttons({
     };
     return (
         <div className="flex justify-center mt-4">
-            <Button className="mr-2">돌아가기</Button>
+            <Button className="mr-2" onClick={() => router.back()}>
+                돌아가기
+            </Button>
             <Button
                 onClick={handlePostSubmit}
                 disabled={
