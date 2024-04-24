@@ -12,7 +12,7 @@ const notoSans = Noto_Sans_KR({
 export const metadata: Metadata = {
     title: 'ONL',
     description:
-        'ONL은 영화인을 위한 커뮤니티입니다. 3대 영화제에서 상을 수상한 영화를 쉽게 찾고 자유롭게 평가를 공유하고 의견을 나눌 수 있는 커뮤니티를 제공합니다. ',
+        'ONL은 영화인을 위한 커뮤니티입니다. 최근 3대 영화제에서의 수상작을 쉽게 찾고, 모든 영화를 탐색할 수 있습니다. ONL은 사용자들과 자유롭게 이야기를 공유하고 의견을 나눌 수 있는 커뮤니티를 제공합니다. ',
     keywords: '영화, 영화제, 수상작, 영화 리뷰, 영화 추천, 영화 커뮤니티',
     authors: {
         name: 'yougyoung kim',
