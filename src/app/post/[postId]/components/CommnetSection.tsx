@@ -1,6 +1,9 @@
+import { Textarea } from '@/components/ui/textarea';
 import getUserNickname from '@/service/account/getUserNickname';
+import deleteComment from '@/service/post/deleteComment';
 import getComments from '@/service/post/getComments';
 import postComment from '@/service/post/postComment';
+import updateComment from '@/service/post/updateComment';
 import updateCommentCount from '@/service/post/updateCommentCount';
 import { CommentData } from '@/types/post';
 import formatDate from '@/utils/date';
@@ -8,7 +11,7 @@ import { getPostData } from '@/utils/post';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { serverTimestamp } from 'firebase/firestore';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 export default function CommentsSection({ postId }: { postId: string }) {
@@ -35,7 +38,6 @@ export default function CommentsSection({ postId }: { postId: string }) {
         retry: true,
         retryDelay: 1000,
     });
-    console.log(comments);
 
     const { data: post } = useQuery({
         queryKey: ['post', postId],
@@ -51,11 +53,40 @@ export default function CommentsSection({ postId }: { postId: string }) {
         mutationFn: (commentData: CommentData) => postComment(commentData),
     });
 
+    const { mutate: mutateDeleteComment } = useMutation({
+        mutationFn: (commentId: string) => deleteComment(commentId),
+        onSuccess: () => {
+            mutateUpdateCommentCount(false);
+            queryClient.invalidateQueries({
+                queryKey: ['comments', postId],
+                exact: true,
+            });
+        },
+    });
+
+    const [editedCommentId, setEditedCommentId] = useState<string>('');
+    const [editedCommentContent, setEditedCommentContent] =
+        useState<string>('');
+
+    const { mutate: mutateEditComment } = useMutation({
+        mutationFn: (commentId: string) =>
+            updateComment(commentId, editedCommentContent),
+        onSuccess: () => {
+            setEditedCommentId('');
+            setEditedCommentContent('');
+            queryClient.invalidateQueries({
+                queryKey: ['comments', postId],
+                exact: true,
+            });
+        },
+    });
+
     const {
         isSuccess: isSuccessMutateCommentCount,
-        mutate: mutateAddCommentCount,
+        mutate: mutateUpdateCommentCount,
     } = useMutation({
-        mutationFn: () => updateCommentCount(postId, true),
+        mutationFn: (isIncrement: boolean) =>
+            updateCommentCount(postId, isIncrement),
     });
 
     useEffect(() => {
@@ -87,16 +118,75 @@ export default function CommentsSection({ postId }: { postId: string }) {
                             key={comment.commentId}
                             className="mb-2 p-2 border-b"
                         >
-                            <p>{comment.content}</p>
-                            <div className="text-xs flex mt-1">
-                                <p>{comment.authorName}</p>
-                                <span className="tb_spr">|</span>
-                                <p> {formatDate(comment.createdAt)}</p>
-                            </div>
-                            <div>
-                                <button>삭제</button>
-                                <button>수정</button>
-                            </div>
+                            {editedCommentId === comment.commentId ? (
+                                <>
+                                    <Textarea
+                                        value={editedCommentContent}
+                                        onChange={e =>
+                                            setEditedCommentContent(
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    <button
+                                        onClick={() => {
+                                            setEditedCommentId('');
+                                            setEditedCommentContent('');
+                                        }}
+                                        className="mt-2 text-xs mr-1  px-2 py-0.5 border rounded-sm hover:bg-gray-100"
+                                    >
+                                        수정 취소
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            mutateEditComment(
+                                                comment.commentId
+                                            );
+                                        }}
+                                        className="mt-2 text-xs mr-1  px-2 py-0.5 border rounded-sm hover:bg-gray-100"
+                                    >
+                                        수정 완료
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <p>{comment.content}</p>
+
+                                    <div className="text-xs flex mt-1 items-center">
+                                        <p>{comment.authorName}</p>
+                                        <span className="tb_spr">|</span>
+                                        <p> {formatDate(comment.createdAt)}</p>
+                                        {sessionData?.user.uid ===
+                                            comment.authorId && (
+                                            <div className="ml-4 flex items-center">
+                                                <button
+                                                    onClick={() =>
+                                                        mutateDeleteComment(
+                                                            comment.commentId
+                                                        )
+                                                    }
+                                                    className="text-xs mr-1  px-2 py-0.5 border rounded-sm hover:bg-gray-100"
+                                                >
+                                                    삭제
+                                                </button>
+                                                <button
+                                                    onClick={() => {
+                                                        setEditedCommentId(
+                                                            comment.commentId
+                                                        );
+                                                        setEditedCommentContent(
+                                                            comment.content
+                                                        );
+                                                    }}
+                                                    className="text-xs mr-1  px-2 py-0.5 border rounded-sm hover:bg-gray-100"
+                                                >
+                                                    수정
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                </>
+                            )}
                         </li>
                     ))}
                 </ul>
@@ -112,11 +202,13 @@ export default function CommentsSection({ postId }: { postId: string }) {
                     }
                     value={commentText}
                     onChange={e => setCommentText(e.target.value)}
-                    disabled={status !== 'authenticated'}
+                    disabled={
+                        status !== 'authenticated' || editedCommentId != ''
+                    }
                 ></textarea>
                 <button
                     type="button"
-                    className="mt-2 bg-black text-white px-4 py-2 rounded"
+                    className="mt-2 bg-black text-white px-4 py-2 rounded disabled:opacity-50"
                     onClick={async () => {
                         if (commentText.trim() !== '') {
                             const postData = await getPostData(postId);
@@ -141,11 +233,13 @@ export default function CommentsSection({ postId }: { postId: string }) {
                                 postTitle: postData?.title,
                             };
                             mutate(commentData);
-                            mutateAddCommentCount();
+                            mutateUpdateCommentCount(true);
                             setCommentText('');
                         }
                     }}
-                    disabled={status !== 'authenticated'}
+                    disabled={
+                        status !== 'authenticated' || editedCommentId != ''
+                    }
                 >
                     댓글 남기기
                 </button>
