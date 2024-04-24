@@ -115,7 +115,11 @@ export default function EditProfile() {
                                     aria-disabled={
                                         sessionData?.user.isGoogleAccount
                                     }
-                                    placeholder={nickname}
+                                    placeholder={
+                                        sessionData?.user.isGoogleAccount
+                                            ? (sessionData.user.name as string)
+                                            : nickname
+                                    }
                                     value={newNickname}
                                 />
                             </div>

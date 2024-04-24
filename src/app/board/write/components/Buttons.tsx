@@ -10,6 +10,8 @@ import {
 import { PostData } from '@/types/post';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import getUserNickname from '@/service/account/getUserNickname';
 
 interface ButtonsProps {
     title: string;
@@ -28,6 +30,13 @@ export default function Buttons({
 }: ButtonsProps) {
     const { data: sessionData } = useSession();
     const router = useRouter();
+
+    const { data: nickname } = useQuery({
+        queryKey: ['nickname', sessionData?.user.uid],
+        queryFn: () => getUserNickname(sessionData?.user.uid as string),
+        enabled: !!sessionData?.user.uid,
+    });
+
     const handlePostSubmit = async () => {
         const plainTextContent = stripHtml(editorContent);
         if (!title || plainTextContent.length < 10) {
@@ -48,7 +57,9 @@ export default function Buttons({
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp(),
             attachments: [],
-            authorName: sessionData?.user.name as string,
+            authorName: sessionData?.user.isGoogleAccount
+                ? (sessionData.user.name as string)
+                : (nickname as string),
             likeCount: 0,
             viewCount: 0,
             postId: '',
