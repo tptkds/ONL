@@ -21,9 +21,12 @@ export default function MoviesOfTrending() {
     });
 
     const settings = {
+        className: 'center',
+        centerMode: true,
+        centerPadding: '20px',
         dots: false,
         infinite: true,
-        speed: 2000,
+        speed: 5000,
         slidesToShow: 5,
         slidesToScroll: 1,
         responsive: [
@@ -32,7 +35,6 @@ export default function MoviesOfTrending() {
                 settings: {
                     slidesToShow: 4,
                     slidesToScroll: 1,
-                    infinite: true,
                 },
             },
 
@@ -44,7 +46,7 @@ export default function MoviesOfTrending() {
                 },
             },
             {
-                breakpoint: 400,
+                breakpoint: 500,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 1,
@@ -58,7 +60,7 @@ export default function MoviesOfTrending() {
 
     return (
         <>
-            <h2 className="mt-16 mb-4 text-xl text-center font-bold">
+            <h2 className="mt-8 sm:mt-16 mb-4 text-base sm:text-xl text-center font-bold">
                 오늘의 인기영화
             </h2>
             {isLoading ? (
@@ -73,13 +75,13 @@ export default function MoviesOfTrending() {
                                         key={movie.id}
                                         href={`/film-info/${movie.id}`}
                                     >
-                                        <div className="relative h-56 w-36 sm:h-[284px] sm:w-[198px] lg:h-[398px] lg:w-[278px] sm:ml-16 flex-shrink-0 transition-[height] transition-[width] ease-in focus:outline-none">
+                                        <div className="relative h-56 w-full sm:h-[284px] sm:w-[198px] lg:h-[398px] lg:w-[278px] flex-shrink-0 transition-[height] transition-[width] ease-in focus:outline-none">
                                             <Image
                                                 src={`${TMDB_BASE_URL}/w500/${movie.poster_path}`}
                                                 alt={movie.title}
                                                 fill
                                                 style={{
-                                                    objectFit: 'cover',
+                                                    objectFit: 'contain',
                                                     padding: '4px',
                                                 }}
                                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

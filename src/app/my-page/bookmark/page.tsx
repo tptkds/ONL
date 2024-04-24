@@ -4,6 +4,7 @@ import { BookmarkMovie } from '@/types/movie';
 import { useSession } from 'next-auth/react';
 import Bookmark from './components/Bookmark';
 import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
 
 export default function Bookmarks() {
     const { data: sessionData } = useSession();
@@ -25,7 +26,7 @@ export default function Bookmarks() {
 
     return (
         <div className="flex flex-wrap w-full mt-4 sm:mt-0 ml-2 h-fit">
-            {bookmarkedMovies &&
+            {Object.keys(bookmarkedMovies).length != 0 ? (
                 Object.keys(bookmarkedMovies).map(key => (
                     <Bookmark
                         key={key}
@@ -34,7 +35,12 @@ export default function Bookmarks() {
                         bookmarkedMovies={bookmarkedMovies}
                         setBookmarkedMovies={setBookmarkedMovies}
                     />
-                ))}
+                ))
+            ) : (
+                <div className="flex justify-center w-full h-60 items-center text-sm">
+                    북마크한 영화가 아직 없어요!
+                </div>
+            )}
         </div>
     );
 }

@@ -16,9 +16,15 @@ export default function Recommendations() {
 
     return (
         <div className="sm:ml-4 flex flex-wrap content-start w-full ">
-            {recommendationsData?.map(likedPost => (
-                <Post {...likedPost} key={likedPost.postId} />
-            ))}
+            {recommendationsData.length != 0 ? (
+                recommendationsData?.map(likedPost => (
+                    <Post {...likedPost} key={likedPost.postId} />
+                ))
+            ) : (
+                <div className="flex justify-center w-full h-60 items-center text-sm">
+                    추천한 글이 아직 없어요!
+                </div>
+            )}
         </div>
     );
 }

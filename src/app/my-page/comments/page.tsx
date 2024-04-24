@@ -17,9 +17,15 @@ export default function Comments() {
 
     return (
         <div className="sm:ml-4 flex flex-wrap content-start w-full">
-            {commentsData?.map(comment => (
-                <Comment {...comment} key={comment.commentId} />
-            ))}
+            {commentsData ? (
+                commentsData?.map(comment => (
+                    <Comment {...comment} key={comment.commentId} />
+                ))
+            ) : (
+                <div className="flex justify-center w-full h-60 items-center text-sm">
+                    작성한 댓글이 아직 없어요!
+                </div>
+            )}
         </div>
     );
 }

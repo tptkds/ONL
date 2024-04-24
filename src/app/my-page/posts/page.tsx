@@ -18,7 +18,13 @@ export default function Posts() {
 
     return (
         <div className="sm:ml-4 flex flex-wrap content-start w-full ">
-            {postsData?.map(post => <Post {...post} key={post.postId} />)}
+            {postsData ? (
+                postsData?.map(post => <Post {...post} key={post.postId} />)
+            ) : (
+                <div className="flex justify-center w-full h-60 items-center text-sm">
+                    작성한 글이 아직 없어요!
+                </div>
+            )}
         </div>
     );
 }

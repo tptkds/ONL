@@ -20,7 +20,7 @@ export default function Bookmarks() {
     }, [sessionData?.user?.uid]);
     return (
         <div className="flex flex-wrap w-full mt-4 sm:mt-0 ml-2 h-fit">
-            {watchedMovies &&
+            {Object.keys(watchedMovies).length != 0 ? (
                 Object.keys(watchedMovies).map(key => (
                     <Movie
                         key={key}
@@ -29,7 +29,12 @@ export default function Bookmarks() {
                         setWatchedMovies={setWatchedMovies}
                         uid={sessionData?.user.uid as string}
                     />
-                ))}
+                ))
+            ) : (
+                <div className="flex justify-center w-full h-60 items-center text-sm">
+                    시청한 영화가 아직 없어요!
+                </div>
+            )}
         </div>
     );
 }
