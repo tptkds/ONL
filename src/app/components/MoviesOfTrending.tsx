@@ -58,7 +58,7 @@ export default function MoviesOfTrending() {
 
     return (
         <>
-            <h2 className="mt-16 mb-4 text-2xl text-center font-bold">
+            <h2 className="mt-16 mb-4 text-xl text-center font-bold">
                 오늘의 인기영화
             </h2>
             {isLoading ? (
