@@ -1,11 +1,17 @@
 'use client';
 import useSignInUser from '@/service/account/useSignInUser';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const Form: React.FC = () => {
+    const router = useRouter();
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const { status, signInUser, errorMessage } = useSignInUser();
+
+    useEffect(() => {
+        if (status == 'success') router.push('/');
+    }, [status]);
 
     return (
         <>

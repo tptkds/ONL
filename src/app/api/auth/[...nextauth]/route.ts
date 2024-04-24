@@ -89,7 +89,7 @@ const authOptions: NextAuthOptions = {
             if (account?.provider === 'google' && profile?.sub) {
                 user.id = profile.sub;
             }
-            return '/';
+            return true;
         },
     },
 };
