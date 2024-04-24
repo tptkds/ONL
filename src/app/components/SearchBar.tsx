@@ -60,6 +60,7 @@ export default function SearchBar({
             </button>
             <input
                 type="text"
+                name="search"
                 autoComplete="off"
                 className="h-12 w-full border focus:outline-none p-3"
                 placeholder="영화, 게시글 검색"
