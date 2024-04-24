@@ -50,7 +50,7 @@ export default function TagInput({
             onChange={handleTagsChange}
             value={selectedTags}
             placeholder="태그 추가 (최대 3개)"
-            className="border-neutral-200 mt-4 w-full text-sm "
+            className="border-neutral-200 mt-10 w-full text-sm "
             components={{
                 DropdownIndicator: CustomDropdownIndicator,
                 IndicatorSeparator: CustomSeparator,

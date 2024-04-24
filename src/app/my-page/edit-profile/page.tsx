@@ -14,18 +14,10 @@ import { Label } from '@/components/ui/label';
 import { signOut, useSession } from 'next-auth/react';
 import { useRef, useState } from 'react';
 import changeNickname from '@/service/account/changeNickname';
-import {
-    getAuth,
-    signInWithEmailAndPassword,
-    updatePassword,
-    updateProfile,
-    User,
-} from 'firebase/auth';
+import { signInWithEmailAndPassword, updatePassword } from 'firebase/auth';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import getUserNickname from '@/service/account/getUserNickname';
 import { auth } from '@/app/firebase';
-import { FirebaseError } from 'firebase/app';
-import { FirebaseAuthError } from '@/service/account/firebaseAuthError';
 
 export default function EditProfile() {
     const queryClient = useQueryClient();
@@ -34,7 +26,9 @@ export default function EditProfile() {
     const { data: nickname } = useQuery({
         queryKey: ['nickname', sessionData?.user.uid],
         queryFn: () => getUserNickname(sessionData?.user.uid as string),
-        enabled: !!sessionData?.user.uid,
+        enabled:
+            !!sessionData?.user.uid &&
+            sessionData.user.isGoogleAccount === false,
     });
 
     const { mutate } = useMutation({

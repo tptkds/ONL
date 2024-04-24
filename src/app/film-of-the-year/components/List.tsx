@@ -54,7 +54,7 @@ export default function List() {
         return <></>;
     }
     return (
-        <section className="w-full mt-8 sm:mt-16 px-4 min-[420px]:px-16 text-neutral-800">
+        <section className="w-full mt-8 sm:mt-10 px-4 min-[420px]:px-16 text-neutral-800">
             {isLoading || !awards ? (
                 <div className="flex items-center justify-center w-full h-full">
                     <AiOutlineLoading3Quarters className="animate-spin" />
@@ -62,7 +62,7 @@ export default function List() {
             ) : (
                 awards?.map(award => (
                     <div key={award.id} className="mb-8">
-                        <h2 className="text-xl font-semibold text-center">
+                        <h2 className="text-base sm:text-xl font-semibold text-center">
                             {award.id === 'Berlin'
                                 ? '베를린 국제 영화제 제73회'
                                 : award.id === 'Cannes'

@@ -36,7 +36,9 @@ export default function Buttons({
     const { data: nickname } = useQuery({
         queryKey: ['nickname', sessionData?.user.uid],
         queryFn: () => getUserNickname(sessionData?.user.uid as string),
-        enabled: !!sessionData?.user.uid,
+        enabled:
+            !!sessionData?.user.uid &&
+            sessionData.user.isGoogleAccount === false,
     });
 
     const handlePostSubmit = async () => {
