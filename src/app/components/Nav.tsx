@@ -25,15 +25,15 @@ export default function Nav() {
                         <SearchPanel />
                     </div>
                     <div className=" sm:w-1/2 flex justify-end text-neutral-500">
-                        {status === 'unauthenticated' ? (
-                            <>
-                                <SignUpLink />
-                                <SignInLink />
-                            </>
-                        ) : (
+                        {status == 'authenticated' ? (
                             <>
                                 <MyPageLink />
                                 <SignOutButton />
+                            </>
+                        ) : (
+                            <>
+                                <SignUpLink />
+                                <SignInLink />
                             </>
                         )}
                     </div>
