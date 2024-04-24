@@ -5,6 +5,7 @@ import ForgotPassword from './components/ForgotPassword';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import SignUpLink from './components/SignUpLink';
 
 const SignIn: React.FC = () => {
     const router = useRouter();
@@ -24,6 +25,7 @@ const SignIn: React.FC = () => {
                     <div className="mt-12 ">
                         <Form />
                         <ForgotPassword />
+                        <SignUpLink />
                     </div>
                     <div className="contour"></div>
 
