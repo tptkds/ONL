@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 export default function Menu() {
     const [curCategory, setCurCategory] = useState<string>('');
     const pathname = usePathname();
-    console.log(curCategory);
+
     useEffect(() => {
         if (pathname) setCurCategory(pathname.slice(9));
     }, [setCurCategory, pathname]);

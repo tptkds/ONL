@@ -16,13 +16,13 @@ export default function CommentsSection({ postId }: { postId: string }) {
     const { data: sessionData, status } = useSession();
 
     const { data: userName } = useQuery({
-        queryKey: ['useName', sessionData?.user.uid],
+        queryKey: ['userName', sessionData?.user.uid],
         queryFn: () => getUserNickname(sessionData?.user.uid as string),
         refetchOnWindowFocus: false,
         refetchInterval: false,
         retry: true,
         retryDelay: 1000,
-        enabled: !!sessionData?.user.uid,
+        enabled: !!sessionData?.user.uid && !!!sessionData.user.isGoogleAccount,
     });
 
     const { data: comments, isFetching } = useQuery({
@@ -115,12 +115,16 @@ export default function CommentsSection({ postId }: { postId: string }) {
                             if (
                                 postData == null ||
                                 !sessionData?.user.uid ||
-                                !userName
+                                (sessionData?.user.isGoogleAccount
+                                    ? !sessionData?.user.name
+                                    : !userName)
                             )
                                 return;
                             const commentData: CommentData = {
                                 authorId: sessionData?.user.uid,
-                                authorName: userName,
+                                authorName: sessionData?.user.isGoogleAccount
+                                    ? (sessionData?.user.name as string)
+                                    : (userName as string),
                                 createdAt: serverTimestamp(),
                                 updatedAt: serverTimestamp(),
                                 content: commentText,
