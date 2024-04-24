@@ -7,6 +7,7 @@ import { createMarkup } from '@/utils/post';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function PostContent({ postId }: { postId: string }) {
     const router = useRouter();
@@ -34,6 +35,13 @@ export default function PostContent({ postId }: { postId: string }) {
         },
     });
 
+    useEffect(() => {
+        if (!isLoadingPostData && !postData?.postId) {
+            alert('삭제된 게시글입니다.');
+            router.back();
+        }
+    }, [isLoadingPostData]);
+
     return (
         <>
             {isLoadingPostData || !postData ? (
@@ -45,7 +53,7 @@ export default function PostContent({ postId }: { postId: string }) {
             ) : (
                 <>
                     <h2 className="text-2xl font-semibold mb-2">
-                        {postData.title}
+                        [{postData.category}] {postData.title}
                     </h2>
                     <div className="flex justify-between border-b">
                         <div className="text-gray-700 text-xs flex pt-2 pb-4 ">
