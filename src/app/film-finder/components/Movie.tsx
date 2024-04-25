@@ -1,12 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import BookmarkToggleButton from '../../components/BookmarkToggleButton';
 import WatchedToggleButton from '../../components/WatchedToggleButton';
-import { BookmarkMovie } from '@/types/movie';
+
 import { useSession } from 'next-auth/react';
-import getBookmarkedMovies from '@/service/movie/getBookmarkedMovies';
-import getWatchedMovies from '@/service/movie/getWatchedMovies';
+import { BookmarkMovie, WatchedMovie } from '@/types/movie';
 
 interface MovieProps {
     movie: {
@@ -18,29 +17,25 @@ interface MovieProps {
         overview: string;
     };
     index: number;
+    bookmarkedMovies: { [key: string]: BookmarkMovie };
+    watchedMovies: { [key: string]: WatchedMovie };
+    setBookmarkedMovies: React.Dispatch<
+        React.SetStateAction<{ [key: string]: BookmarkMovie }>
+    >;
+    setWatchedMovies: React.Dispatch<
+        React.SetStateAction<{ [key: string]: WatchedMovie }>
+    >;
 }
 
-export default function Movie({ movie, index }: MovieProps) {
+export default function Movie({
+    movie,
+    index,
+    watchedMovies,
+    bookmarkedMovies,
+    setBookmarkedMovies,
+    setWatchedMovies,
+}: MovieProps) {
     const { data: sessionData, status } = useSession();
-    const [watchedMovies, setWatchedMovies] = useState({});
-    const [bookmarkedMovies, setBookmarkedMovies] = useState<{
-        [key: string]: BookmarkMovie;
-    }>({});
-
-    useEffect(() => {
-        if (
-            sessionData?.user?.uid &&
-            Object.keys(bookmarkedMovies).length === 0
-        ) {
-            getBookmarkedMovies(sessionData.user.uid)
-                .then(setBookmarkedMovies)
-                .catch(console.error);
-
-            getWatchedMovies(sessionData.user.uid)
-                .then(setWatchedMovies)
-                .catch(console.error);
-        }
-    }, [sessionData?.user?.uid]);
 
     const posterURL = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 

@@ -28,29 +28,21 @@ export default function WatchedToggleButton({
     const toggleWatchedMovie = async () => {
         const isWatched = watchedMovies[movieId];
 
-        if (isWatched) {
-            try {
-                await deleteWatchedMovie(
-                    uId,
-                    watchedMovies[movieId].id as string
-                );
+        try {
+            if (isWatched) {
+                await deleteWatchedMovie(uId, isWatched.movieId);
                 const updatedWatchedMovies = { ...watchedMovies };
                 delete updatedWatchedMovies[movieId];
                 setWatchedMovies(updatedWatchedMovies);
                 console.log(`Removed from watched movies: ${movieId}`);
-            } catch (error) {
-                console.error('Failed to remove from watched movies:', error);
-            }
-        } else {
-            const newWatched: WatchedMovie = {
-                movieId: movieId,
-                watchDate: Timestamp.fromDate(new Date()),
-                userRating: rating,
-                movieTitle: movieTitle,
-                moviePoster: moviePoster,
-            };
-
-            try {
+            } else {
+                const newWatched: WatchedMovie = {
+                    movieId: movieId,
+                    watchDate: Timestamp.fromDate(new Date()),
+                    userRating: rating,
+                    movieTitle: movieTitle,
+                    moviePoster: moviePoster,
+                };
                 await addWatchedMovie(uId, newWatched);
                 const updatedWatchedMovies = {
                     ...watchedMovies,
@@ -58,9 +50,9 @@ export default function WatchedToggleButton({
                 };
                 setWatchedMovies(updatedWatchedMovies);
                 console.log(`Added to watched movies: ${movieId}`);
-            } catch (error) {
-                console.error('Failed to add to watched movies:', error);
             }
+        } catch (error) {
+            console.error('Failed to toggle watched movie:', error);
         }
     };
 

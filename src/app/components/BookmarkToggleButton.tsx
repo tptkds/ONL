@@ -20,31 +20,24 @@ export default function BookmarkToggleButton({
         React.SetStateAction<{ [key: string]: BookmarkMovie }>
     >;
 }) {
+    const isBookmarked = bookmarkedMovies[movieId];
     const toggleBookmarMovie = async () => {
         const isBookmarked = bookmarkedMovies[movieId];
 
-        if (isBookmarked) {
-            try {
-                await deleteBookmarkedMovie(
-                    uId,
-                    bookmarkedMovies[movieId].id as string
-                );
+        try {
+            if (isBookmarked) {
+                await deleteBookmarkedMovie(uId, isBookmarked.movieId);
                 const updatedBookmarkedMovies = { ...bookmarkedMovies };
                 delete updatedBookmarkedMovies[movieId];
                 setBookmarkedMovies(updatedBookmarkedMovies);
                 console.log(`Bookmark removed for movieId: ${movieId}`);
-            } catch (error) {
-                console.error('Failed to remove bookmark:', error);
-            }
-        } else {
-            const newBookmark: BookmarkMovie = {
-                movieId: movieId,
-                bookmarkDate: new Date(),
-                moviePoster: moviePoster,
-                movieTitle: movieTitle,
-            };
-
-            try {
+            } else {
+                const newBookmark = {
+                    movieId: movieId,
+                    bookmarkDate: new Date(),
+                    moviePoster: moviePoster,
+                    movieTitle: movieTitle,
+                };
                 await addBookmarkedMovie(uId, newBookmark);
                 const updatedBookmarkedMovies = {
                     ...bookmarkedMovies,
@@ -52,9 +45,9 @@ export default function BookmarkToggleButton({
                 };
                 setBookmarkedMovies(updatedBookmarkedMovies);
                 console.log(`Bookmark added for movieId: ${movieId}`);
-            } catch (error) {
-                console.error('Failed to add bookmark:', error);
             }
+        } catch (error) {
+            console.error('Failed to toggle bookmark:', error);
         }
     };
     return (
