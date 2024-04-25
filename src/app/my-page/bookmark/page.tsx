@@ -4,7 +4,6 @@ import { BookmarkMovie } from '@/types/movie';
 import { useSession } from 'next-auth/react';
 import Bookmark from './components/Bookmark';
 import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
 
 export default function Bookmarks() {
     const { data: sessionData } = useSession();

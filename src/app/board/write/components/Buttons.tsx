@@ -87,7 +87,7 @@ export default function Buttons({
         }
     };
     return (
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center mt-8 ">
             <Button className="mr-2" onClick={() => router.back()}>
                 돌아가기
             </Button>

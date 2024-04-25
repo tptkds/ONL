@@ -60,7 +60,7 @@ export default function TextEditor({
             onChange={setEditorContent}
             modules={modules}
             formats={formats}
-            className="h-96 border-neutral-200"
+            className="  border-neutral-200"
             placeholder="최소 10자 이상을 입력해 주세요."
         />
     );
