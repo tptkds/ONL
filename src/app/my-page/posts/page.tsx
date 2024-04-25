@@ -9,7 +9,6 @@ export default function Posts() {
     const { data: postsData } = useQuery({
         queryKey: ['posts', sessionData?.user.uid],
         queryFn: () => getAllAccountPosts(sessionData?.user.uid as string),
-        initialData: [],
         enabled: !!sessionData?.user.uid,
         refetchOnMount: 'always',
         refetchOnWindowFocus: false,

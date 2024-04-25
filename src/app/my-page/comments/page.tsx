@@ -10,7 +10,6 @@ export default function Comments() {
     const { data: commentsData } = useQuery({
         queryKey: ['commnets', sessionData?.user.uid],
         queryFn: () => getAllAccountComments(sessionData?.user.uid as string),
-        initialData: [],
         enabled: !!sessionData?.user.uid,
         refetchOnMount: 'always',
     });
