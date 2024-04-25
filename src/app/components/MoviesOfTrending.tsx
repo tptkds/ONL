@@ -70,7 +70,7 @@ export default function MoviesOfTrending() {
                     <div className="relative w-full overflow-hidden">
                         <Slider {...settings}>
                             {trendingMovies.results.map(
-                                (movie: TrendingMovie) => (
+                                (movie: TrendingMovie, index: number) => (
                                     <Link
                                         key={movie.id}
                                         href={`/film-info/${movie.id}`}
@@ -85,7 +85,7 @@ export default function MoviesOfTrending() {
                                                     padding: '4px',
                                                 }}
                                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                                priority
+                                                priority={index < 5}
                                                 placeholder="blur"
                                                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM8UA8AAgUBQbH2eGIAAAAASUVORK5CYII="
                                             />

@@ -43,7 +43,7 @@ export default function MoviesOfYearCarousel() {
         <div className="relative w-full overflow-hidden">
             {!isLoading ? (
                 <Slider {...settings} className="z-0">
-                    {moviesDetailsWithAwards?.map(movie => (
+                    {moviesDetailsWithAwards?.map((movie, index) => (
                         <div
                             key={movie.id}
                             className="relative w-full h-[284px] sm:h-[398px] xl:h-[550px] overflow-hidden focus:outline-none"
@@ -58,7 +58,7 @@ export default function MoviesOfYearCarousel() {
                                         objectPosition: '50% 50%',
                                     }}
                                     sizes="100vw"
-                                    priority
+                                    priority={index == 1}
                                     placeholder="blur"
                                     blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwJyBoZWlnaHQ9JzYwJyB2ZXJzaW9uPTEuMSB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9J2dyYXknLz48L3N2Zz4="
                                 />

@@ -17,9 +17,10 @@ interface MovieProps {
         vote_average: number;
         overview: string;
     };
+    index: number;
 }
 
-export default function Movie({ movie }: MovieProps) {
+export default function Movie({ movie, index }: MovieProps) {
     const { data: sessionData, status } = useSession();
     const [watchedMovies, setWatchedMovies] = useState({});
     const [bookmarkedMovies, setBookmarkedMovies] = useState<{
@@ -68,7 +69,7 @@ export default function Movie({ movie }: MovieProps) {
                             sizes="100vw"
                             width={1000}
                             height={700}
-                            priority
+                            priority={index < 5}
                             placeholder="blur"
                             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM8UA8AAgUBQbH2eGIAAAAASUVORK5CYII="
                         />
