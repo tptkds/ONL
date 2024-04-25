@@ -98,7 +98,7 @@ export default function Info({ filmId }: { filmId: string }) {
                 <CastList creditsData={creditsData} />
             </div>
             <div className="mt-16 mx-16">
-                <h3 className="mb-4 text-xl sm:ttext-2xl font-bold text-center sm:text-left">
+                <h3 className="mb-4 text-xl sm:text-2xl font-bold text-center sm:text-left">
                     제작진
                 </h3>
                 <CrewList creditsData={creditsData} />

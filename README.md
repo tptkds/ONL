@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ONL(Our Night's Long)
 
-## Getting Started
+ONL은 <u>3대 영화제 최근 수상작과 다양한 영화 정보를 쉽게 탐색할 수 있는 서비스</u>를 제공합니다.
+ONL 사용자들은 <u>북마크 기능과 시청 체크 기능</u>으로 본인의 영화 활동을 쉽게 기록할 수 있고,
+ONL 사용자들과 <u>영화 및 일상 관련 이야기를 공유</u>할 수 있는 커뮤니티를 이용할 수 있습니다.
 
-First, run the development server:
+## 기술스택
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 프론트엔드
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+-   **React**: 선언적 UI 구축을 위한 JavaScript 라이브러리
+-   **Next.js**: 서버 사이드 렌더링을 지원하는 React 프레임워크
+-   **tailwindcss**: 유틸리티 중심의 CSS 프레임워크
+-   **shadcn/ui**: 다양한 UI 컴포넌트 제공
+-   **react-quill**: 텍스트 에디터
+-   **react-select**: 사용자 정의 가능한 선택 상자 컴포넌트
+-   **react-slick, slick-carousel**: 슬라이더 컴포넌트
+-   **react-icons, lucide-react**: 아이콘 라이브러리
+-   **dompurify**: XSS 공격 방지를 위한 HTML 살균
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 백엔드
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+-   **Firebase**: 데이터베이스 및 인증 기능
 
-## Learn More
+### Tools
 
-To learn more about Next.js, take a look at the following resources:
+-   **Next-auth**: Next.js 애플리케이션에서 인증과 세션 관리를 쉽게 구현할 수 있도록 지원
+-   **zustand**: React 상태 관리
+-   **tanstack/react-query**: 데이터 페칭, 캐싱, 동기화를 통한 서버 상태 관리
+-   **axios**: 브라우저 및 Node.js를 위한 Promise 기반 HTTP 클라이언트
+-   **babel-polyfill**: 구형 브라우저에서 최신 JavaScript 기능 사용 지원
+-   **date-fns**: 날짜 연산 라이브러리
+-   **zod**: TypeScript 환경에서 데이터 유효성 검증
+-   **usehooks-ts**: 사용자 인터페이스와 상호작용을 강화하는 React 훅 제공
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 프로젝트 진행 기간
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+2024년 4월 7일 ~ 2024년 4월 25일
 
-## Deploy on Vercel
+## 팀 멤버 및 역할
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+-   **김유경**: 프로젝트의 모든 단계를 담당
+    -   **프론트엔드 개발**: React 및 Next.js를 활용한 사용자 인터페이스 설계 및 구현
+    -   **백엔드 개발**: Firebase를 이용한 서버리스 백엔드 구축 및 관리
+    -   **UI/UX 디자인**: 사용자 경험을 고려한 인터페이스 디자인
+    -   **프로젝트 관리**: 전체 프로젝트 스케줄링, 관리 및 문서화
+    -   **테스트 및 디버깅**: 애플리케이션의 안정성 보장을 위한 포괄적 테스트 진행
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## ONL 서비스 기능
+
+-   **올해의 영화**: 세계 3대 영화제 최신 수상작을 확인할 수 있습니다.
+-   **영화 탐색**: 필터링 및 정렬 기능과 함께 거의 모든 영화를 쉽고 빠르게 탐색할 수 있습니다.
+-   **영화 상세 정보**: 영화 줄거리 및 개봉 날짜 그리고 출연진, 제작진 리스트를 확인할 수 있습니다.
+-   **영화 북마크 기능**: 관심있는 영화를 북마크할 수 있습니다.
+-   **시청 체크 기능**: 영화 시청 기록을 남겨 어떤 영화를 봤는지 쉽게 확인할 수 있습니다.
+-   **이야기 공간**: 게시글을 통해 ONL 사용자들과 영화 또는 일상 이야기를 공유할 수 있습니다.
+-   **게시글 기능**: 태그와 함께 게시글을 작성하고, 작성한 게시글을 수정 및 삭제할 수 있습니다.
+-   **댓글 기능**: 게시글에 댓글을 남기고, 남긴 댓글을 수정 및 삭제할 수 있습니다.
+-   **게시글 추천 기능**: 마음에 드는 게시글을 추천할 수 있습니다.
+-   **마이페이지**: 북마크한 영화, 시청한 영화, 내가 쓴 글, 내가 남긴 댓글, 추천한 글을 한 눈에 볼 수 있고, 닉네임 및 패스워드를 변경할 수 있습니다.
+
+## 프로젝트 배경 및 동기
+
+## 미래 계획 및 개선사항
