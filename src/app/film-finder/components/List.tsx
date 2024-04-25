@@ -51,7 +51,7 @@ export default function List() {
                     {page.results.map(movie => (
                         <div
                             key={movie.id}
-                            className="relative w-full sm:w-1/2 md:w-1/3 xl:w-1/4 2xl:w-1/5 h-full flex flex-col "
+                            className="relative w-full sm:w-1/2 md:w-1/3 xl:w-1/4 2xl:w-1/5 flex flex-col "
                         >
                             <Movie movie={movie} />
                         </div>
