@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import addLikedPost from '@/service/post/addLikedPost';
 import deleteLikedPost from '@/service/post/deleteLikedPost';
@@ -10,7 +9,7 @@ import { useSession } from 'next-auth/react';
 import { BiLike, BiSolidLike } from 'react-icons/bi';
 
 export default function LikeButton({ postId }: { postId: string }) {
-    const { data: sessionData } = useSession();
+    const { data: sessionData, status: sessionStatus } = useSession();
 
     const { data: postData, isLoading: isLoadingPostData } = useQuery({
         queryKey: ['post', postId],
@@ -74,6 +73,10 @@ export default function LikeButton({ postId }: { postId: string }) {
         });
 
     const handleLike = () => {
+        if (sessionStatus !== 'authenticated') {
+            alert('로그인 후에 추천할 수 있어요.');
+            return;
+        }
         if (likedPostIds?.[postId]) {
             removeLikeMutate();
         } else {
