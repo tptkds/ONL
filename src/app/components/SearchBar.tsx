@@ -105,6 +105,7 @@ export default function SearchBar({
                             </ul>
                         </div>
                     )}
+
                     {searchedMovies && searchedMovies.length > 0 && (
                         <div>
                             <h2 className="py-0.5 px-4  text-sm font-bold">
@@ -132,7 +133,15 @@ export default function SearchBar({
                         </div>
                     )}
                 </div>
-            ) : null}
+            ) : (
+                searchedText.length != 0 && (
+                    <div className="absolute top-12 z-10  w-full max-w-full max-h-[500px] py-4 bg-white sm:shadow-md overflow-hidden">
+                        <p className="py-0.5 px-4  text-sm">
+                            검색된 영화나 게시글이 없습니다.
+                        </p>
+                    </div>
+                )
+            )}
         </div>
     );
 }
