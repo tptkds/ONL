@@ -101,7 +101,7 @@ export default function List() {
                                                     objectFit: 'contain',
                                                 }}
                                                 width={500}
-                                                height={300}
+                                                height={500}
                                                 placeholder="blur"
                                                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM8UA8AAgUBQbH2eGIAAAAASUVORK5CYII="
                                             />

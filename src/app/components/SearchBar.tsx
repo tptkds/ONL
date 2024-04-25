@@ -74,6 +74,7 @@ export default function SearchBar({
                         setIsSearchBarHidden(true);
                     }, 100);
                 }}
+                style={{ fontSize: '16px' }}
             />
             {(showResults && searchedMovies && searchedMovies.length > 0) ||
             (showResults && searchedPosts && searchedPosts.length > 0) ? (

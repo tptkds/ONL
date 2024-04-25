@@ -75,7 +75,7 @@ export default function MoviesOfTrending() {
                                         key={movie.id}
                                         href={`/film-info/${movie.id}`}
                                     >
-                                        <div className="relative h-56 w-full sm:h-[284px] sm:w-[198px] lg:h-[398px] lg:w-[278px] flex-shrink-0 transition-[height] transition-[width] ease-in focus:outline-none">
+                                        <div className="relative h-72 w-full sm:h-[284px] sm:w-[198px] lg:h-[398px] lg:w-[278px] flex-shrink-0 transition-[height] transition-[width] ease-in focus:outline-none">
                                             <Image
                                                 src={`${TMDB_BASE_URL}/w500/${movie.poster_path}`}
                                                 alt={movie.title}
