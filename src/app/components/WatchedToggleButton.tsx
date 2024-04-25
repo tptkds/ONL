@@ -26,23 +26,29 @@ export default function WatchedToggleButton({
     rating,
 }: WatchedToggleButtonProps) {
     const toggleWatchedMovie = async () => {
-        const isWatched = watchedMovies[movieId];
-
-        try {
-            if (isWatched) {
-                await deleteWatchedMovie(uId, isWatched.movieId);
+        if (watchedMovies[movieId]) {
+            try {
+                await deleteWatchedMovie(
+                    uId,
+                    watchedMovies[movieId].id as string
+                );
                 const updatedWatchedMovies = { ...watchedMovies };
                 delete updatedWatchedMovies[movieId];
                 setWatchedMovies(updatedWatchedMovies);
                 console.log(`Removed from watched movies: ${movieId}`);
-            } else {
-                const newWatched: WatchedMovie = {
-                    movieId: movieId,
-                    watchDate: Timestamp.fromDate(new Date()),
-                    userRating: rating,
-                    movieTitle: movieTitle,
-                    moviePoster: moviePoster,
-                };
+            } catch (error) {
+                console.error('Failed to remove from watched movies:', error);
+            }
+        } else {
+            const newWatched: WatchedMovie = {
+                movieId: movieId,
+                watchDate: Timestamp.fromDate(new Date()),
+                userRating: rating,
+                movieTitle: movieTitle,
+                moviePoster: moviePoster,
+            };
+
+            try {
                 await addWatchedMovie(uId, newWatched);
                 const updatedWatchedMovies = {
                     ...watchedMovies,
@@ -50,15 +56,15 @@ export default function WatchedToggleButton({
                 };
                 setWatchedMovies(updatedWatchedMovies);
                 console.log(`Added to watched movies: ${movieId}`);
+            } catch (error) {
+                console.error('Failed to add to watched movies:', error);
             }
-        } catch (error) {
-            console.error('Failed to toggle watched movie:', error);
         }
     };
 
     return (
         <button
-            onClick={toggleWatchedMovie}
+            onClick={async () => toggleWatchedMovie()}
             className="hover:bg-gray-100 p-2 rounded-full flex justify-center items-center"
         >
             {watchedMovies[movieId] ? (
