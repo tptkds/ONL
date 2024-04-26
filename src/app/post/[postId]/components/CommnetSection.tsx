@@ -64,7 +64,7 @@ export default function CommentsSection({ postId }: { postId: string }) {
         },
     });
 
-    const [editedCommentId, setEditedCommentId] = useState<string>('');
+    const [editedCommentId, setEditedCommentId] = useState<string | null>(null);
     const [editedCommentContent, setEditedCommentContent] =
         useState<string>('');
 
@@ -72,7 +72,7 @@ export default function CommentsSection({ postId }: { postId: string }) {
         mutationFn: (commentId: string) =>
             updateComment(commentId, editedCommentContent),
         onSuccess: () => {
-            setEditedCommentId('');
+            setEditedCommentId(null);
             setEditedCommentContent('');
             queryClient.invalidateQueries({
                 queryKey: ['comments', postId],
@@ -130,7 +130,7 @@ export default function CommentsSection({ postId }: { postId: string }) {
                                     />
                                     <button
                                         onClick={() => {
-                                            setEditedCommentId('');
+                                            setEditedCommentId(null);
                                             setEditedCommentContent('');
                                         }}
                                         className="mt-2 text-xs mr-1  px-2 py-0.5 border rounded-sm hover:bg-gray-100"
@@ -203,7 +203,7 @@ export default function CommentsSection({ postId }: { postId: string }) {
                     value={commentText}
                     onChange={e => setCommentText(e.target.value)}
                     disabled={
-                        status !== 'authenticated' || editedCommentId != ''
+                        status !== 'authenticated' || editedCommentId !== null
                     }
                 ></textarea>
                 <button
@@ -238,7 +238,7 @@ export default function CommentsSection({ postId }: { postId: string }) {
                         }
                     }}
                     disabled={
-                        status !== 'authenticated' || editedCommentId != ''
+                        status !== 'authenticated' || editedCommentId !== null
                     }
                 >
                     댓글 남기기
