@@ -1,31 +1,28 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { BookmarkMovie } from '@/types/movie';
+import { BookmarkMovie, WatchedMovie } from '@/types/movie';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import getBookmarkedMovies from '@/service/movie/getBookmarkedMovies';
-
 import getWatchedMovies from '@/service/movie/getWatchedMovies';
 import Link from 'next/link';
-import BookmarkToggleButton from './BookmarkToggleButton';
-import WatchedToggleButton from './WatchedToggleButton';
 import { useQuery } from '@tanstack/react-query';
 import getMoviesOfTheYearByFestival from '@/service/movie/getMoviesOfTheYearByFestival';
 import { TMDB_BASE_URL } from '@/constants/movie';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-
+import BookmarkToggleButton from '@/app/components/BookmarkToggleButton';
+import WatchedToggleButton from '@/app/components/WatchedToggleButton';
+interface WatchedMoviesMap {
+    [key: string]: WatchedMovie;
+}
 export default function List() {
     const [rating, setRating] = useState<number>(0);
     const [visibleOverview, setVisibleOverview] = useState<(string | number)[]>(
         []
     );
-    const [watchedMovies, setWatchedMovies] = useState({});
-    const [bookmarkedMovies, setBookmarkedMovies] = useState<{
-        [key: string]: BookmarkMovie;
-    }>({});
+
     const { data: sessionData, status } = useSession();
 
-    // 영화 데이터 로드
     const { data: awards, isLoading } = useQuery({
         queryKey: ['award', 2023, 'byFestival'],
         queryFn: () => getMoviesOfTheYearByFestival(),
@@ -35,21 +32,32 @@ export default function List() {
         refetchInterval: false,
     });
 
-    // 북마크 ,시청영화 데이터 로드
+    const [watchedMovies, setWatchedMovies] = useState<WatchedMoviesMap>({});
+    const { data: watchedMoviesData } = useQuery({
+        queryKey: ['watchedMovies', sessionData?.user.uid],
+        queryFn: () => getWatchedMovies(sessionData?.user?.uid as string),
+        enabled: !!sessionData?.user?.uid,
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
+    });
     useEffect(() => {
-        if (
-            sessionData?.user?.uid &&
-            Object.keys(bookmarkedMovies).length === 0
-        ) {
-            getBookmarkedMovies(sessionData.user.uid)
-                .then(setBookmarkedMovies)
-                .catch(console.error);
+        if (watchedMoviesData) setWatchedMovies(watchedMoviesData);
+    }, [watchedMoviesData]);
 
-            getWatchedMovies(sessionData.user.uid)
-                .then(setWatchedMovies)
-                .catch(console.error);
-        }
-    }, [sessionData?.user?.uid]);
+    const [bookmarkedMovies, setBookmarkedMovies] = useState<{
+        [key: string]: BookmarkMovie;
+    }>({});
+    const { data: bookmarkedMoviesData } = useQuery({
+        queryKey: ['bookmarkedMovies', sessionData?.user.uid],
+        queryFn: () => getBookmarkedMovies(sessionData?.user?.uid as string),
+        enabled: !!sessionData?.user?.uid,
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
+    });
+    useEffect(() => {
+        if (bookmarkedMoviesData) setBookmarkedMovies(bookmarkedMoviesData);
+    }, [bookmarkedMoviesData]);
+
     if (!awards) {
         return <></>;
     }
@@ -130,7 +138,7 @@ export default function List() {
                                                             movie.poster_path as string
                                                         }
                                                         movieTitle={movie.title}
-                                                        movieId={movie.id}
+                                                        movieId={movie.imdb_id}
                                                         uId={
                                                             sessionData?.user
                                                                 .uid as string
@@ -138,25 +146,19 @@ export default function List() {
                                                         bookmarkedMovies={
                                                             bookmarkedMovies
                                                         }
-                                                        setBookmarkedMovies={
-                                                            setBookmarkedMovies
-                                                        }
                                                     />
                                                     <WatchedToggleButton
                                                         moviePoster={
                                                             movie.poster_path as string
                                                         }
                                                         movieTitle={movie.title}
-                                                        movieId={movie.id}
+                                                        movieId={movie.imdb_id}
                                                         uId={
                                                             sessionData?.user
                                                                 .uid as string
                                                         }
                                                         watchedMovies={
                                                             watchedMovies
-                                                        }
-                                                        setWatchedMovies={
-                                                            setWatchedMovies
                                                         }
                                                         rating={rating}
                                                     />

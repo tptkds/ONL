@@ -1,6 +1,6 @@
 import { db } from '@/app/firebase';
 import { WatchedMovie } from '@/types/movie';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 
 export default async function addWatchedMovie(
     uId: string,

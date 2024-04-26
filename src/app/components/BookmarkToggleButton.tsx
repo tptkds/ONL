@@ -1,6 +1,9 @@
 import addBookmarkedMovie from '@/service/movie/addBookmarkedMovie';
 import deleteBookmarkedMovie from '@/service/movie/deleteBookmarkedMovie';
 import { BookmarkMovie } from '@/types/movie';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Timestamp } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 import { IoBookmarkOutline, IoBookmark } from 'react-icons/io5';
 
 export default function BookmarkToggleButton({
@@ -9,56 +12,65 @@ export default function BookmarkToggleButton({
     movieId,
     uId,
     bookmarkedMovies,
-    setBookmarkedMovies,
 }: {
     moviePoster: string;
     movieTitle: string;
     movieId: string;
     uId: string;
     bookmarkedMovies: { [key: string]: BookmarkMovie };
-    setBookmarkedMovies: React.Dispatch<
-        React.SetStateAction<{ [key: string]: BookmarkMovie }>
-    >;
 }) {
-    const toggleBookmarMovie = async () => {
-        if (bookmarkedMovies[movieId]) {
-            try {
-                await deleteBookmarkedMovie(
-                    uId,
-                    bookmarkedMovies[movieId].id as string
-                );
-                const updatedBookmarkedMovies = { ...bookmarkedMovies };
-                delete updatedBookmarkedMovies[movieId];
-                setBookmarkedMovies(updatedBookmarkedMovies);
-                console.log(`Bookmark removed for movieId: ${movieId}`);
-            } catch (error) {
-                console.error('Failed to remove bookmark:', error);
-            }
-        } else {
-            const newBookmark: BookmarkMovie = {
+    const [isDisabledBookmarking, setIsDisabledBookmarking] =
+        useState<boolean>(false);
+    const queryClient = useQueryClient();
+
+    const { mutate: mutateDeleteBookmarkedMovie } = useMutation({
+        mutationKey: ['mutateDeleteBookmarkedMovie', movieId],
+        mutationFn: () => deleteBookmarkedMovie(uId, movieId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['bookmarkedMovies', uId],
+            });
+        },
+    });
+
+    const { mutate: mutateAddBookmarkedMovie } = useMutation({
+        mutationKey: ['mutateDeleteBookmarkedMovie', movieId],
+        mutationFn: () =>
+            addBookmarkedMovie(uId, {
                 movieId: movieId,
-                bookmarkDate: new Date(),
+                bookmarkDate: Timestamp.fromDate(new Date()),
                 moviePoster: moviePoster,
                 movieTitle: movieTitle,
-            };
+            }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['bookmarkedMovies', uId],
+            });
+        },
+    });
 
-            try {
-                await addBookmarkedMovie(uId, newBookmark);
-                const updatedBookmarkedMovies = {
-                    ...bookmarkedMovies,
-                    [movieId]: newBookmark,
-                };
-                setBookmarkedMovies(updatedBookmarkedMovies);
-                console.log(`Bookmark added for movieId: ${movieId}`);
-            } catch (error) {
-                console.error('Failed to add bookmark:', error);
-            }
+    const toggleBookmarMovie = async () => {
+        setIsDisabledBookmarking(true);
+        if (bookmarkedMovies[movieId]) {
+            mutateDeleteBookmarkedMovie();
+        } else {
+            mutateAddBookmarkedMovie();
         }
     };
+
+    const isFetchingBookmarkedMovies = queryClient.isFetching({
+        queryKey: ['bookmarkedMovies', uId],
+    });
+
+    useEffect(() => {
+        if (!isFetchingBookmarkedMovies) setIsDisabledBookmarking(false);
+    }, [isFetchingBookmarkedMovies]);
+
     return (
         <button
             className=" hover:bg-gray-100 p-2 rounded-full flex justify-center items-center"
             onClick={toggleBookmarMovie}
+            disabled={isDisabledBookmarking}
         >
             {bookmarkedMovies[movieId] ? (
                 <IoBookmark className="text-base " />

@@ -48,7 +48,6 @@ export default function CommentsSection({ postId }: { postId: string }) {
 
     useEffect(() => {
         if (commentsData) {
-            console.log(commentsData);
             setComments(commentsData);
         }
     }, [commentsData]);

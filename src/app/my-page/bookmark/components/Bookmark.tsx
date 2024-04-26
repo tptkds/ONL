@@ -9,14 +9,10 @@ export default function Bookmark({
     bookmarkData,
     uid,
     bookmarkedMovies,
-    setBookmarkedMovies,
 }: {
     bookmarkData: BookmarkMovie;
     uid: string;
     bookmarkedMovies: { [key: string]: BookmarkMovie };
-    setBookmarkedMovies: React.Dispatch<
-        React.SetStateAction<{ [key: string]: BookmarkMovie }>
-    >;
 }) {
     return (
         <div className="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5  border py-2 pb-4 mb-4">
@@ -47,7 +43,6 @@ export default function Bookmark({
                     movieId={bookmarkData.movieId}
                     uId={uid}
                     bookmarkedMovies={bookmarkedMovies}
-                    setBookmarkedMovies={setBookmarkedMovies}
                 />
             </div>
         </div>
