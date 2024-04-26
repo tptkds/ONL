@@ -1,5 +1,5 @@
 'use client';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { MoviesResponse } from '@/types/movie';
 import Movie from './Movie';
 import { useIntersectionObserver } from 'usehooks-ts';
@@ -13,7 +13,7 @@ import React, { useEffect, useState, Fragment } from 'react';
 import { useSession } from 'next-auth/react';
 
 export default function List() {
-    const { data: sessionData, status } = useSession();
+    const { data: sessionData } = useSession();
     const { selectedSorting, selectedGenres, keyword } = useStore();
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
         useInfiniteQuery<MoviesResponse>({
@@ -45,26 +45,30 @@ export default function List() {
     }, [isIntersecting, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
     const [watchedMovies, setWatchedMovies] = useState({});
+    const { data: watchedMoviesData } = useQuery({
+        queryKey: ['watchedMovies', sessionData?.user.uid],
+        queryFn: () => getWatchedMovies(sessionData?.user?.uid as string),
+        enabled: !!sessionData?.user?.uid,
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
+    });
+    useEffect(() => {
+        if (watchedMoviesData) setWatchedMovies(watchedMoviesData);
+    }, [watchedMoviesData]);
+
     const [bookmarkedMovies, setBookmarkedMovies] = useState<{
         [key: string]: BookmarkMovie;
     }>({});
-
+    const { data: bookmarkedMoviesData } = useQuery({
+        queryKey: ['bookmarkedMovies', sessionData?.user.uid],
+        queryFn: () => getBookmarkedMovies(sessionData?.user?.uid as string),
+        enabled: !!sessionData?.user?.uid,
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
+    });
     useEffect(() => {
-        const uid = sessionData?.user?.uid;
-        if (uid) {
-            if (Object.keys(bookmarkedMovies).length === 0) {
-                getBookmarkedMovies(uid)
-                    .then(setBookmarkedMovies)
-                    .catch(console.error);
-            }
-
-            if (Object.keys(watchedMovies).length === 0) {
-                getWatchedMovies(uid)
-                    .then(setWatchedMovies)
-                    .catch(console.error);
-            }
-        }
-    }, [sessionData?.user?.uid]);
+        if (bookmarkedMoviesData) setBookmarkedMovies(bookmarkedMoviesData);
+    }, [bookmarkedMoviesData]);
 
     return (
         <div className="flex flex-wrap h-full">

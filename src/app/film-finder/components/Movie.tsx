@@ -1,11 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import BookmarkToggleButton from '../../components/BookmarkToggleButton';
-import WatchedToggleButton from '../../components/WatchedToggleButton';
-
 import { useSession } from 'next-auth/react';
 import { BookmarkMovie, WatchedMovie } from '@/types/movie';
+import BookmarkToggleButton from './BookmarkToggleButton';
+import WatchedToggleButton from './WatchedToggleButton';
 
 interface MovieProps {
     movie: {
