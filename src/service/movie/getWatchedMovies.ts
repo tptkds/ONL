@@ -15,7 +15,6 @@ export default async function getWatchedMovies(
             const data = doc.data() as WatchedMovie;
             watchedMovies[data.movieId] = {
                 ...data,
-                id: doc.id,
             };
         });
 

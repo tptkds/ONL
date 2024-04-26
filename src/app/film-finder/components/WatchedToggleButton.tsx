@@ -1,7 +1,9 @@
 import addWatchedMovie from '@/service/movie/addWatchedMovie';
 import deleteWatchedMovie from '@/service/movie/deleteWatchedMovie';
 import { WatchedMovie } from '@/types/movie';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Timestamp } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 import { PiTelevisionSimple, PiTelevisionSimpleFill } from 'react-icons/pi';
 
 interface WatchedToggleButtonProps {
@@ -10,9 +12,7 @@ interface WatchedToggleButtonProps {
     movieId: string;
     uId: string;
     watchedMovies: { [key: string]: WatchedMovie };
-    setWatchedMovies: React.Dispatch<
-        React.SetStateAction<{ [key: string]: WatchedMovie }>
-    >;
+
     rating: number;
 }
 
@@ -22,55 +22,73 @@ export default function WatchedToggleButton({
     movieId,
     uId,
     watchedMovies,
-    setWatchedMovies,
     rating,
 }: WatchedToggleButtonProps) {
-    const toggleWatchedMovie = async () => {
+    const queryClient = useQueryClient();
+    const [isDisabledCheckingWatched, setIsDisabledCheckingWatched] =
+        useState<boolean>(false);
+
+    const { mutate: mutateDeleteWatchedMovie } = useMutation({
+        mutationKey: ['mutateDeleteWatchedMovie', movieId],
+        mutationFn: () => deleteWatchedMovie(uId, movieId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['watchedMovies', uId],
+            });
+        },
+    });
+
+    const { mutate: mutateAddWatchedMovie } = useMutation({
+        mutationKey: ['mutateAddWatchedMovie', movieId],
+        mutationFn: () =>
+            addWatchedMovie(uId, {
+                movieId: movieId,
+                moviePoster: moviePoster,
+                movieTitle: movieTitle,
+                watchDate: Timestamp.fromDate(new Date()),
+                userRating: rating,
+            }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['watchedMovies', uId],
+            });
+        },
+    });
+
+    const isFetchingWatchedMovies = queryClient.isFetching({
+        queryKey: ['watchedMovies', uId],
+    });
+
+    useEffect(() => {
+        if (!isFetchingWatchedMovies) setIsDisabledCheckingWatched(false);
+    }, [isFetchingWatchedMovies]);
+
+    const toggleWatchedMovie = () => {
+        setIsDisabledCheckingWatched(true);
         if (watchedMovies[movieId]) {
-            try {
-                await deleteWatchedMovie(
-                    uId,
-                    watchedMovies[movieId].id as string
-                );
-                const updatedWatchedMovies = { ...watchedMovies };
-                delete updatedWatchedMovies[movieId];
-                setWatchedMovies(updatedWatchedMovies);
-                console.log(`Removed from watched movies: ${movieId}`);
-            } catch (error) {
-                console.error('Failed to remove from watched movies:', error);
-            }
+            mutateDeleteWatchedMovie();
         } else {
-            const newWatched: WatchedMovie = {
+            const movie: WatchedMovie = {
                 movieId: movieId,
                 watchDate: Timestamp.fromDate(new Date()),
                 userRating: rating,
                 movieTitle: movieTitle,
                 moviePoster: moviePoster,
             };
-
-            try {
-                await addWatchedMovie(uId, newWatched);
-                const updatedWatchedMovies = {
-                    ...watchedMovies,
-                    [movieId]: newWatched,
-                };
-                setWatchedMovies(updatedWatchedMovies);
-                console.log(`Added to watched movies: ${movieId}`);
-            } catch (error) {
-                console.error('Failed to add to watched movies:', error);
-            }
+            mutateAddWatchedMovie();
         }
     };
 
     return (
         <button
-            onClick={async () => toggleWatchedMovie()}
-            className="hover:bg-gray-100 p-2 rounded-full flex justify-center items-center"
+            onClick={toggleWatchedMovie}
+            className="ml-2"
+            disabled={isDisabledCheckingWatched}
         >
             {watchedMovies[movieId] ? (
-                <PiTelevisionSimpleFill className="text-base" />
+                <PiTelevisionSimpleFill className="text-xl" />
             ) : (
-                <PiTelevisionSimple className="text-base" />
+                <PiTelevisionSimple className="text-xl" />
             )}
         </button>
     );

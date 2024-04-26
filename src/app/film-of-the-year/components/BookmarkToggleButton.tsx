@@ -1,6 +1,7 @@
 import addBookmarkedMovie from '@/service/movie/addBookmarkedMovie';
 import deleteBookmarkedMovie from '@/service/movie/deleteBookmarkedMovie';
 import { BookmarkMovie } from '@/types/movie';
+import { Timestamp } from 'firebase/firestore';
 import { IoBookmarkOutline, IoBookmark } from 'react-icons/io5';
 
 export default function BookmarkToggleButton({
@@ -25,10 +26,7 @@ export default function BookmarkToggleButton({
 
         if (isBookmarked) {
             try {
-                await deleteBookmarkedMovie(
-                    uId,
-                    bookmarkedMovies[movieId].id as string
-                );
+                await deleteBookmarkedMovie(uId, movieId as string);
                 const updatedBookmarkedMovies = { ...bookmarkedMovies };
                 delete updatedBookmarkedMovies[movieId];
                 setBookmarkedMovies(updatedBookmarkedMovies);
@@ -39,7 +37,7 @@ export default function BookmarkToggleButton({
         } else {
             const newBookmark: BookmarkMovie = {
                 movieId: movieId,
-                bookmarkDate: new Date(),
+                bookmarkDate: Timestamp.fromDate(new Date()),
                 moviePoster: moviePoster,
                 movieTitle: movieTitle,
             };

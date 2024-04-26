@@ -89,8 +89,6 @@ export default function List() {
                                 index={index}
                                 bookmarkedMovies={bookmarkedMovies}
                                 watchedMovies={watchedMovies}
-                                setWatchedMovies={setWatchedMovies}
-                                setBookmarkedMovies={setBookmarkedMovies}
                             />
                         </div>
                     ))}

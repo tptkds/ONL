@@ -2,6 +2,7 @@ import addBookmarkedMovie from '@/service/movie/addBookmarkedMovie';
 import deleteBookmarkedMovie from '@/service/movie/deleteBookmarkedMovie';
 import { BookmarkMovie } from '@/types/movie';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Timestamp } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { IoBookmarkOutline, IoBookmark } from 'react-icons/io5';
 
@@ -17,9 +18,6 @@ export default function BookmarkToggleButton({
     movieId: string;
     uId: string;
     bookmarkedMovies: { [key: string]: BookmarkMovie };
-    setBookmarkedMovies: React.Dispatch<
-        React.SetStateAction<{ [key: string]: BookmarkMovie }>
-    >;
 }) {
     const [isDisabledBookmarking, setIsDisabledBookmarking] =
         useState<boolean>(false);
@@ -27,8 +25,7 @@ export default function BookmarkToggleButton({
 
     const { mutate: mutateDeleteBookmarkedMovie } = useMutation({
         mutationKey: ['mutateDeleteBookmarkedMovie', movieId],
-        mutationFn: () =>
-            deleteBookmarkedMovie(uId, bookmarkedMovies[movieId].id as string),
+        mutationFn: () => deleteBookmarkedMovie(uId, movieId),
         onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: ['bookmarkedMovies', uId],
@@ -41,7 +38,7 @@ export default function BookmarkToggleButton({
         mutationFn: () =>
             addBookmarkedMovie(uId, {
                 movieId: movieId,
-                bookmarkDate: new Date(),
+                bookmarkDate: Timestamp.fromDate(new Date()),
                 moviePoster: moviePoster,
                 movieTitle: movieTitle,
             }),

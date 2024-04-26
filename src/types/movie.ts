@@ -151,7 +151,6 @@ export type {
 };
 
 export interface WatchedMovie {
-    id?: string;
     movieId: string;
     watchDate: Timestamp;
     userRating: number;
@@ -160,9 +159,8 @@ export interface WatchedMovie {
 }
 
 export interface BookmarkMovie {
-    id?: string;
     movieId: string;
-    bookmarkDate: Date;
+    bookmarkDate: Timestamp;
     movieTitle: string;
     moviePoster: string;
 }

@@ -18,7 +18,6 @@ export default async function getBookmarkedMovies(
             const data = doc.data() as BookmarkMovie;
             bookmarkedMovies[data.movieId] = {
                 ...data,
-                id: doc.id,
             };
         });
 

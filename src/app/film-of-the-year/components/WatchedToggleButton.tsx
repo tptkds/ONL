@@ -30,10 +30,7 @@ export default function WatchedToggleButton({
 
         if (isWatched) {
             try {
-                await deleteWatchedMovie(
-                    uId,
-                    watchedMovies[movieId].id as string
-                );
+                await deleteWatchedMovie(uId, movieId as string);
                 const updatedWatchedMovies = { ...watchedMovies };
                 delete updatedWatchedMovies[movieId];
                 setWatchedMovies(updatedWatchedMovies);

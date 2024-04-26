@@ -18,12 +18,6 @@ interface MovieProps {
     index: number;
     bookmarkedMovies: { [key: string]: BookmarkMovie };
     watchedMovies: { [key: string]: WatchedMovie };
-    setBookmarkedMovies: React.Dispatch<
-        React.SetStateAction<{ [key: string]: BookmarkMovie }>
-    >;
-    setWatchedMovies: React.Dispatch<
-        React.SetStateAction<{ [key: string]: WatchedMovie }>
-    >;
 }
 
 export default function Movie({
@@ -31,8 +25,6 @@ export default function Movie({
     index,
     watchedMovies,
     bookmarkedMovies,
-    setBookmarkedMovies,
-    setWatchedMovies,
 }: MovieProps) {
     const { data: sessionData, status } = useSession();
 
@@ -89,7 +81,6 @@ export default function Movie({
                                     movieId={movie.id + ''}
                                     uId={sessionData?.user.uid as string}
                                     bookmarkedMovies={bookmarkedMovies}
-                                    setBookmarkedMovies={setBookmarkedMovies}
                                 />
                                 <WatchedToggleButton
                                     moviePoster={movie.poster_path}
@@ -97,7 +88,6 @@ export default function Movie({
                                     movieId={movie.id + ''}
                                     uId={sessionData?.user.uid as string}
                                     watchedMovies={watchedMovies}
-                                    setWatchedMovies={setWatchedMovies}
                                     rating={5}
                                 />
                             </div>
