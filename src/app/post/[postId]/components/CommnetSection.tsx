@@ -11,12 +11,13 @@ import { getPostData } from '@/utils/post';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { serverTimestamp } from 'firebase/firestore';
 import { useSession } from 'next-auth/react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 export default function CommentsSection({ postId }: { postId: string }) {
     const queryClient = useQueryClient();
     const [commentText, setCommentText] = useState('');
+    const [comments, setComments] = useState<CommentData[]>([]);
     const { data: sessionData, status } = useSession();
 
     const { data: userName } = useQuery({
@@ -29,7 +30,13 @@ export default function CommentsSection({ postId }: { postId: string }) {
         enabled: !!sessionData?.user.uid && !!!sessionData.user.isGoogleAccount,
     });
 
-    const { data: comments, isFetching } = useQuery({
+    const {
+        data: commentsData,
+        isFetching,
+        isSuccess: isSuccessGetComments,
+        isFetched: isFetchedGetComments,
+        isRefetching,
+    } = useQuery({
         queryKey: ['comments', postId],
         queryFn: () => getComments(postId),
 
@@ -38,6 +45,13 @@ export default function CommentsSection({ postId }: { postId: string }) {
         retry: true,
         retryDelay: 1000,
     });
+
+    useEffect(() => {
+        if (commentsData) {
+            console.log(commentsData);
+            setComments(commentsData);
+        }
+    }, [commentsData]);
 
     const { data: post } = useQuery({
         queryKey: ['post', postId],
@@ -107,90 +121,78 @@ export default function CommentsSection({ postId }: { postId: string }) {
                 <h3 className="flex text-xl font-bold">댓글</h3>
                 <p className="ml-2">{post?.commentCount}개</p>
             </div>
-            {isFetching ? (
-                <div className="flex items-center justify-center w-full h-full">
-                    <AiOutlineLoading3Quarters className="animate-spin" />
-                </div>
-            ) : (
-                <ul>
-                    {comments?.map((comment, i) => (
-                        <li
-                            key={comment.commentId}
-                            className="mb-2 p-2 border-b"
-                        >
-                            {editedCommentId === comment.commentId ? (
-                                <>
-                                    <Textarea
-                                        value={editedCommentContent}
-                                        onChange={e =>
-                                            setEditedCommentContent(
-                                                e.target.value
-                                            )
-                                        }
-                                    />
-                                    <button
-                                        onClick={() => {
-                                            setEditedCommentId(null);
-                                            setEditedCommentContent('');
-                                        }}
-                                        className="mt-2 text-xs mr-1  px-2 py-0.5 border rounded-sm hover:bg-gray-100"
-                                    >
-                                        수정 취소
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            mutateEditComment(
-                                                comment.commentId
-                                            );
-                                        }}
-                                        className="mt-2 text-xs mr-1  px-2 py-0.5 border rounded-sm hover:bg-gray-100"
-                                    >
-                                        수정 완료
-                                    </button>
-                                </>
-                            ) : (
-                                <>
-                                    <p>{comment.content}</p>
 
-                                    <div className="text-xs flex mt-1 items-center">
-                                        <p>{comment.authorName}</p>
-                                        <span className="tb_spr">|</span>
-                                        <p> {formatDate(comment.createdAt)}</p>
-                                        {sessionData?.user.uid ===
-                                            comment.authorId && (
-                                            <div className="ml-4 flex items-center">
-                                                <button
-                                                    onClick={() =>
-                                                        mutateDeleteComment(
-                                                            comment.commentId
-                                                        )
-                                                    }
-                                                    className="text-xs mr-1  px-2 py-0.5 border rounded-sm hover:bg-gray-100"
-                                                >
-                                                    삭제
-                                                </button>
-                                                <button
-                                                    onClick={() => {
-                                                        setEditedCommentId(
-                                                            comment.commentId
-                                                        );
-                                                        setEditedCommentContent(
-                                                            comment.content
-                                                        );
-                                                    }}
-                                                    className="text-xs mr-1  px-2 py-0.5 border rounded-sm hover:bg-gray-100"
-                                                >
-                                                    수정
-                                                </button>
-                                            </div>
-                                        )}
-                                    </div>
-                                </>
-                            )}
-                        </li>
-                    ))}
-                </ul>
-            )}
+            <ul>
+                {comments?.map((comment, i) => (
+                    <li key={comment.commentId} className="mb-2 p-2 border-b">
+                        {editedCommentId === comment.commentId ? (
+                            <>
+                                <Textarea
+                                    value={editedCommentContent}
+                                    onChange={e =>
+                                        setEditedCommentContent(e.target.value)
+                                    }
+                                />
+                                <button
+                                    onClick={() => {
+                                        setEditedCommentId(null);
+                                        setEditedCommentContent('');
+                                    }}
+                                    className="mt-2 text-xs mr-1  px-2 py-0.5 border rounded-sm hover:bg-gray-100"
+                                >
+                                    수정 취소
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        mutateEditComment(comment.commentId);
+                                    }}
+                                    className="mt-2 text-xs mr-1  px-2 py-0.5 border rounded-sm hover:bg-gray-100"
+                                >
+                                    수정 완료
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <p>{comment.content}</p>
+
+                                <div className="text-xs flex mt-1 items-center">
+                                    <p>{comment.authorName}</p>
+                                    <span className="tb_spr">|</span>
+                                    <p> {formatDate(comment.createdAt)}</p>
+                                    {sessionData?.user.uid ===
+                                        comment.authorId && (
+                                        <div className="ml-4 flex items-center">
+                                            <button
+                                                onClick={() =>
+                                                    mutateDeleteComment(
+                                                        comment.commentId
+                                                    )
+                                                }
+                                                className="text-xs mr-1  px-2 py-0.5 border rounded-sm hover:bg-gray-100"
+                                            >
+                                                삭제
+                                            </button>
+                                            <button
+                                                onClick={() => {
+                                                    setEditedCommentId(
+                                                        comment.commentId
+                                                    );
+                                                    setEditedCommentContent(
+                                                        comment.content
+                                                    );
+                                                }}
+                                                className="text-xs mr-1  px-2 py-0.5 border rounded-sm hover:bg-gray-100"
+                                            >
+                                                수정
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            </>
+                        )}
+                    </li>
+                ))}
+            </ul>
 
             <div className="mb-4">
                 <textarea
