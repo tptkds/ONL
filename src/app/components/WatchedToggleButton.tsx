@@ -99,7 +99,7 @@ export default function WatchedToggleButton({
                 <dialog id="my_modal_1" className="modal" ref={ratingModal}>
                     <div className="modal-box">
                         <h3 className="font-bold text-lg">
-                            이미 시청한 영화에요!
+                            이미 시청한 영화예요!
                         </h3>
                         <p className="text-xs text-gray-600 mt-0.5">
                             평점을 수정하거나 동일한 별을 한 번 더 클릭해 해당
@@ -128,6 +128,10 @@ export default function WatchedToggleButton({
                                             checked={
                                                 updatedRating === index + 1
                                             }
+                                            onClick={() => {
+                                                if (index + 1 === updatedRating)
+                                                    setUpdateRating(0);
+                                            }}
                                         />
                                     )
                                 )}
