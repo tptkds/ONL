@@ -55,7 +55,6 @@ const config: Config = {
         },
     },
     plugins: [require('tailwindcss-animate'), require('daisyui')],
-    safelist: ['mask-half', 'mask-half-1', 'mask-half-2'],
 };
 
 export default config;
