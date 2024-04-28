@@ -2,6 +2,7 @@ import addWatchedMovie from '@/service/movie/addWatchedMovie';
 import deleteWatchedMovie from '@/service/movie/deleteWatchedMovie';
 import updateRatingWatchedMovie from '@/service/movie/updateRatingWatchedMovie';
 import { WatchedMovie } from '@/types/movie';
+import { displayToast } from '@/utils/alert';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Timestamp } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';
@@ -22,6 +23,9 @@ export default function WatchedToggleButton({
     uId,
     watchedMovies,
 }: WatchedToggleButtonProps) {
+    const toastRef = useRef<HTMLDivElement>(null);
+    const toastTextRef = useRef<HTMLSpanElement>(null);
+
     const ratingModal = useRef<HTMLDialogElement>(null);
     const [rating, setRating] = useState<number>(0);
     const [updatedRating, setUpdateRating] = useState<number>(0);
@@ -44,6 +48,11 @@ export default function WatchedToggleButton({
             queryClient.invalidateQueries({
                 queryKey: ['watchedMovies', uId],
             });
+            displayToast(
+                toastTextRef,
+                toastRef,
+                movieTitle + ' 영화가 시청 목록에서 제거됐어요!'
+            );
         },
     });
 
@@ -61,6 +70,11 @@ export default function WatchedToggleButton({
             queryClient.invalidateQueries({
                 queryKey: ['watchedMovies', uId],
             });
+            displayToast(
+                toastTextRef,
+                toastRef,
+                movieTitle + ' 영화가 시청 목록에 추가됐어요!'
+            );
         },
     });
 
@@ -71,6 +85,11 @@ export default function WatchedToggleButton({
             queryClient.invalidateQueries({
                 queryKey: ['watchedMovies', uId],
             });
+            displayToast(
+                toastTextRef,
+                toastRef,
+                movieTitle + ' 영화의 평점이 업데이트됐어요!'
+            );
         },
     });
 
@@ -161,7 +180,7 @@ export default function WatchedToggleButton({
                                         rating === updatedRating
                                     }
                                 >
-                                    {updatedRating === 0 ? '삭제' : '수정'}
+                                    {updatedRating === 0 ? '제거' : '수정'}
                                 </button>
                             </form>
                         </div>
@@ -229,6 +248,15 @@ export default function WatchedToggleButton({
                     </div>
                 </dialog>
             )}
+            <div
+                className="toast toast-end z-50 hidden"
+                ref={toastRef}
+                aria-live="polite"
+            >
+                <div className="alert alert-success bg-black rounded-full text-white bg-opacity-70 text-sm flex justify-center font-normal">
+                    <span ref={toastTextRef}></span>
+                </div>
+            </div>
         </>
     );
 }

@@ -1,6 +1,7 @@
 import addBookmarkedMovie from '@/service/movie/addBookmarkedMovie';
 import deleteBookmarkedMovie from '@/service/movie/deleteBookmarkedMovie';
 import { BookmarkMovie } from '@/types/movie';
+import { displayToast } from '@/utils/alert';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Timestamp } from 'firebase/firestore';
 import { useEffect, useRef, useState } from 'react';
@@ -26,33 +27,6 @@ export default function BookmarkToggleButton({
         useState<boolean>(false);
     const queryClient = useQueryClient();
 
-    const displayToast = (text: string) => {
-        if (toastTextRef?.current && toastRef?.current) {
-            toastTextRef.current.innerText = text;
-            toastRef.current.classList.remove('hidden');
-            toastRef.current.classList.remove('opacity-0');
-            toastRef.current.classList.add(
-                'opacity-100',
-                'transition-opacity',
-                'duration-300'
-            );
-
-            setTimeout(() => {
-                if (toastRef?.current) {
-                    toastRef.current.classList.replace(
-                        'opacity-100',
-                        'opacity-0'
-                    );
-                    setTimeout(() => {
-                        if (toastRef?.current) {
-                            toastRef.current.classList.add('hidden');
-                        }
-                    }, 300);
-                }
-            }, 3000);
-        }
-    };
-
     const { mutate: mutateDeleteBookmarkedMovie } = useMutation({
         mutationKey: ['mutateDeleteBookmarkedMovie', movieId],
         mutationFn: () => deleteBookmarkedMovie(uId, movieId),
@@ -60,7 +34,11 @@ export default function BookmarkToggleButton({
             queryClient.invalidateQueries({
                 queryKey: ['bookmarkedMovies', uId],
             });
-            displayToast(movieTitle + ' 영화가 북마크 목록에서 제거되었어요!');
+            displayToast(
+                toastTextRef,
+                toastRef,
+                movieTitle + ' 영화가 북마크 목록에서 제거됐어요!'
+            );
         },
     });
 
@@ -77,7 +55,11 @@ export default function BookmarkToggleButton({
             queryClient.invalidateQueries({
                 queryKey: ['bookmarkedMovies', uId],
             });
-            displayToast(movieTitle + ' 영화가 북마크 목록에 추가되었어요!');
+            displayToast(
+                toastTextRef,
+                toastRef,
+                movieTitle + ' 영화가 북마크 목록에 추가됐어요!'
+            );
         },
     });
 
@@ -111,8 +93,12 @@ export default function BookmarkToggleButton({
                     <PiBookmarkSimpleLight style={{ fontSize: '19px' }} />
                 )}
             </button>
-            <div className="toast toast-end z-50 hidden" ref={toastRef}>
-                <div className="alert alert-success bg-black rounded-full text-white bg-opacity-70 text-sm flex justify-center">
+            <div
+                className="toast toast-end z-50 hidden"
+                ref={toastRef}
+                aria-live="polite"
+            >
+                <div className="alert alert-success bg-black rounded-full text-white bg-opacity-70 text-sm flex justify-center font-normal">
                     <span ref={toastTextRef}></span>
                 </div>
             </div>
