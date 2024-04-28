@@ -117,9 +117,7 @@ export default function WatchedToggleButton({
             {watchedMovies[movieId] ? (
                 <dialog id="my_modal_1" className="modal" ref={ratingModal}>
                     <div className="modal-box">
-                        <h3 className="font-bold text-lg">
-                            이미 시청한 영화예요!
-                        </h3>
+                        <h3 className="font-bold text-lg">시청한 영화</h3>
                         <p className="text-xs text-gray-600 mt-0.5">
                             평점을 수정하거나 동일한 별을 한 번 더 클릭해 해당
                             영화를 시청 목록에서 제거할 수 있어요.
