@@ -88,7 +88,6 @@ export default function Movie({
                                     movieId={movie.id + ''}
                                     uId={sessionData?.user.uid as string}
                                     watchedMovies={watchedMovies}
-                                    rating={5}
                                 />
                             </div>
                         )}

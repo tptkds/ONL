@@ -16,7 +16,6 @@ interface WatchedMoviesMap {
     [key: string]: WatchedMovie;
 }
 export default function List() {
-    const [rating, setRating] = useState<number>(0);
     const [visibleOverview, setVisibleOverview] = useState<(string | number)[]>(
         []
     );
@@ -160,7 +159,6 @@ export default function List() {
                                                         watchedMovies={
                                                             watchedMovies
                                                         }
-                                                        rating={rating}
                                                     />
                                                 </>
                                             ) : (

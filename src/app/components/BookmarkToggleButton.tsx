@@ -5,6 +5,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Timestamp } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { IoBookmarkOutline, IoBookmark } from 'react-icons/io5';
+import {
+    PiBookmarkSimple,
+    PiBookmarkSimpleFill,
+    PiBookmarkSimpleLight,
+} from 'react-icons/pi';
 
 export default function BookmarkToggleButton({
     moviePoster,
@@ -73,9 +78,9 @@ export default function BookmarkToggleButton({
             disabled={isDisabledBookmarking}
         >
             {bookmarkedMovies[movieId] ? (
-                <IoBookmark className="text-base " />
+                <PiBookmarkSimpleFill style={{ fontSize: '18px' }} />
             ) : (
-                <IoBookmarkOutline className="text-base" />
+                <PiBookmarkSimpleLight style={{ fontSize: '19px' }} />
             )}
         </button>
     );
