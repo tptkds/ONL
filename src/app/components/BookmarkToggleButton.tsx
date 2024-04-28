@@ -3,13 +3,8 @@ import deleteBookmarkedMovie from '@/service/movie/deleteBookmarkedMovie';
 import { BookmarkMovie } from '@/types/movie';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Timestamp } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
-import { IoBookmarkOutline, IoBookmark } from 'react-icons/io5';
-import {
-    PiBookmarkSimple,
-    PiBookmarkSimpleFill,
-    PiBookmarkSimpleLight,
-} from 'react-icons/pi';
+import { useEffect, useRef, useState } from 'react';
+import { PiBookmarkSimpleFill, PiBookmarkSimpleLight } from 'react-icons/pi';
 
 export default function BookmarkToggleButton({
     moviePoster,
@@ -24,9 +19,39 @@ export default function BookmarkToggleButton({
     uId: string;
     bookmarkedMovies: { [key: string]: BookmarkMovie };
 }) {
+    const toastRef = useRef<HTMLDivElement>(null);
+    const toastTextRef = useRef<HTMLSpanElement>(null);
+
     const [isDisabledBookmarking, setIsDisabledBookmarking] =
         useState<boolean>(false);
     const queryClient = useQueryClient();
+
+    const displayToast = (text: string) => {
+        if (toastTextRef?.current && toastRef?.current) {
+            toastTextRef.current.innerText = text;
+            toastRef.current.classList.remove('hidden');
+            toastRef.current.classList.remove('opacity-0');
+            toastRef.current.classList.add(
+                'opacity-100',
+                'transition-opacity',
+                'duration-300'
+            );
+
+            setTimeout(() => {
+                if (toastRef?.current) {
+                    toastRef.current.classList.replace(
+                        'opacity-100',
+                        'opacity-0'
+                    );
+                    setTimeout(() => {
+                        if (toastRef?.current) {
+                            toastRef.current.classList.add('hidden');
+                        }
+                    }, 300);
+                }
+            }, 3000);
+        }
+    };
 
     const { mutate: mutateDeleteBookmarkedMovie } = useMutation({
         mutationKey: ['mutateDeleteBookmarkedMovie', movieId],
@@ -35,6 +60,7 @@ export default function BookmarkToggleButton({
             queryClient.invalidateQueries({
                 queryKey: ['bookmarkedMovies', uId],
             });
+            displayToast(movieTitle + ' 영화가 북마크 목록에서 제거되었어요!');
         },
     });
 
@@ -51,6 +77,7 @@ export default function BookmarkToggleButton({
             queryClient.invalidateQueries({
                 queryKey: ['bookmarkedMovies', uId],
             });
+            displayToast(movieTitle + ' 영화가 북마크 목록에 추가되었어요!');
         },
     });
 
@@ -72,16 +99,23 @@ export default function BookmarkToggleButton({
     }, [isFetchingBookmarkedMovies]);
 
     return (
-        <button
-            className=" hover:bg-gray-100 p-2 rounded-full flex justify-center items-center"
-            onClick={toggleBookmarMovie}
-            disabled={isDisabledBookmarking}
-        >
-            {bookmarkedMovies[movieId] ? (
-                <PiBookmarkSimpleFill style={{ fontSize: '18px' }} />
-            ) : (
-                <PiBookmarkSimpleLight style={{ fontSize: '19px' }} />
-            )}
-        </button>
+        <>
+            <button
+                className=" hover:bg-gray-100 p-2 rounded-full flex justify-center items-center"
+                onClick={toggleBookmarMovie}
+                disabled={isDisabledBookmarking}
+            >
+                {bookmarkedMovies[movieId] ? (
+                    <PiBookmarkSimpleFill style={{ fontSize: '18px' }} />
+                ) : (
+                    <PiBookmarkSimpleLight style={{ fontSize: '19px' }} />
+                )}
+            </button>
+            <div className="toast toast-end z-50 hidden" ref={toastRef}>
+                <div className="alert alert-success bg-black rounded-full text-white bg-opacity-70 text-sm flex justify-center">
+                    <span ref={toastTextRef}></span>
+                </div>
+            </div>
+        </>
     );
 }
