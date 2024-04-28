@@ -42,7 +42,6 @@ export default function Movie({
                     movieId={WatchedMovieData.movieId}
                     uId={uid}
                     watchedMovies={watchedMovies}
-                    rating={5}
                 />
             </div>
         </div>
