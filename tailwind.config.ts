@@ -6,6 +6,7 @@ const config: Config = {
         './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
         './src/components/**/*.{js,ts,jsx,tsx,mdx}',
         './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+        './src/**/*.{js,jsx,ts,tsx,html}',
     ],
     prefix: '',
     theme: {
@@ -55,6 +56,7 @@ const config: Config = {
         },
     },
     plugins: [require('tailwindcss-animate'), require('daisyui')],
+    safelist: ['mask-half', 'mask-half-1', 'mask-half-2'],
 };
 
 export default config;
