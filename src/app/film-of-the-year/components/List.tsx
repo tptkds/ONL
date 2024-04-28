@@ -16,10 +16,6 @@ interface WatchedMoviesMap {
     [key: string]: WatchedMovie;
 }
 export default function List() {
-    const [visibleOverview, setVisibleOverview] = useState<(string | number)[]>(
-        []
-    );
-
     const { data: sessionData, status } = useSession();
 
     const { data: awards, isLoading } = useQuery({
@@ -86,17 +82,9 @@ export default function List() {
                                         <p className="mb-3 text-sm text-center font-medium">
                                             {movie.award}
                                         </p>
-                                        <div
-                                            className="relative "
-                                            onMouseOver={() =>
-                                                setVisibleOverview([
-                                                    award.id,
-                                                    index,
-                                                ])
-                                            }
-                                            onMouseOut={() =>
-                                                setVisibleOverview([])
-                                            }
+                                        <Link
+                                            href={`/film-info/${movie.id}`}
+                                            className="relative"
                                         >
                                             <Image
                                                 src={`${TMDB_BASE_URL}/w500/${movie.poster_path}`}
@@ -112,16 +100,7 @@ export default function List() {
                                                 placeholder="blur"
                                                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM8UA8AAgUBQbH2eGIAAAAASUVORK5CYII="
                                             />
-                                            <div
-                                                className={`${award.id === visibleOverview[0] && index === visibleOverview[1] ? 'absolute top-0 left-0 w-full h-full bg-neutral-900/80 text-ellipsis overflow-scroll hide-scrollbar px-6 py-4' : 'hidden'}`}
-                                            >
-                                                <p className="text-white text-sm">
-                                                    {movie.overview
-                                                        ? movie.overview
-                                                        : '줄거리 정보가 없습니다.'}
-                                                </p>
-                                            </div>
-                                        </div>
+                                        </Link>
                                         <Link
                                             href={`/film-info/${movie.id}`}
                                             className="text-center my-4"
