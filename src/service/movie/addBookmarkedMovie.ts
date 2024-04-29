@@ -1,25 +1,36 @@
 import { db } from '@/app/firebase';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import { doc, runTransaction } from 'firebase/firestore';
 import { BookmarkMovie } from '@/types/movie';
 
 export default async function addBookmarkedMovie(
     uId: string,
     movie: BookmarkMovie
 ): Promise<void> {
-    if (!uId) {
-        console.error('Invalid user ID:', uId);
-        return;
-    }
+    const userDocRef = doc(db, 'users', uId);
+    const bookmarkedMovieRef = doc(
+        userDocRef,
+        'bookmarkedMovies',
+        movie.movieId + ''
+    );
+    const movieRef = doc(db, 'movies', movie.movieId + '');
+
     try {
-        const userDocRef = doc(db, 'users', uId);
-        const bookmarkedMovieRef = doc(
-            userDocRef,
-            'bookmarkedMovies',
-            movie.movieId
-        );
-        await setDoc(bookmarkedMovieRef, movie);
-        console.log('Bookmarked movie added successfully.');
+        await runTransaction(db, async transaction => {
+            const movieSnap = await transaction.get(movieRef);
+            if (!movieSnap.exists()) {
+                transaction.set(movieRef, { bookmarked: 1 });
+                transaction.set(bookmarkedMovieRef, movie);
+            } else {
+                const data = movieSnap.data() || {};
+                const currentBookmarked = data.bookmarked || 0;
+                transaction.update(movieRef, {
+                    bookmarked: currentBookmarked + 1,
+                });
+                transaction.set(bookmarkedMovieRef, movie);
+            }
+        });
+        console.log('북마크 추가 트랜잭션을 성공했습니다.');
     } catch (error) {
-        console.error('Error adding bookmarked movie:', error);
+        console.error('북마크 추가 트랜잭션을 실패했습니다:', error);
     }
 }

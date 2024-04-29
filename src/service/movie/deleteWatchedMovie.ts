@@ -33,8 +33,15 @@ export default async function deleteWatchedMovie(
             const watchedMovieData = watchedMovieSnap.data();
             const movieData = movieSnap.data();
 
-            const newScore = movieData.score - watchedMovieData.userRating;
-            const newParticipants = movieData.participants - 1;
+            let newScore = movieData.score - watchedMovieData.userRating;
+            let newParticipants = movieData.participants - 1;
+
+            if (newParticipants < 0) {
+                newParticipants = 0;
+            }
+            if (newScore < 0) {
+                newScore = 0;
+            }
 
             transaction.delete(watchedMovieRef);
 
