@@ -38,10 +38,10 @@ export default function Bookmark({
             </div>
             <div className="flex justify-center mt-2">
                 <BookmarkToggleButton
-                    moviePoster={bookmarkData.moviePoster}
+                    moviePoster={bookmarkData.moviePoster as string}
                     movieTitle={bookmarkData.movieTitle}
                     movieId={bookmarkData.movieId}
-                    uId={uid}
+                    uId={uid as string}
                     bookmarkedMovies={bookmarkedMovies}
                 />
             </div>

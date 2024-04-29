@@ -104,7 +104,6 @@ export default function WatchedToggleButton({
     return (
         <>
             <button
-                className="ml-2"
                 disabled={isDisabledCheckingWatched}
                 onClick={() => ratingModal?.current?.showModal()}
             >
