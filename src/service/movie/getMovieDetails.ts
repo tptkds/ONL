@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const getMovieDetails = async (movieId: string) => {
+export const getMovieDetails = async (movieId: number) => {
     const OPTIONS = {
         method: 'GET',
         headers: {

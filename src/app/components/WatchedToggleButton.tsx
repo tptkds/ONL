@@ -11,7 +11,7 @@ import { PiTelevisionSimple, PiTelevisionSimpleFill } from 'react-icons/pi';
 interface WatchedToggleButtonProps {
     moviePoster: string;
     movieTitle: string;
-    movieId: string;
+    movieId: number;
     uId: string;
     watchedMovies: { [key: string]: WatchedMovie };
 }
@@ -48,6 +48,9 @@ export default function WatchedToggleButton({
             queryClient.invalidateQueries({
                 queryKey: ['watchedMovies', uId],
             });
+            queryClient.invalidateQueries({
+                queryKey: ['movieRatingData'],
+            });
             displayToast(
                 toastTextRef,
                 toastRef,
@@ -70,6 +73,9 @@ export default function WatchedToggleButton({
             queryClient.invalidateQueries({
                 queryKey: ['watchedMovies', uId],
             });
+            queryClient.invalidateQueries({
+                queryKey: ['movieRatingData'],
+            });
             displayToast(
                 toastTextRef,
                 toastRef,
@@ -84,6 +90,9 @@ export default function WatchedToggleButton({
         onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: ['watchedMovies', uId],
+            });
+            queryClient.invalidateQueries({
+                queryKey: ['movieRatingData'],
             });
             displayToast(
                 toastTextRef,
@@ -106,6 +115,7 @@ export default function WatchedToggleButton({
             <button
                 disabled={isDisabledCheckingWatched}
                 onClick={() => ratingModal?.current?.showModal()}
+                className=" hover:bg-gray-100 p-2 rounded-full flex justify-center items-center"
             >
                 {watchedMovies[movieId] ? (
                     <PiTelevisionSimpleFill style={{ fontSize: '19px' }} />

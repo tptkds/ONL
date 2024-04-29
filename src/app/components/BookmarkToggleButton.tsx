@@ -16,7 +16,7 @@ export default function BookmarkToggleButton({
 }: {
     moviePoster: string;
     movieTitle: string;
-    movieId: string;
+    movieId: number;
     uId: string;
     bookmarkedMovies: { [key: string]: BookmarkMovie };
 }) {
@@ -88,7 +88,7 @@ export default function BookmarkToggleButton({
                 disabled={isDisabledBookmarking}
             >
                 {bookmarkedMovies[movieId] ? (
-                    <PiBookmarkSimpleFill style={{ fontSize: '18px' }} />
+                    <PiBookmarkSimpleFill style={{ fontSize: '19px' }} />
                 ) : (
                     <PiBookmarkSimpleLight style={{ fontSize: '19px' }} />
                 )}

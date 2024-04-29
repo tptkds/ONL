@@ -7,8 +7,12 @@ export default async function addWatchedMovie(
     movie: WatchedMovie
 ): Promise<void> {
     const userDocRef = doc(db, 'users', uId);
-    const watchedMovieRef = doc(userDocRef, 'watchedMovies', movie.movieId);
-    const movieDocRef = doc(db, 'movies', movie.movieId);
+    const watchedMovieRef = doc(
+        userDocRef,
+        'watchedMovies',
+        movie.movieId + ''
+    );
+    const movieDocRef = doc(db, 'movies', movie.movieId + '');
 
     try {
         const movieSnap = await getDoc(movieDocRef);

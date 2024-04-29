@@ -33,7 +33,7 @@ interface AwardItem {
     genres: string[];
     posterPath: string;
     release_date: string;
-    tmdbId: string;
+    tmdbId: number;
 }
 
 interface AwardData {
@@ -151,7 +151,7 @@ export type {
 };
 
 export interface WatchedMovie {
-    movieId: string;
+    movieId: number;
     watchDate: Timestamp;
     userRating: number;
     movieTitle: string;
@@ -159,13 +159,13 @@ export interface WatchedMovie {
 }
 
 export interface BookmarkMovie {
-    movieId: string;
+    movieId: number;
     bookmarkDate: Timestamp;
     movieTitle: string;
     moviePoster: string;
 }
 export interface FestivalData {
-    [key: string]: { tmdbId: string; award: string }[];
+    [key: string]: { tmdbId: number; award: string }[];
 }
 
 export interface TrendingMovie {

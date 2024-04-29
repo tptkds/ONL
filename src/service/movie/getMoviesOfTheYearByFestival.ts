@@ -1,60 +1,14 @@
 import { yearOfFilms2023 } from '@/constants/movie';
 import { getMovieDetails } from './getMovieDetails';
-interface MovieDetails {
-    adult: boolean;
-    backdrop_path: string | null;
-    belongs_to_collection: {
-        id: number;
-        name: string;
-        poster_path: string | null;
-        backdrop_path: string | null;
-    } | null;
-    budget: number;
-    genres: {
-        id: number;
-        name: string;
-    }[];
-    homepage: string;
-    id: string;
-    imdb_id: string;
-    origin_country: string[];
-    original_language: string;
-    original_title: string;
-    overview: string;
-    popularity: number;
-    poster_path: string | null;
-    production_companies: {
-        id: number;
-        logo_path: string | null;
-        name: string;
-        origin_country: string;
-    }[];
-    production_countries: {
-        iso_3166_1: string;
-        name: string;
-    }[];
-    release_date: string;
-    revenue: number;
-    runtime: number;
-    spoken_languages: {
-        english_name: string;
-        iso_639_1: string;
-        name: string;
-    }[];
-    status: string;
-    tagline: string;
-    title: string;
-    video: boolean;
-    vote_average: number;
-    vote_count: number;
-    award: string;
-    festival: string;
-}
+import { MovieDetails } from '@/types/movie';
 
+interface MovieDetailsByAward extends MovieDetails {
+    award: string;
+}
 export default async function getMoviesOfTheYearByFestival() {
-    const moviesBerlin = { id: 'Berlin', movies: [] as MovieDetails[] };
-    const moviesCannes = { id: 'Cannes', movies: [] as MovieDetails[] };
-    const moviesVenice = { id: 'Venice', movies: [] as MovieDetails[] };
+    const moviesBerlin = { id: 'Berlin', movies: [] as MovieDetailsByAward[] };
+    const moviesCannes = { id: 'Cannes', movies: [] as MovieDetailsByAward[] };
+    const moviesVenice = { id: 'Venice', movies: [] as MovieDetailsByAward[] };
 
     const promisesBerlin = [];
     const promisesCannes = [];
@@ -97,6 +51,7 @@ export default async function getMoviesOfTheYearByFestival() {
         { ...moviesCannes },
         { ...moviesVenice },
     ];
+    console.log(allMovies);
 
     return allMovies;
 }

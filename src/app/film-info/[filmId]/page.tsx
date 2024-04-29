@@ -10,7 +10,7 @@ import { getMovieCredits } from '@/service/movie/getMovieCredits';
 export default async function FilmInfo({
     params,
 }: {
-    params: { filmId: string };
+    params: { filmId: number };
 }) {
     const queryClient = new QueryClient();
 

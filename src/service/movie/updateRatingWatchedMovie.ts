@@ -3,12 +3,12 @@ import { doc, runTransaction } from 'firebase/firestore';
 
 export default async function updateRatingWatchedMovie(
     uId: string,
-    movieId: string,
+    movieId: number,
     updatedRating: number
 ) {
     const userDocRef = doc(db, 'users', uId);
-    const watchedMovieRef = doc(userDocRef, 'watchedMovies', movieId);
-    const movieDocRef = doc(db, 'movies', movieId);
+    const watchedMovieRef = doc(userDocRef, 'watchedMovies', movieId + '');
+    const movieDocRef = doc(db, 'movies', movieId + '');
 
     try {
         await runTransaction(db, async transaction => {

@@ -10,7 +10,7 @@ import CastList from './CastList';
 import CrewList from './CrewList';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
-export default function Info({ filmId }: { filmId: string }) {
+export default function Info({ filmId }: { filmId: number }) {
     const { data, isError, isPending, isFetching } = useQuery({
         queryKey: ['filmInfo', filmId],
         queryFn: async () => getMovieDetails(filmId),

@@ -1,9 +1,9 @@
 import { db } from '@/app/firebase';
-import { doc, runTransaction, getDoc } from 'firebase/firestore';
+import { doc, runTransaction } from 'firebase/firestore';
 
 export default async function deleteWatchedMovie(
     uId: string,
-    movieId: string
+    movieId: number
 ): Promise<void> {
     if (!uId || !movieId) {
         console.error(
@@ -15,8 +15,8 @@ export default async function deleteWatchedMovie(
     }
 
     const userDocRef = doc(db, 'users', uId);
-    const watchedMovieRef = doc(userDocRef, 'watchedMovies', movieId);
-    const movieDocRef = doc(db, 'movies', movieId);
+    const watchedMovieRef = doc(userDocRef, 'watchedMovies', movieId + '');
+    const movieDocRef = doc(db, 'movies', movieId + '');
 
     try {
         await runTransaction(db, async transaction => {

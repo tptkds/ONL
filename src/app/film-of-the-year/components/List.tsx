@@ -12,11 +12,20 @@ import { TMDB_BASE_URL } from '@/constants/movie';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import BookmarkToggleButton from '@/app/components/BookmarkToggleButton';
 import WatchedToggleButton from '@/app/components/WatchedToggleButton';
+import getMovieRatingData from '@/service/movie/getMovieRatingData';
 interface WatchedMoviesMap {
     [key: string]: WatchedMovie;
 }
 export default function List() {
     const { data: sessionData, status } = useSession();
+
+    const { data: movieRatingData } = useQuery({
+        queryKey: ['movieRatingData'],
+        queryFn: () => getMovieRatingData(),
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
+    });
+    console.log(movieRatingData);
 
     const { data: awards, isLoading } = useQuery({
         queryKey: ['award', 2023, 'byFestival'],
@@ -103,12 +112,43 @@ export default function List() {
                                         </Link>
                                         <Link
                                             href={`/film-info/${movie.id}`}
-                                            className="text-center my-4"
+                                            className="text-center mt-4 mb-1"
                                         >
                                             {movie.title}
                                         </Link>
+                                        <div className="flex items-center justify-center ">
+                                            <Image
+                                                src={'/onl.svg'}
+                                                alt="ONL"
+                                                width={20}
+                                                height={20}
+                                                style={{ margin: '0 2px' }}
+                                            />
+                                            <div className="mx-2">
+                                                <p className="text-sm ">
+                                                    {movieRatingData &&
+                                                    movieRatingData[movie.id] &&
+                                                    movieRatingData[movie.id]
+                                                        .score != 0
+                                                        ? (
+                                                              Math.floor(
+                                                                  (movieRatingData[
+                                                                      movie.id
+                                                                  ].score /
+                                                                      movieRatingData[
+                                                                          movie
+                                                                              .id
+                                                                      ]
+                                                                          .participants) *
+                                                                      100
+                                                              ) / 100
+                                                          ).toFixed(2)
+                                                        : '평점 정보가 없어요'}
+                                                </p>
+                                            </div>
+                                        </div>
 
-                                        <div className="flex justify-center">
+                                        <div className="flex justify-center items-center mt-3">
                                             {status === 'authenticated' ? (
                                                 <>
                                                     <BookmarkToggleButton
@@ -116,7 +156,7 @@ export default function List() {
                                                             movie.poster_path as string
                                                         }
                                                         movieTitle={movie.title}
-                                                        movieId={movie.imdb_id}
+                                                        movieId={movie.id}
                                                         uId={
                                                             sessionData?.user
                                                                 .uid as string
@@ -130,7 +170,7 @@ export default function List() {
                                                             movie.poster_path as string
                                                         }
                                                         movieTitle={movie.title}
-                                                        movieId={movie.imdb_id}
+                                                        movieId={movie.id}
                                                         uId={
                                                             sessionData?.user
                                                                 .uid as string
@@ -139,6 +179,19 @@ export default function List() {
                                                             watchedMovies
                                                         }
                                                     />
+                                                    <p
+                                                        className="text-sm"
+                                                        aria-label={`${movie.title}을 시청한 사용자 수`}
+                                                    >
+                                                        {movieRatingData &&
+                                                        movieRatingData[
+                                                            movie.id
+                                                        ]
+                                                            ? movieRatingData[
+                                                                  movie.id
+                                                              ].participants
+                                                            : '0'}
+                                                    </p>
                                                 </>
                                             ) : (
                                                 <></>

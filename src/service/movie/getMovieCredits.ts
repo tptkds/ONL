@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const getMovieCredits = async (movieId: string) => {
+export const getMovieCredits = async (movieId: number) => {
     const OPTIONS = {
         method: 'GET',
         headers: {
