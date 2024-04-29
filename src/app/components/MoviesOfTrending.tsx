@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import Slider from 'react-slick';
 import Image from 'next/image';
 import 'slick-carousel/slick/slick.css';
@@ -20,21 +20,24 @@ export default function MoviesOfTrending() {
         refetchInterval: false,
     });
 
+    const [isDragging, setIsDragging] = useState<boolean>(false);
+
     const settings = {
         className: 'center',
         centerMode: true,
         centerPadding: '20px',
         dots: false,
         infinite: true,
-        speed: 5000,
+        speed: 500,
         slidesToShow: 5,
-        slidesToScroll: 1,
+        slidesToScroll: 5,
+        swipeToSlide: true,
         responsive: [
             {
                 breakpoint: 1411,
                 settings: {
                     slidesToShow: 4,
-                    slidesToScroll: 1,
+                    slidesToScroll: 4,
                 },
             },
 
@@ -42,20 +45,29 @@ export default function MoviesOfTrending() {
                 breakpoint: 1163,
                 settings: {
                     slidesToShow: 3,
-                    slidesToScroll: 1,
+                    slidesToScroll: 3,
                 },
             },
             {
                 breakpoint: 500,
                 settings: {
                     slidesToShow: 2,
-                    slidesToScroll: 1,
+                    slidesToScroll: 2,
                 },
             },
         ],
         autoplay: true,
-        autoplaySpeed: 500,
+        autoplaySpeed: 2000,
         cssEase: 'ease-in-out',
+        beforeChange: () => setIsDragging(true),
+        afterChange: () => setIsDragging(false),
+    };
+
+    const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        if (isDragging) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
     };
 
     return (
@@ -74,6 +86,7 @@ export default function MoviesOfTrending() {
                                     <Link
                                         key={movie.id}
                                         href={`/film-info/${movie.id}`}
+                                        onClick={handleLinkClick}
                                     >
                                         <div className="relative h-72 w-full sm:h-[284px] sm:w-[198px] lg:h-[398px] lg:w-[278px] flex-shrink-0 transition-[height] transition-[width] ease-in focus:outline-none">
                                             <Image
