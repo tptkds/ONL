@@ -1,23 +1,19 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { BookmarkMovie, WatchedMovie } from '@/types/movie';
-import Image from 'next/image';
+import { BookmarkMovie, MovieDataMap, WatchedMovie } from '@/types/movie';
 import { useSession } from 'next-auth/react';
 import getBookmarkedMovies from '@/service/movie/getBookmarkedMovies';
 import getWatchedMovies from '@/service/movie/getWatchedMovies';
-import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import getMoviesOfTheYearByFestival from '@/service/movie/getMoviesOfTheYearByFestival';
-import { TMDB_BASE_URL } from '@/constants/movie';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import BookmarkToggleButton from '@/app/components/BookmarkToggleButton';
-import WatchedToggleButton from '@/app/components/WatchedToggleButton';
 import getMovieData from '@/service/movie/getMovieData';
+import Movie from '@/app/components/Movie';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 interface WatchedMoviesMap {
     [key: string]: WatchedMovie;
 }
 export default function List() {
-    const { data: sessionData, status } = useSession();
+    const { data: sessionData } = useSession();
 
     const { data: movieData } = useQuery({
         queryKey: ['movieData'],
@@ -87,127 +83,28 @@ export default function List() {
                                         key={index}
                                         className=" flex flex-col justify-center p-4 my-4 border border-gray-200 w-full  sm:w-1/2 screen-920:w-1/3 xl:w-1/4 2xl:w-1/5 "
                                     >
-                                        <p className="mb-3 text-sm text-center font-medium">
+                                        <p className=" text-sm text-center font-medium">
                                             {movie.award}
                                         </p>
-                                        <Link
-                                            href={`/film-info/${movie.id}`}
-                                            className="relative"
-                                        >
-                                            <Image
-                                                src={`${TMDB_BASE_URL}/w500/${movie.poster_path}`}
-                                                alt={movie.title}
-                                                sizes="100vw"
-                                                style={{
-                                                    width: '100%',
-                                                    height: 'auto',
-                                                    objectFit: 'contain',
-                                                }}
-                                                width={500}
-                                                height={500}
-                                                placeholder="blur"
-                                                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM8UA8AAgUBQbH2eGIAAAAASUVORK5CYII="
-                                            />
-                                        </Link>
-                                        <Link
-                                            href={`/film-info/${movie.id}`}
-                                            className="text-center mt-4 mb-1"
-                                        >
-                                            {movie.title}
-                                        </Link>
-                                        <div className="flex items-center justify-center ">
-                                            <Image
-                                                src={'/onl.svg'}
-                                                alt="ONL"
-                                                width={20}
-                                                height={20}
-                                                style={{ margin: '0 2px' }}
-                                            />
-                                            <div className="mx-2">
-                                                <p className="text-sm ">
-                                                    {movieData &&
-                                                    movieData[movie.id]
-                                                        ?.participants &&
-                                                    movieData[movie.id]
-                                                        ?.score != 0
-                                                        ? (
-                                                              Math.floor(
-                                                                  (movieData[
-                                                                      movie.id
-                                                                  ].score /
-                                                                      movieData[
-                                                                          movie
-                                                                              .id
-                                                                      ]
-                                                                          .participants) *
-                                                                      100
-                                                              ) / 100
-                                                          ).toFixed(2)
-                                                        : '평점 정보가 없어요'}
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex justify-center items-center mt-3">
-                                            {status === 'authenticated' ? (
-                                                <>
-                                                    <BookmarkToggleButton
-                                                        moviePoster={
-                                                            movie.poster_path as string
-                                                        }
-                                                        movieTitle={movie.title}
-                                                        movieId={movie.id}
-                                                        uId={
-                                                            sessionData?.user
-                                                                .uid as string
-                                                        }
-                                                        bookmarkedMovies={
-                                                            bookmarkedMovies
-                                                        }
-                                                    />
-                                                    <p
-                                                        className="text-sm mr-2"
-                                                        aria-label={`${movie.title}을 북마크한 사용자 수`}
-                                                    >
-                                                        {movieData &&
-                                                        movieData[movie.id]
-                                                            ?.bookmarked
-                                                            ? movieData[
-                                                                  movie.id
-                                                              ].bookmarked
-                                                            : '0'}
-                                                    </p>
-                                                    <WatchedToggleButton
-                                                        moviePoster={
-                                                            movie.poster_path as string
-                                                        }
-                                                        movieTitle={movie.title}
-                                                        movieId={movie.id}
-                                                        uId={
-                                                            sessionData?.user
-                                                                .uid as string
-                                                        }
-                                                        watchedMovies={
-                                                            watchedMovies
-                                                        }
-                                                    />
-                                                    <p
-                                                        className="text-sm mr-2"
-                                                        aria-label={`${movie.title}을 시청한 사용자 수`}
-                                                    >
-                                                        {movieData &&
-                                                        movieData[movie.id]
-                                                            ?.participants
-                                                            ? movieData[
-                                                                  movie.id
-                                                              ].participants
-                                                            : '0'}
-                                                    </p>
-                                                </>
-                                            ) : (
-                                                <></>
-                                            )}
-                                        </div>
+                                        <Movie
+                                            movie={{
+                                                id: movie.id,
+                                                title: movie.title,
+                                                poster_path:
+                                                    movie.poster_path as string,
+                                                release_date:
+                                                    movie.release_date,
+                                                vote_average:
+                                                    movie.vote_average,
+                                                overview: movie.overview,
+                                            }}
+                                            index={index}
+                                            bookmarkedMovies={bookmarkedMovies}
+                                            watchedMovies={watchedMovies}
+                                            movieData={
+                                                movieData as MovieDataMap
+                                            }
+                                        />
                                     </div>
                                 ))}
                         </div>
