@@ -208,3 +208,12 @@ export interface FirebaseMovieData {
     score: number;
     participants: number;
 }
+
+export interface MovieData {
+    participants: number;
+    score: number;
+    bookmarked: number;
+}
+export interface MovieDataMap {
+    [key: string]: MovieData;
+}

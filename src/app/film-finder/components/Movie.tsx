@@ -2,18 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { useSession } from 'next-auth/react';
-import { BookmarkMovie, WatchedMovie } from '@/types/movie';
+import { BookmarkMovie, MovieDataMap, WatchedMovie } from '@/types/movie';
 import BookmarkToggleButton from '@/app/components/BookmarkToggleButton';
 import WatchedToggleButton from '@/app/components/WatchedToggleButton';
-
-interface MovieData {
-    participants: number;
-    score: number;
-    bookmarked: number;
-}
-interface MovieDataMap {
-    [key: string]: MovieData;
-}
 
 interface MovieProps {
     movie: {
