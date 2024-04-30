@@ -138,25 +138,25 @@ export { genres, TMDB_BASE_URL, languageMap, jobKoreanMap };
 
 export const yearOfFilms2023: FestivalData = {
     Berlin: [
-        { tmdbId: '1070449', award: '황금곰상' },
-        { tmdbId: '900379', award: '심사위원대상' },
-        { tmdbId: '1092099', award: '심사위원상' },
-        { tmdbId: '920767', award: '감독상' },
-        { tmdbId: '1053600', award: '각본상' },
+        { tmdbId: 1070449, award: '황금곰상' },
+        { tmdbId: 900379, award: '심사위원대상' },
+        { tmdbId: 1092099, award: '심사위원상' },
+        { tmdbId: 920767, award: '감독상' },
+        { tmdbId: 1053600, award: '각본상' },
     ],
     Cannes: [
-        { tmdbId: '915935', award: '황금종려상' },
-        { tmdbId: '467244', award: '그랑프리' },
-        { tmdbId: '986280', award: '심사위원상' },
-        { tmdbId: '964960', award: '최우수 감독상' },
-        { tmdbId: '1050035', award: '각본상' },
+        { tmdbId: 915935, award: '황금종려상' },
+        { tmdbId: 467244, award: '그랑프리' },
+        { tmdbId: 986280, award: '심사위원상' },
+        { tmdbId: 964960, award: '최우수 감독상' },
+        { tmdbId: 1050035, award: '각본상' },
     ],
     Venice: [
-        { tmdbId: '792307', award: '황금사자상' },
-        { tmdbId: '937746', award: '감독상' },
-        { tmdbId: '1156125', award: '심사위원대상' },
-        { tmdbId: '1121956', award: '심사위원 특별상' },
-        { tmdbId: '991708', award: '각본상' },
+        { tmdbId: 792307, award: '황금사자상' },
+        { tmdbId: 937746, award: '감독상' },
+        { tmdbId: 1156125, award: '심사위원대상' },
+        { tmdbId: 1121956, award: '심사위원 특별상' },
+        { tmdbId: 991708, award: '각본상' },
     ],
 };
 
