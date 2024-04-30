@@ -24,14 +24,18 @@ export default async function updateRatingWatchedMovie(
 
             const watchedMovieData = watchedMovieSnap.data();
             const movieData = movieSnap.data();
-            const oldRating = watchedMovieData.userRating;
+            const oldRating: number = watchedMovieData.userRating || 0;
+            const oldParticipants: number = watchedMovieData.participants || 1;
+            const newScore: number =
+                movieData.score - oldRating + updatedRating;
+            const newParticipants: number = oldParticipants;
 
-            const newScore = movieData.score - oldRating + updatedRating;
+            movieData.score - oldRating + updatedRating;
             transaction.update(movieDocRef, {
                 score: newScore,
+                newParticipants: newParticipants,
             });
 
-            // 시청한 영화 문서에 새 평점 저장
             transaction.update(watchedMovieRef, {
                 userRating: updatedRating,
             });

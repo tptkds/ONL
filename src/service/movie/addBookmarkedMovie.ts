@@ -22,9 +22,10 @@ export default async function addBookmarkedMovie(
                 transaction.set(bookmarkedMovieRef, movie);
             } else {
                 const data = movieSnap.data() || {};
-                const currentBookmarked = data.bookmarked || 0;
+                const currentBookmarked: number = data.bookmarked || 0;
+                let updatedBookmarked: number = currentBookmarked + 1;
                 transaction.update(movieRef, {
-                    bookmarked: currentBookmarked + 1,
+                    bookmarked: updatedBookmarked,
                 });
                 transaction.set(bookmarkedMovieRef, movie);
             }
