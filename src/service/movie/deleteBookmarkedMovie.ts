@@ -18,14 +18,12 @@ export default async function deleteBookmarkedMovie(
             const movieSnap = await transaction.get(movieRef);
             if (movieSnap.exists()) {
                 const data = movieSnap.data() || {};
-                const currentBookmarked = data.bookmarked || 0;
-                if (currentBookmarked > 1) {
-                    transaction.update(movieRef, {
-                        bookmarked: currentBookmarked - 1,
-                    });
-                } else {
-                    transaction.delete(movieRef);
-                }
+                let currentBookmarked = data.bookmarked || 0;
+                if (currentBookmarked < 1) currentBookmarked = 1;
+                transaction.update(movieRef, {
+                    bookmarked: currentBookmarked - 1,
+                });
+
                 transaction.delete(bookmarkedMovieRef);
             } else {
                 console.log('북마크가 존재하지 않습니다.');

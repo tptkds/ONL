@@ -12,20 +12,19 @@ import { TMDB_BASE_URL } from '@/constants/movie';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import BookmarkToggleButton from '@/app/components/BookmarkToggleButton';
 import WatchedToggleButton from '@/app/components/WatchedToggleButton';
-import getMovieRatingData from '@/service/movie/getMovieRatingData';
+import getMovieData from '@/service/movie/getMovieData';
 interface WatchedMoviesMap {
     [key: string]: WatchedMovie;
 }
 export default function List() {
     const { data: sessionData, status } = useSession();
 
-    const { data: movieRatingData } = useQuery({
-        queryKey: ['movieRatingData'],
-        queryFn: () => getMovieRatingData(),
+    const { data: movieData } = useQuery({
+        queryKey: ['movieData'],
+        queryFn: () => getMovieData(),
         refetchOnWindowFocus: false,
         refetchInterval: false,
     });
-    console.log(movieRatingData);
 
     const { data: awards, isLoading } = useQuery({
         queryKey: ['award', 2023, 'byFestival'],
@@ -126,16 +125,17 @@ export default function List() {
                                             />
                                             <div className="mx-2">
                                                 <p className="text-sm ">
-                                                    {movieRatingData &&
-                                                    movieRatingData[movie.id] &&
-                                                    movieRatingData[movie.id]
-                                                        .score != 0
+                                                    {movieData &&
+                                                    movieData[movie.id]
+                                                        ?.participants &&
+                                                    movieData[movie.id]
+                                                        ?.score != 0
                                                         ? (
                                                               Math.floor(
-                                                                  (movieRatingData[
+                                                                  (movieData[
                                                                       movie.id
                                                                   ].score /
-                                                                      movieRatingData[
+                                                                      movieData[
                                                                           movie
                                                                               .id
                                                                       ]
@@ -165,6 +165,18 @@ export default function List() {
                                                             bookmarkedMovies
                                                         }
                                                     />
+                                                    <p
+                                                        className="text-sm mr-2"
+                                                        aria-label={`${movie.title}을 북마크한 사용자 수`}
+                                                    >
+                                                        {movieData &&
+                                                        movieData[movie.id]
+                                                            ?.bookmarked
+                                                            ? movieData[
+                                                                  movie.id
+                                                              ].bookmarked
+                                                            : '0'}
+                                                    </p>
                                                     <WatchedToggleButton
                                                         moviePoster={
                                                             movie.poster_path as string
@@ -180,14 +192,13 @@ export default function List() {
                                                         }
                                                     />
                                                     <p
-                                                        className="text-sm"
+                                                        className="text-sm mr-2"
                                                         aria-label={`${movie.title}을 시청한 사용자 수`}
                                                     >
-                                                        {movieRatingData &&
-                                                        movieRatingData[
-                                                            movie.id
-                                                        ]
-                                                            ? movieRatingData[
+                                                        {movieData &&
+                                                        movieData[movie.id]
+                                                            ?.participants
+                                                            ? movieData[
                                                                   movie.id
                                                               ].participants
                                                             : '0'}

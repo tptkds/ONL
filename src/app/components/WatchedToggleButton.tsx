@@ -29,6 +29,7 @@ export default function WatchedToggleButton({
     const ratingModal = useRef<HTMLDialogElement>(null);
     const [rating, setRating] = useState<number>(0);
     const [updatedRating, setUpdateRating] = useState<number>(0);
+
     useEffect(() => {
         watchedMovies[movieId]
             ? setRating(watchedMovies[movieId].userRating)
@@ -37,6 +38,7 @@ export default function WatchedToggleButton({
             ? setUpdateRating(watchedMovies[movieId].userRating)
             : setUpdateRating(0);
     }, [watchedMovies]);
+
     const queryClient = useQueryClient();
     const [isDisabledCheckingWatched, setIsDisabledCheckingWatched] =
         useState<boolean>(false);
@@ -49,7 +51,7 @@ export default function WatchedToggleButton({
                 queryKey: ['watchedMovies', uId],
             });
             queryClient.invalidateQueries({
-                queryKey: ['movieRatingData'],
+                queryKey: ['movieData'],
             });
             displayToast(
                 toastTextRef,
@@ -74,7 +76,7 @@ export default function WatchedToggleButton({
                 queryKey: ['watchedMovies', uId],
             });
             queryClient.invalidateQueries({
-                queryKey: ['movieRatingData'],
+                queryKey: ['movieData'],
             });
             displayToast(
                 toastTextRef,
@@ -92,7 +94,7 @@ export default function WatchedToggleButton({
                 queryKey: ['watchedMovies', uId],
             });
             queryClient.invalidateQueries({
-                queryKey: ['movieRatingData'],
+                queryKey: ['movieData'],
             });
             displayToast(
                 toastTextRef,

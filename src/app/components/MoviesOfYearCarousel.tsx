@@ -8,7 +8,7 @@ import getMoviesOfTheYear from '@/service/movie/getMoviesOfTheYear';
 import { useQuery } from '@tanstack/react-query';
 import { TMDB_BASE_URL } from '@/constants/movie';
 import Link from 'next/link';
-import getMovieRatingData from '@/service/movie/getMovieRatingData';
+import getMovieRatingData from '@/service/movie/getMovieData';
 
 export default function MoviesOfYearCarousel() {
     const {

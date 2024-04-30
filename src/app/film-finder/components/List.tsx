@@ -11,7 +11,15 @@ import getWatchedMovies from '@/service/movie/getWatchedMovies';
 import { BookmarkMovie } from '@/types/movie';
 import React, { useEffect, useState, Fragment } from 'react';
 import { useSession } from 'next-auth/react';
-
+import getMovieData from '@/service/movie/getMovieData';
+interface MovieData {
+    participants: number;
+    score: number;
+    bookmarked: number;
+}
+interface MovieDataMap {
+    [key: string]: MovieData;
+}
 export default function List() {
     const { data: sessionData } = useSession();
     const { selectedSorting, selectedGenres, keyword } = useStore();
@@ -45,6 +53,14 @@ export default function List() {
     }, [isIntersecting, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
     const [watchedMovies, setWatchedMovies] = useState({});
+
+    const { data: movieData } = useQuery({
+        queryKey: ['movieData'],
+        queryFn: () => getMovieData(),
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
+    });
+
     const { data: watchedMoviesData } = useQuery({
         queryKey: ['watchedMovies', sessionData?.user.uid],
         queryFn: () => getWatchedMovies(sessionData?.user?.uid as string),
@@ -89,6 +105,7 @@ export default function List() {
                                 index={index}
                                 bookmarkedMovies={bookmarkedMovies}
                                 watchedMovies={watchedMovies}
+                                movieData={movieData as MovieDataMap}
                             />
                         </div>
                     ))}

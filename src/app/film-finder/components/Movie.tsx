@@ -6,6 +6,15 @@ import { BookmarkMovie, WatchedMovie } from '@/types/movie';
 import BookmarkToggleButton from '@/app/components/BookmarkToggleButton';
 import WatchedToggleButton from '@/app/components/WatchedToggleButton';
 
+interface MovieData {
+    participants: number;
+    score: number;
+    bookmarked: number;
+}
+interface MovieDataMap {
+    [key: string]: MovieData;
+}
+
 interface MovieProps {
     movie: {
         id: number;
@@ -18,6 +27,7 @@ interface MovieProps {
     index: number;
     bookmarkedMovies: { [key: string]: BookmarkMovie };
     watchedMovies: { [key: string]: WatchedMovie };
+    movieData: MovieDataMap;
 }
 
 export default function Movie({
@@ -25,6 +35,7 @@ export default function Movie({
     index,
     watchedMovies,
     bookmarkedMovies,
+    movieData,
 }: MovieProps) {
     const { data: sessionData, status } = useSession();
 
@@ -71,26 +82,70 @@ export default function Movie({
                         {movie.release_date}
                     </p>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between items-center">
                         {renderRating(movie.vote_average)}
+
                         {status == 'authenticated' && (
-                            <div className="flex">
+                            <div className="flex justify-between items-center">
                                 <BookmarkToggleButton
                                     moviePoster={movie.poster_path}
                                     movieTitle={movie.title}
-                                    movieId={movie.id + ''}
+                                    movieId={movie.id}
                                     uId={sessionData?.user.uid as string}
                                     bookmarkedMovies={bookmarkedMovies}
                                 />
+                                <p
+                                    className="text-sm mr-2"
+                                    aria-label={`${movie.title}을 북마크한 사용자 수`}
+                                >
+                                    {movieData &&
+                                    movieData[movie.id]?.bookmarked
+                                        ? movieData[movie.id].bookmarked
+                                        : '0'}
+                                </p>
                                 <WatchedToggleButton
                                     moviePoster={movie.poster_path}
                                     movieTitle={movie.title}
-                                    movieId={movie.id + ''}
+                                    movieId={movie.id}
                                     uId={sessionData?.user.uid as string}
                                     watchedMovies={watchedMovies}
                                 />
+                                <p
+                                    className="text-sm mr-2"
+                                    aria-label={`${movie.title}을 시청한 사용자 수`}
+                                >
+                                    {movieData &&
+                                    movieData[movie.id]?.participants
+                                        ? movieData[movie.id].participants
+                                        : '0'}
+                                </p>
                             </div>
                         )}
+                    </div>
+                    <div className="flex items-center ">
+                        <Image
+                            src={'/onl.svg'}
+                            alt="ONL"
+                            width={20}
+                            height={20}
+                            style={{ margin: '0 2px' }}
+                        />
+                        <div className="mx-2">
+                            <p className="text-sm ">
+                                {movieData &&
+                                movieData[movie.id]?.participants &&
+                                movieData[movie.id]?.score != 0
+                                    ? (
+                                          Math.floor(
+                                              (movieData[movie.id].score /
+                                                  movieData[movie.id]
+                                                      .participants) *
+                                                  100
+                                          ) / 100
+                                      ).toFixed(2)
+                                    : '평점 정보가 없어요'}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

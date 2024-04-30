@@ -34,6 +34,9 @@ export default function BookmarkToggleButton({
             queryClient.invalidateQueries({
                 queryKey: ['bookmarkedMovies', uId],
             });
+            queryClient.invalidateQueries({
+                queryKey: ['movieData'],
+            });
             displayToast(
                 toastTextRef,
                 toastRef,
@@ -54,6 +57,9 @@ export default function BookmarkToggleButton({
         onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: ['bookmarkedMovies', uId],
+            });
+            queryClient.invalidateQueries({
+                queryKey: ['movieData'],
             });
             displayToast(
                 toastTextRef,
