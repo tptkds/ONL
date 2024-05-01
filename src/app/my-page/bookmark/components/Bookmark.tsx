@@ -20,15 +20,17 @@ export default function Bookmark({
         <div className="w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5  border py-2 pb-4 mb-4">
             <div className="relative w-full h-auto px-2">
                 <Link href={`/film-info/${bookmarkData.movieId}`}>
-                    <Image
-                        src={`${TMDB_BASE_URL}/w500/${bookmarkData.moviePoster}`}
-                        alt={bookmarkData.movieTitle}
-                        width={500}
-                        height={300}
-                        sizes="100vw"
-                        placeholder="blur"
-                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM8UA8AAgUBQbH2eGIAAAAASUVORK5CYII="
-                    />
+                    <div className="relative mb-2 flex h-4/5">
+                        <Image
+                            src={`${TMDB_BASE_URL}/w500/${bookmarkData.moviePoster}`}
+                            alt={bookmarkData.movieTitle}
+                            sizes="100vw"
+                            width={1000}
+                            height={700}
+                            placeholder="blur"
+                            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM8UA8AAgUBQbH2eGIAAAAASUVORK5CYII="
+                        />
+                    </div>
                 </Link>
             </div>
             <div className="mt-2">
@@ -46,7 +48,7 @@ export default function Bookmark({
                     height={20}
                     style={{ margin: '0 2px' }}
                 />
-                <div className="mx-2">
+                <div className="mx-2 mt-1">
                     <p className="text-sm ">
                         {movieData &&
                         movieData[bookmarkData.movieId]?.participants &&

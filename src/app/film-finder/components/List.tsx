@@ -1,7 +1,6 @@
 'use client';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { MoviesResponse } from '@/types/movie';
-import Movie from './Movie';
 import { useIntersectionObserver } from 'usehooks-ts';
 import useStore from '@/app/store';
 import getMoviesByFilltering from '@/service/movie/getMoviesByFilltering';
@@ -12,6 +11,7 @@ import { BookmarkMovie } from '@/types/movie';
 import React, { useEffect, useState, Fragment } from 'react';
 import { useSession } from 'next-auth/react';
 import getMovieData from '@/service/movie/getMovieData';
+import Movie from '@/app/components/Movie';
 interface MovieData {
     participants: number;
     score: number;
